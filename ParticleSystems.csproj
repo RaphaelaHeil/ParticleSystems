@@ -51,9 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseLifetimeHandler.cs" />
+    <Compile Include="ExpirationHandler.cs" />
+    <Compile Include="LifetimeHandler.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="FrameManager.cs" />
+    <Compile Include="LinearPositionUpdater.cs" />
     <Compile Include="MainFrame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,9 +63,12 @@
       <DependentUpon>MainFrame.cs</DependentUpon>
     </Compile>
     <Compile Include="Particle.cs" />
-    <Compile Include="PositionGenerator.cs" />
+    <Compile Include="ParticleGenerator.cs" />
+    <Compile Include="PositionUpdater.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomParticleGenerator.cs" />
+    <Compile Include="RandomPositionUpdater.cs" />
     <EmbeddedResource Include="MainFrame.resx">
       <DependentUpon>MainFrame.cs</DependentUpon>
     </EmbeddedResource>

@@ -22,7 +22,7 @@ namespace ParticleSystems
         private bool glControlLoaded = false;
         private bool stopped = true;
         private bool paused = true;
-        private Context context = new Context();
+     
         private FrameManager  manager;
 
         private System.Timers.Timer timer = new System.Timers.Timer(DEFAULT);
@@ -31,7 +31,7 @@ namespace ParticleSystems
         {
             InitializeComponent();
 
-            manager = new FrameManager(context);
+            manager = new FrameManager();
             
 
             //TODO move to some other init function !!
@@ -87,24 +87,30 @@ namespace ParticleSystems
 
         private void frameButton_Click(object sender, EventArgs e)
         {
-            manager.prepareFrame();
+            manager.PrepareFrame();
             glControl.Invalidate();
         }
 
         private void initialiseBasedOnSelection()
         {
-            context.clear();
+            manager = new FrameManager();
 
-            int amount = int.Parse(amountBox.Text);
-            int lifetime = int.Parse(lifetimeBox.Text);
-            int newParticles = int.Parse(newParticleBox.Text);
+            //TODO: read selection and prepare FrmaeManager
+
+            int amount = Math.Abs(int.Parse(amountBox.Text)); 
+            int lifetime = Math.Abs(int.Parse(lifetimeBox.Text));
+            int newParticles = Math.Abs(int.Parse(newParticleBox.Text));
             if (randomRadioButton.Checked)
             {
-                manager.initContext(amount, lifetime, newParticles, true);
+                manager.SetPositionHandler(new RandomPositionUpdater());
+                manager.InitContext(amount, lifetime, newParticles, true);
             }
             else
             {
-                manager.initContext(amount, lifetime, newParticles, false);
+                int xIncrease = int.Parse(xIncreaseBox.Text);
+                int yIncrease = int.Parse(yIncreaseBox.Text);
+                manager.SetPositionHandler(new LinearPositionUpdater(xIncrease, yIncrease));
+                manager.InitContext(amount, lifetime, newParticles, false);
             }
 
             
@@ -112,13 +118,8 @@ namespace ParticleSystems
 
         private void timerListener(object sender, ElapsedEventArgs e)
         {
-            // UpdateModel(); // this is where you'd do whatever you need to do to update your model per frame
-            // Invalidate will cause the Paint event on your GLControl to fire
-            //_glControl.Invalidate(); // _glControl is obviously a private reference to the GLControl
-            manager.prepareFrame();
-           // Console.Write("beep\n");
+            manager.PrepareFrame();
             glControl.Invalidate();
-            //  renderStuff();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -140,23 +141,27 @@ namespace ParticleSystems
         }
 
 
-        private void glControl_Paint(object sender, PaintEventArgs e)
+        private void onRender(object sender, PaintEventArgs e)
         {
-            //Console.Write("paint");
             if (!glControlLoaded)
             {
                 return;
             }
+
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
             
             GL.PointSize(3f);
             GL.Begin(PrimitiveType.Points);
-            foreach(Particle particle in context.getParticles())
+
+            //TODO: change to shader mode stuff
+            //e.g. manager.renderFrame()
+
+            foreach(Particle particle in manager.GetParticles())
             {
                 GL.Color3(new Vector3(particle.getRemainingLifetime() * 0.05f));
-                GL.Vertex2(particle.getPosition());
+                GL.Vertex2(particle.GetPosition());
             }
             
             GL.End();
@@ -167,6 +172,18 @@ namespace ParticleSystems
         private void initialiseParticleSystem()
         {
 
+        }
+
+        private void linearRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            xIncreaseBox.Enabled = true;
+            yIncreaseBox.Enabled = true;
+        }
+
+        private void randomRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            xIncreaseBox.Enabled = false;
+            yIncreaseBox.Enabled = false;
         }
     }
 }

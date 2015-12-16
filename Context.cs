@@ -36,7 +36,7 @@ namespace ParticleSystems
             
             for(int i=0; i<particles.Count;i++)
             {
-                positions[i] = particles.ElementAt(i).getPosition();
+                positions[i] = particles.ElementAt(i).GetPosition();
             }
             return positions;
         }

@@ -41,6 +41,10 @@
             this.randomRadioButton = new System.Windows.Forms.RadioButton();
             this.tenRadioButton = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.xIncreaseBox = new System.Windows.Forms.TextBox();
+            this.yIncreaseBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,12 +56,12 @@
             this.glControl.Size = new System.Drawing.Size(400, 400);
             this.glControl.TabIndex = 0;
             this.glControl.VSync = false;
-            this.glControl.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl_Paint);
+            this.glControl.Paint += new System.Windows.Forms.PaintEventHandler(this.onRender);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(427, 96);
+            this.label1.Location = new System.Drawing.Point(488, 135);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(98, 13);
             this.label1.TabIndex = 1;
@@ -65,15 +69,16 @@
             // 
             // amountBox
             // 
-            this.amountBox.Location = new System.Drawing.Point(572, 93);
+            this.amountBox.Location = new System.Drawing.Point(625, 128);
             this.amountBox.Name = "amountBox";
-            this.amountBox.Size = new System.Drawing.Size(100, 20);
+            this.amountBox.Size = new System.Drawing.Size(31, 20);
             this.amountBox.TabIndex = 2;
-            this.amountBox.Text = "10";
+            this.amountBox.Text = "20";
+            this.amountBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(597, 175);
+            this.startButton.Location = new System.Drawing.Point(581, 210);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 3;
@@ -83,24 +88,26 @@
             // 
             // lifetimeBox
             // 
-            this.lifetimeBox.Location = new System.Drawing.Point(572, 119);
+            this.lifetimeBox.Location = new System.Drawing.Point(625, 154);
             this.lifetimeBox.Name = "lifetimeBox";
-            this.lifetimeBox.Size = new System.Drawing.Size(100, 20);
+            this.lifetimeBox.Size = new System.Drawing.Size(31, 20);
             this.lifetimeBox.TabIndex = 4;
-            this.lifetimeBox.Text = "10";
+            this.lifetimeBox.Text = "20";
+            this.lifetimeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // newParticleBox
             // 
-            this.newParticleBox.Location = new System.Drawing.Point(572, 149);
+            this.newParticleBox.Location = new System.Drawing.Point(625, 184);
             this.newParticleBox.Name = "newParticleBox";
-            this.newParticleBox.Size = new System.Drawing.Size(100, 20);
+            this.newParticleBox.Size = new System.Drawing.Size(31, 20);
             this.newParticleBox.TabIndex = 5;
-            this.newParticleBox.Text = "10";
+            this.newParticleBox.Text = "20";
+            this.newParticleBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(427, 122);
+            this.label2.Location = new System.Drawing.Point(488, 161);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 6;
@@ -109,7 +116,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(427, 152);
+            this.label3.Location = new System.Drawing.Point(488, 191);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(139, 13);
             this.label3.TabIndex = 7;
@@ -118,7 +125,7 @@
             // frameButton
             // 
             this.frameButton.Enabled = false;
-            this.frameButton.Location = new System.Drawing.Point(572, 266);
+            this.frameButton.Location = new System.Drawing.Point(581, 296);
             this.frameButton.Name = "frameButton";
             this.frameButton.Size = new System.Drawing.Size(75, 23);
             this.frameButton.TabIndex = 8;
@@ -129,7 +136,7 @@
             // pauseButton
             // 
             this.pauseButton.Enabled = false;
-            this.pauseButton.Location = new System.Drawing.Point(491, 266);
+            this.pauseButton.Location = new System.Drawing.Point(500, 296);
             this.pauseButton.Name = "pauseButton";
             this.pauseButton.Size = new System.Drawing.Size(75, 23);
             this.pauseButton.TabIndex = 9;
@@ -148,27 +155,71 @@
             this.randomRadioButton.TabStop = true;
             this.randomRadioButton.Text = "randomly";
             this.randomRadioButton.UseVisualStyleBackColor = true;
+            this.randomRadioButton.CheckedChanged += new System.EventHandler(this.randomRadioButton_CheckedChanged);
             // 
             // tenRadioButton
             // 
             this.tenRadioButton.AutoSize = true;
             this.tenRadioButton.Location = new System.Drawing.Point(6, 47);
             this.tenRadioButton.Name = "tenRadioButton";
-            this.tenRadioButton.Size = new System.Drawing.Size(86, 17);
+            this.tenRadioButton.Size = new System.Drawing.Size(50, 17);
             this.tenRadioButton.TabIndex = 11;
-            this.tenRadioButton.Text = "x+1 and  y+1";
+            this.tenRadioButton.Text = "linear";
             this.tenRadioButton.UseVisualStyleBackColor = true;
+            this.tenRadioButton.CheckedChanged += new System.EventHandler(this.linearRadioButton_CheckedChanged);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.yIncreaseBox);
+            this.groupBox1.Controls.Add(this.xIncreaseBox);
             this.groupBox1.Controls.Add(this.randomRadioButton);
             this.groupBox1.Controls.Add(this.tenRadioButton);
-            this.groupBox1.Location = new System.Drawing.Point(430, 12);
+            this.groupBox1.Location = new System.Drawing.Point(456, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(143, 66);
+            this.groupBox1.Size = new System.Drawing.Size(233, 75);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Position Update";
+            // 
+            // xIncreaseBox
+            // 
+            this.xIncreaseBox.Enabled = false;
+            this.xIncreaseBox.Location = new System.Drawing.Point(102, 46);
+            this.xIncreaseBox.Name = "xIncreaseBox";
+            this.xIncreaseBox.Size = new System.Drawing.Size(39, 20);
+            this.xIncreaseBox.TabIndex = 12;
+            this.xIncreaseBox.Text = "1";
+            this.xIncreaseBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // yIncreaseBox
+            // 
+            this.yIncreaseBox.Enabled = false;
+            this.yIncreaseBox.Location = new System.Drawing.Point(183, 46);
+            this.yIncreaseBox.Name = "yIncreaseBox";
+            this.yIncreaseBox.Size = new System.Drawing.Size(38, 20);
+            this.yIncreaseBox.TabIndex = 13;
+            this.yIncreaseBox.Text = "1";
+            this.yIncreaseBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(77, 49);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(24, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "x + ";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(161, 49);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(21, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "y +";
             // 
             // MainFrame
             // 
@@ -186,6 +237,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.startButton);
             this.Controls.Add(this.glControl);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainFrame";
             this.Text = "Particle System Explorer";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -211,6 +263,10 @@
         private System.Windows.Forms.RadioButton randomRadioButton;
         private System.Windows.Forms.RadioButton tenRadioButton;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox yIncreaseBox;
+        private System.Windows.Forms.TextBox xIncreaseBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 

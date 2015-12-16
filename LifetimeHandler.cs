@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace ParticleSystems
 {
-    class BaseLifetimeHandler
+    class LifetimeHandler
     {
-
-
 
         public void decrementLifetime(List<Particle> particles)
         {

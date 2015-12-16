@@ -14,6 +14,7 @@ namespace ParticleSystems
         private int remainingLifetime;
         private int agingVelocity;
         private Boolean expired = false;
+        private double velocity = 1.0;
         
         public Particle(Vector2d initialPosition, int maxLifetime, int agingVelocity)
         {
@@ -27,6 +28,11 @@ namespace ParticleSystems
                 //throw Exception
             }
             setAgingVelocity(agingVelocity);
+        }
+
+        public Particle(Vector2d initialPosition, int maxLifetime, int agingVelocity, double velocity) : this(initialPosition, maxLifetime, agingVelocity)
+        {
+            SetVelocity(velocity);
         }
 
 
@@ -49,24 +55,29 @@ namespace ParticleSystems
 
         public void updatePosition(Vector2d translation)
         {
-            position = Vector2d.Add(position, translation);
+            position = Vector2d.Add(position, translation*velocity);
         }
 
         //GETTERS AND SETTERS:
 
-        public Vector2d getPosition()
+        public Vector2d GetPosition()
         {
             return position;
         }
 
-        public void setPosition(Vector2d Position)
+        public void SetPosition(Vector2d Position)
         {
             position = Position;
         }
 
-        public int getAgingVelocity()
+        public int GetAgingVelocity()
         {
             return agingVelocity;
+        }
+
+        public void SetVelocity(double Velocity)
+        {
+            this.velocity = Velocity;
         }
 
         /// <summary>
