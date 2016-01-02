@@ -9,16 +9,19 @@ namespace ParticleSystems
 {
     class FrameManager
     {
-        private int MAX_LIFETIME = 20;
+        private static int MAX_LIFETIME = 20;
         private int MAX_NEW_PARTICLES = 100;
         private Boolean RANDOMLY = true;
 
-        private ParticleGenerator particleGenerator;
-        private PositionUpdater positionUpdater;
+        private ParticleGenerator particleGenerator = new RandomParticleGenerator(400, 400, MAX_LIFETIME, 1, 1.0);
+        private PositionUpdater positionUpdater = new LinearPositionUpdater(5,5);
 
         private Context context = new Context();
         private LifetimeHandler lifetimeHandler = new LifetimeHandler();
         private ExpirationHandler expirationHandler = new ExpirationHandler();
+      //  private ParticleGenerator particleGenerator = new RandomParticleGenerator();
+
+        private Frame activeFrame; 
 
         public void InitContext(int amountOfParticles, int maxLifetime, int maxNewParticles, Boolean randomly)
         {

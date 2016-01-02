@@ -51,11 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ExpirationHandler.cs" />
+    <Compile Include="Frame.cs" />
     <Compile Include="LifetimeHandler.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="FrameManager.cs" />
     <Compile Include="LinearPositionUpdater.cs" />
+    <Compile Include="LinearUpdatingParticleSystem.cs" />
     <Compile Include="MainFrame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,13 +69,31 @@
     </Compile>
     <Compile Include="Particle.cs" />
     <Compile Include="ParticleGenerator.cs" />
+    <Compile Include="ParticleSystem.cs" />
+    <Compile Include="ParticleSystemRegistration.cs" />
+    <Compile Include="ParticleSystemSettingsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ParticleSystemSettingsPanel.Designer.cs">
+      <DependentUpon>ParticleSystemSettingsPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="PositionUpdater.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomParticleGenerator.cs" />
     <Compile Include="RandomPositionUpdater.cs" />
+    <Compile Include="Test.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TestSystem.cs" />
+    <EmbeddedResource Include="ABC.resx">
+      <DependentUpon>ABC.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainFrame.resx">
       <DependentUpon>MainFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParticleSystemSettingsPanel.resx">
+      <DependentUpon>ParticleSystemSettingsPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -81,6 +104,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Test.resx">
+      <DependentUpon>Test.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -93,6 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
