@@ -22,7 +22,7 @@ namespace ParticleSystems
             // Test
             // 
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Location = new System.Drawing.Point(0, 0);
+            this.Location = new System.Drawing.Point(6, 16);
             this.Name = "Test";
             this.ResumeLayout(false);
 

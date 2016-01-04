@@ -8,11 +8,9 @@ namespace ParticleSystems
 {
     class ExpirationHandler
     {
-
         public int handleExpiration(List<Particle> particles)
         {
             return particles.RemoveAll(particle => particle.isExpired());
-
         }
     }
 }

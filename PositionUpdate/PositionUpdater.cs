@@ -9,8 +9,6 @@ namespace ParticleSystems
 {
     interface PositionUpdater
     {
-        void UpdatePosition(Particle particle);
-
         void UpdatePositions(List<Particle> particles);
     }
 }

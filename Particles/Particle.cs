@@ -35,23 +35,17 @@ namespace ParticleSystems
             SetVelocity(velocity);
         }
 
-
-        public void applyDefaultAging()
-        {
-            ageBy(agingVelocity);
-        }
-
-        public void ageBy(int ageReduction)
+        public void applyAging()
         {
             if (remainingLifetime > 0)
             {
-                remainingLifetime -= ageReduction;
+                remainingLifetime -= agingVelocity;
             }
             if (remainingLifetime <= 0)
             {
                 expired = true;
             }
-        }
+        }    
 
         public void updatePosition(Vector2d translation)
         {

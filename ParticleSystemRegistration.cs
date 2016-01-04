@@ -15,7 +15,7 @@ namespace ParticleSystems
         public ParticleSystemRegistration()
         {
             systems.Add("Linear Updating System", Expression.Lambda<Func<ParticleSystem>>(
-            Expression.New(typeof(LinearUpdatingParticleSystem).GetConstructor(Type.EmptyTypes))
+            Expression.New(typeof(LinearilyUpdatingParticleSystem).GetConstructor(Type.EmptyTypes))
              ).Compile());
         }
 

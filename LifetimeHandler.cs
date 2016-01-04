@@ -8,14 +8,12 @@ namespace ParticleSystems
 {
     class LifetimeHandler
     {
-
-        public void decrementLifetime(List<Particle> particles)
+        public void DecrementLifetime(List<Particle> particles)
         {
             foreach (Particle particle in particles)
             {
-                particle.applyDefaultAging();
+                particle.applyAging();
             }
         }
-
     }
 }

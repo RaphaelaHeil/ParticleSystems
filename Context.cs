@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
 
 namespace ParticleSystems
@@ -25,21 +21,23 @@ namespace ParticleSystems
             particles.Remove(particle);
         }
 
-        public List<Particle> getParticles()
+        public List<Particle> GetParticles()
         {
             return particles;
         }
 
-        public Vector2d[] getParticlePositions()
-        {
-            Vector2d[] positions = new Vector2d[particles.Count];
+        //public Vector2d[] getParticlePositions()
+        //{
+        //    Vector2d[] positions = new Vector2d[particles.Count];
             
-            for(int i=0; i<particles.Count;i++)
-            {
-                positions[i] = particles.ElementAt(i).GetPosition();
-            }
-            return positions;
-        }
+        //    foreach(var particle)
+
+        //    for(int i=0; i<particles.Count;i++)
+        //    {
+        //        positions[i] = particles.ElementAt(i).GetPosition();
+        //    }
+        //    return positions;
+        //}
 
         public void clear()
         {

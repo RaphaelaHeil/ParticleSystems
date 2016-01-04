@@ -1,37 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-//using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenTK.Graphics.OpenGL;
-using OpenTK;
-using System.Timers;
+using System.Diagnostics;
 
 namespace ParticleSystems
 {
 
     public partial class MainFrame : Form
     {
-
         private ParticleSystemRegistration particleSystemRegistration = new ParticleSystemRegistration();
 
-        //private const double DEFAULT = 1000.0/ 60.0; // might need fine-tuning later on TODO!! 
-        private const int DEFAULT = 1000 / 60;
+        private const double DEFAULT = 1000.0 / 60.0; //TODO: figure this out ... :/ 
 
+
+        private Stopwatch stopWatch = new Stopwatch();
         private bool glControlLoaded = false;
+        private bool ready = false;
         private bool stopped = true;
         private bool paused = true;
 
         private ParticleSystem selectedParticleSystem;
 
-        private FrameManager manager;
-
-        private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        //private System.Timers.Timer timer = new System.Timers.Timer(DEFAULT);
+        private System.Timers.Timer timer = new System.Timers.Timer(DEFAULT);
+        private Timer fpsTimer = new Timer();
+        private long frameCounter = 0;
 
         public MainFrame()
         {
@@ -40,28 +33,23 @@ namespace ParticleSystems
             particleSystemSelection.Items.AddRange(particleSystemRegistration.GetParticleSystemNames());
             particleSystemSelection.EndUpdate();
 
-            manager = new FrameManager();
+            timer.Elapsed += timerListener;
 
-
-            //TODO move to some other init function !!
-            //register listener: 
-            // timer.Elapsed += timerListener;
-            timer.Tick += timerListener;
-            timer.Interval = DEFAULT;
-
+            fpsTimer.Tick += fpsTimerListener;
+            fpsTimer.Interval = 1000;
         }
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            initialiseParticleSystem();
-
-            //TODO cleanup this start/stop/pause mess !!! 
             if (stopped)
             {
                 startButton.Text = "Stop";
                 initialiseBasedOnSelection();
+                particleSystemSettings.Enabled = false;
+                generalSettings.Enabled = false;
                 stopped = false;
                 timer.Start();
+                fpsTimer.Start();
                 frameButton.Enabled = false;
                 pauseButton.Enabled = true;
             }
@@ -70,9 +58,13 @@ namespace ParticleSystems
                 stopped = true;
                 paused = true;
                 timer.Stop();
+                fpsTimer.Stop();
                 startButton.Text = "Start";
                 pauseButton.Text = "Pause";
+                pauseButton.Enabled = false;
                 frameButton.Enabled = false;
+                particleSystemSettings.Enabled = true;
+                generalSettings.Enabled = true;
             }
         }
 
@@ -82,6 +74,7 @@ namespace ParticleSystems
             {
                 startButton.Text = "Stop";
                 timer.Stop();
+                fpsTimer.Stop();
                 pauseButton.Text = "Continue";
                 frameButton.Enabled = true;
                 paused = false;
@@ -89,6 +82,7 @@ namespace ParticleSystems
             else
             {
                 timer.Start();
+                fpsTimer.Start();
                 pauseButton.Text = "Pause";
                 frameButton.Enabled = false;
                 paused = true;
@@ -98,49 +92,50 @@ namespace ParticleSystems
 
         private void frameButton_Click(object sender, EventArgs e)
         {
-            manager.PrepareFrame();
+            selectedParticleSystem.PrepareFrame();
             glControl.Invalidate();
         }
 
         private void initialiseBasedOnSelection()
         {
+            ParticleSettings particleSettings = new ParticleSettings();
 
+            particleSettings.SetInitialNumberOfParticles(Math.Abs(int.Parse(initialAmountInput.Text)));
+            particleSettings.SetAgingVelocity(Math.Abs(int.Parse(agingVelocityInput.Text)));
+            particleSettings.SetLifetime(Math.Abs(int.Parse(lifetimeInput.Text)));
+            particleSettings.SetNewParticlesPerFrame(Math.Abs(int.Parse(newParticlesInput.Text)));
+            particleSettings.SetVelocity(Math.Abs(int.Parse(velocityInput.Text)));
 
+            particleSettings.SetAgingVelocityIsRandomlyGenerated(agingRand.Checked);
+            particleSettings.SetLifetimeIsRandomlyGenerated(lifetimeRand.Checked);
+            particleSettings.SetNumberOfNewParticlesIsRandomlyGenerated(newPerFrameRand.Checked);
+            particleSettings.SetVelocityIsRandomlyGenerated(velocityRand.Checked);
 
+            Context context = new Context();
 
-            manager = new FrameManager();
+            //TODO: read context ... :S 
 
-            //TODO: read selection and prepare FrmaeManager
-
-            int amount = Math.Abs(int.Parse(amountBox.Text));
-            int lifetime = Math.Abs(int.Parse(lifetimeBox.Text));
-            int newParticles = Math.Abs(int.Parse(newParticleBox.Text));
-            //if (randomRadioButton.Checked)
-            //{
-            //    manager.SetPositionHandler(new RandomPositionUpdater());
-            //    manager.InitContext(amount, lifetime, newParticles, true);
-            //}
-            //else
-            //{
-            //    int xIncrease = int.Parse(xIncreaseBox.Text);
-            //    int yIncrease = int.Parse(yIncreaseBox.Text);
-            //    manager.SetPositionHandler(new LinearPositionUpdater(xIncrease, yIncrease));
-            //    manager.InitContext(amount, lifetime, newParticles, false);
-            //}
+            selectedParticleSystem.Initialise(particleSettings, context);
+            ready = true;
         }
 
         private void timerListener(object sender, EventArgs eventArgs)
-        //private void timerListener(object sender, ElapsedEventArgs e)
         {
-            manager.PrepareFrame();
+            selectedParticleSystem.PrepareFrame();
             glControl.Invalidate();
+            stopWatch.Reset();
+        }
+
+        private void fpsTimerListener(object sender, EventArgs eventArgs)
+        {
+            framesPerSecondOutput.Text = frameCounter.ToString();
+            frameCounter = 0;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             glControlLoaded = true;
             GL.ClearColor(Color.SkyBlue);
-
             SetupViewport();
         }
 
@@ -150,8 +145,8 @@ namespace ParticleSystems
             int h = glControl.Height;
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            GL.Ortho(0, w, 0, h, -1, 1); // Bottom-left corner pixel has coordinate (0, 0)
-            GL.Viewport(0, 0, w, h); // Use all of the glControl painting area
+            GL.Ortho(0, w, 0, h, -1, 1);
+            GL.Viewport(0, 0, w, h);
         }
 
 
@@ -168,58 +163,42 @@ namespace ParticleSystems
 
             GL.PointSize(3f);
             GL.Begin(PrimitiveType.Points);
+            GL.Color3(Color.Black);
+
+            
+
+            //TODO: prepare VBO(s) 
+            if (ready) {
+                selectedParticleSystem.RenderFrame();
+                frameCounter++;
+            }
+
 
             //TODO: change to shader mode stuff
             //e.g. manager.renderFrame()
 
-            foreach (Particle particle in manager.GetParticles())
-            {
-                GL.Color3(new Vector3(particle.getRemainingLifetime() * 0.05f));
-                GL.Vertex2(particle.GetPosition());
-            }
+            //foreach (Particle particle in manager.GetParticles())
+            //{
+            //    GL.Color3(new Vector3(particle.getRemainingLifetime() * 0.05f));
+            //    GL.Vertex2(particle.GetPosition());
+            //}
 
             GL.End();
 
             glControl.SwapBuffers();
         }
 
-        private void initialiseParticleSystem()
-        {
-
-        }
-
-        private void linearRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            //xIncreaseBox.Enabled = true;
-            //yIncreaseBox.Enabled = true;
-        }
-
-        private void randomRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            //xIncreaseBox.Enabled = false;
-            //yIncreaseBox.Enabled = false;
-        }
-
         private void particleSystemSelected(object sender, EventArgs e)
         {
             if (particleSystemSelection.SelectedIndex >= 0)
             {
+                frameControls.Enabled = true;
                 selectedParticleSystem = particleSystemRegistration.GetParticleSystemInstance((string)particleSystemSelection.SelectedItem);
                 particleSystemDescription.Text = selectedParticleSystem.GetDescription();
-
-
-                //particleSystemSettingsPanel.Controls.Remove(particleSystemSettingsPanel);
-                //particleSystemSettingsPanel.Dispose();
-                ////_currentControl.Controls.Remove(_currentControl);
-                ////_currentControl.Dispose();
-                //particleSystemSettingsPanel = selectedParticleSystem.GetParticleSystemSettingsPanel();
-
-                //psSettings.Controls.Add(particleSystemSettingsPanel);
 
                 psSettings.Controls.Remove(particleSystemSettingsPanel);
                 particleSystemSettingsPanel = selectedParticleSystem.GetParticleSystemSettingsPanel();
                 psSettings.Controls.Add(particleSystemSettingsPanel);
-
             }
             Invalidate();
         }

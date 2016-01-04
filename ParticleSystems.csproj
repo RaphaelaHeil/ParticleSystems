@@ -51,15 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ABC.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="ExpirationHandler.cs" />
-    <Compile Include="Frame.cs" />
     <Compile Include="LifetimeHandler.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="FrameManager.cs" />
-    <Compile Include="LinearPositionUpdater.cs" />
+    <Compile Include="PositionUpdate\LinearPositionUpdater.cs" />
     <Compile Include="LinearUpdatingParticleSystem.cs" />
     <Compile Include="MainFrame.cs">
       <SubType>Form</SubType>
@@ -67,32 +63,29 @@
     <Compile Include="MainFrame.Designer.cs">
       <DependentUpon>MainFrame.cs</DependentUpon>
     </Compile>
-    <Compile Include="Particle.cs" />
-    <Compile Include="ParticleGenerator.cs" />
+    <Compile Include="Particles\Particle.cs" />
+    <Compile Include="ParticleGeneration\ParticleGenerator.cs" />
+    <Compile Include="ParticleSettings.cs" />
     <Compile Include="ParticleSystem.cs" />
     <Compile Include="ParticleSystemRegistration.cs" />
-    <Compile Include="ParticleSystemSettingsPanel.cs">
+    <Compile Include="SettingsPanels\ParticleSystemSettingsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ParticleSystemSettingsPanel.Designer.cs">
+    <Compile Include="SettingsPanels\ParticleSystemSettingsPanel.Designer.cs">
       <DependentUpon>ParticleSystemSettingsPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="PositionUpdater.cs" />
+    <Compile Include="PositionUpdate\PositionUpdater.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomParticleGenerator.cs" />
-    <Compile Include="RandomPositionUpdater.cs" />
-    <Compile Include="Test.cs">
+    <Compile Include="ParticleGeneration\RandomParticleGenerator.cs" />
+    <Compile Include="PositionUpdate\RandomPositionUpdater.cs" />
+    <Compile Include="SettingsPanels\Test.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TestSystem.cs" />
-    <EmbeddedResource Include="ABC.resx">
-      <DependentUpon>ABC.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainFrame.resx">
       <DependentUpon>MainFrame.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ParticleSystemSettingsPanel.resx">
+    <EmbeddedResource Include="SettingsPanels\ParticleSystemSettingsPanel.resx">
       <DependentUpon>ParticleSystemSettingsPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -104,7 +97,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Test.resx">
+    <EmbeddedResource Include="SettingsPanels\Test.resx">
       <DependentUpon>Test.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
