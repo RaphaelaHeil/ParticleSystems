@@ -52,11 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExpirationHandler.cs" />
+    <Compile Include="IdHolder.cs" />
     <Compile Include="LifetimeHandler.cs" />
     <Compile Include="Context.cs" />
-    <Compile Include="FrameManager.cs" />
     <Compile Include="PositionUpdate\LinearPositionUpdater.cs" />
-    <Compile Include="LinearUpdatingParticleSystem.cs" />
+    <Compile Include="ParticleSystems\LinearUpdatingParticleSystem.cs" />
     <Compile Include="MainFrame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,8 +66,9 @@
     <Compile Include="Particles\Particle.cs" />
     <Compile Include="ParticleGeneration\ParticleGenerator.cs" />
     <Compile Include="ParticleSettings.cs" />
-    <Compile Include="ParticleSystem.cs" />
+    <Compile Include="ParticleSystems\ParticleSystem.cs" />
     <Compile Include="ParticleSystemRegistration.cs" />
+    <Compile Include="RenderHelper.cs" />
     <Compile Include="SettingsPanels\ParticleSystemSettingsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,6 +101,9 @@
     <EmbeddedResource Include="SettingsPanels\Test.resx">
       <DependentUpon>Test.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="fragment.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -109,6 +113,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="vertex.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

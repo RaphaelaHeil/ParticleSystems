@@ -1,99 +1,131 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
+﻿using OpenTK;
 
 namespace ParticleSystems
 {
-    
+    /// <summary>
+    /// Base particle, representing the general structure of a particle. 
+    /// </summary>
     class Particle
     {
-        private Vector2d position;
-        private int remainingLifetime;
-        private int agingVelocity;
-        private Boolean expired = false;
-        private double velocity = 1.0;
-        
+        private Vector2d Position;
+        private int RemainingLifetime;
+        private int AgingVelocity;
+        private bool Expired = false;
+        private double Velocity = 1.0;
+
+        /// <summary>
+        /// Constructor with default velocity, i.e. 1.0.
+        /// </summary>
+        /// <param name="initialPosition">The particle's initial position</param>
+        /// <param name="maxLifetime">The particle's maximum lifetime</param>
+        /// <param name="agingVelocity">The particle's aging velocity</param>
         public Particle(Vector2d initialPosition, int maxLifetime, int agingVelocity)
         {
-            this.position = initialPosition;
-            if (maxLifetime > 0)
-            {
-                this.remainingLifetime = maxLifetime;
-            }
-            else
-            {
-                //throw Exception
-            }
-            setAgingVelocity(agingVelocity);
+            this.Position = initialPosition;
+            this.RemainingLifetime = maxLifetime;
+            SetAgingVelocity(agingVelocity);
         }
 
+        /// <summary>
+        /// Constructor with specified velocity.
+        /// </summary>
+        /// <param name="initialPosition">The particle's initial position</param>
+        /// <param name="maxLifetime">The particle's maximum lifetime</param>
+        /// <param name="agingVelocity">The particle's aging velocity</param>
+        /// <param name="velocity">The particle's velocity</param>
         public Particle(Vector2d initialPosition, int maxLifetime, int agingVelocity, double velocity) : this(initialPosition, maxLifetime, agingVelocity)
         {
             SetVelocity(velocity);
         }
 
-        public void applyAging()
+        /// <summary>
+        /// Apply the previously defined aging to the currently remaining lifetime.
+        /// </summary>
+        public virtual void applyAging()
         {
-            if (remainingLifetime > 0)
+            if (RemainingLifetime > 0)
             {
-                remainingLifetime -= agingVelocity;
+                RemainingLifetime -= AgingVelocity;
             }
-            if (remainingLifetime <= 0)
+            if (RemainingLifetime <= 0)
             {
-                expired = true;
+                Expired = true;
             }
-        }    
-
-        public void updatePosition(Vector2d translation)
-        {
-            position = Vector2d.Add(position, translation*velocity);
-        }
-
-        //GETTERS AND SETTERS:
-
-        public Vector2d GetPosition()
-        {
-            return position;
-        }
-
-        public void SetPosition(Vector2d Position)
-        {
-            position = Position;
-        }
-
-        public int GetAgingVelocity()
-        {
-            return agingVelocity;
-        }
-
-        public void SetVelocity(double Velocity)
-        {
-            this.velocity = Velocity;
         }
 
         /// <summary>
-        /// Sets a new aging velocity for this particle. Negative values will be discarded, while 0 will prevent this particle from aging.
+        /// Updates the particle's current position.
         /// </summary>
-        /// <param name="agingVelocity"></param>
-        public void setAgingVelocity(int agingVelocity)
+        /// <param name="translation">Translation to be applied to the current position (possibly taking the velocity into consideration)</param>
+        public virtual void updatePosition(Vector2d translation)
+        {
+            Position = Vector2d.Add(Position, translation * Velocity);
+        }
+
+        /// <summary>
+        /// Gets the particle's current position.
+        /// </summary>
+        /// <returns>The particle's current position</returns>
+        public virtual Vector2d GetPosition()
+        {
+            return Position;
+        }
+
+        /// <summary>
+        /// Replaces the particle's position with the given position.
+        /// </summary>
+        /// <param name="position">New position</param>
+        public virtual void SetPosition(Vector2d position)
+        {
+            this.Position = position;
+        }
+
+        /// <summary>
+        /// Gets the particle's aging velocity.
+        /// </summary>
+        /// <returns>The particle's aging velocity</returns>
+        public virtual int GetAgingVelocity()
+        {
+            return AgingVelocity;
+        }
+
+        /// <summary>
+        /// Replaces the particle's current velocity with the given velocity.
+        /// </summary>
+        /// <param name="velocity">New velocity</param>
+        public virtual void SetVelocity(double velocity)
+        {
+            this.Velocity = velocity;
+        }
+
+        /// <summary>
+        /// Sets a new aging velocity for this particle.
+        /// </summary>
+        /// <param name="agingVelocity">New aging velocity; only accepts values bigger than 0!</param>
+        public virtual void SetAgingVelocity(int agingVelocity)
         {
             if (agingVelocity >= 0)
             {
-                this.agingVelocity = agingVelocity;
+                this.AgingVelocity = agingVelocity;
             }
         }
 
-        public int getRemainingLifetime()
+        /// <summary>
+        /// Gets the particle's remaining lifetime.
+        /// </summary>
+        /// <returns>The particle's remaining lifetime</returns>
+        public int GetRemainingLifetime()
         {
-            return remainingLifetime;
+            return RemainingLifetime;
         }
 
-        public Boolean isExpired()
+        /// <summary>
+        /// Checks whether the particle is expired.
+        /// </summary>
+        /// <returns>True if the particle has expired, false otherwise</returns>
+        public virtual bool IsExpired()
         {
-            return expired;
+            return Expired;
         }
     }
 }

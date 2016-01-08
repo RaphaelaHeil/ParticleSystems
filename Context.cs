@@ -4,10 +4,16 @@ using OpenTK;
 
 namespace ParticleSystems
 {
+    
     class Context
     {
-
         private List<Particle> particles = new List<Particle>();
+        private IdHolder IdHolder;
+
+        public Context(IdHolder idHolder)
+        {
+            IdHolder = idHolder;
+        }
         
         //private List<Obstacle>
 
@@ -26,23 +32,9 @@ namespace ParticleSystems
             return particles;
         }
 
-        //public Vector2d[] getParticlePositions()
-        //{
-        //    Vector2d[] positions = new Vector2d[particles.Count];
-            
-        //    foreach(var particle)
-
-        //    for(int i=0; i<particles.Count;i++)
-        //    {
-        //        positions[i] = particles.ElementAt(i).GetPosition();
-        //    }
-        //    return positions;
-        //}
-
-        public void clear()
+        public IdHolder GetIdHolder()
         {
-            particles.Clear();
-            //TODO: Obstacles clear
+            return IdHolder;
         }
     }
 }

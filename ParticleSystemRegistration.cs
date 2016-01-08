@@ -14,9 +14,19 @@ namespace ParticleSystems
 
         public ParticleSystemRegistration()
         {
+            //How to add a new particle system: 
+            // 1) copy the following statement
+            /**
+            systems.Add("NAME", Expression.Lambda<Func<ParticleSystem>>(
+            Expression.New(typeof(CLASSNAME).GetConstructor(Type.EmptyTypes))
+             ).Compile());
+            */
+            // 2) Replace NAME with the name to be shown in the dropdown in the UI
+            // 3) Replace CLASSNAME with the name of the new particle system
+
             systems.Add("Linear Updating System", Expression.Lambda<Func<ParticleSystem>>(
             Expression.New(typeof(LinearilyUpdatingParticleSystem).GetConstructor(Type.EmptyTypes))
-             ).Compile());
+             ).Compile());     
         }
 
         public String[] GetParticleSystemNames()

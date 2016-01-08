@@ -1,39 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using OpenTK;
 
 namespace ParticleSystems
 {
+
+    /// <summary>
+    /// Linearily translates particle positions.
+    /// </summary>
     class LinearPositionUpdater : PositionUpdater
     {
 
-        private int deltaX = 1;
-        private int deltaY = 1;
-        private Vector2d translation;
+        private const int DEFAULT_DELTA = 1;
+        private Vector2d Translation;
 
+        /// <summary>
+        /// Default constructor, sets x and y updates to 1 each.
+        /// </summary>
         public LinearPositionUpdater()
         {
-            translation = new Vector2d(deltaX, deltaY);
+            Translation = new Vector2d(DEFAULT_DELTA, DEFAULT_DELTA);
         }
 
-        public LinearPositionUpdater(int DeltaX, int DeltaY)
+        /// <summary>
+        /// Constructs a LinearPositionUpdater that translates the positions by the given values.
+        /// </summary>
+        /// <param name="deltaX">Translation to be applied to the x coordinate</param>
+        /// <param name="deltaY">Translation to be applied to the y coordinate</param>
+        public LinearPositionUpdater(int deltaX, int deltaY)
         {
-            translation = new Vector2d(DeltaX, DeltaY);
+            Translation = new Vector2d(deltaX, deltaY);
         }
 
-        public void UpdatePosition(Particle particle)
-        {
-            particle.updatePosition(translation);
-        }
-
+        /// <see cref="PositionUpdater.UpdatePositions(List{Particle})"/>
         public void UpdatePositions(List<Particle> particles)
         {
             foreach (var particle in particles)
             {
-                UpdatePosition(particle);
+                particle.updatePosition(Translation);
             }
         }
     }

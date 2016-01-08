@@ -7,37 +7,48 @@ using OpenTK;
 
 namespace ParticleSystems
 {
+    /// <summary>
+    /// Generates regular particles with random values.
+    /// </summary>
     class RandomParticleGenerator : ParticleGenerator
     {
-        private int maxX;
-        private int maxY;
-        private int maxLifetime;
-        private int maxAgingVelocity;
-        private double maxVelocity;
+        private int Width;
+        private int Height;
+        private int MaxLifetime;
+        private int MaxAgingVelocity;
+        private double MaxVelocity;
 
-        private Random random = new Random();
+        private Random Random = new Random();
 
-        public RandomParticleGenerator(int maxX, int maxY, int maxLifetime, int maxAgingVelocity, double maxVelocity)
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="width">Width of the space in which to generate particles; generally equals the glControl width</param>
+        /// <param name="height">Height of the space in which to generate particles; generally equals the glControl height</param>
+        /// <param name="maxLifetime">Maximum lifetime of newly generated particles</param>
+        /// <param name="maxAgingVelocity">Maximum velocity at which particles age</param>
+        /// <param name="maxVelocity">Maximum velocity</param>
+        public RandomParticleGenerator(int width, int height, int maxLifetime, int maxAgingVelocity, double maxVelocity)
         {
-            this.maxX = maxX;
-            this.maxY = maxY;
-            this.maxLifetime = maxLifetime;
-            this.maxAgingVelocity = maxAgingVelocity;
-            this.maxVelocity = maxVelocity;
+            this.Width = width;
+            this.Height = height;
+            this.MaxLifetime = maxLifetime;
+            this.MaxAgingVelocity = maxAgingVelocity;
+            this.MaxVelocity = maxVelocity;
         }
 
         public Particle GenerateParticle()
         {
-            int lifetime = random.Next(1,maxLifetime); 
-            int agingVelocity = random.Next(1,maxAgingVelocity);
-            double velocity = random.NextDouble() * maxVelocity;
-            return new Particle(CreateRandomPosition(), maxLifetime, agingVelocity, velocity);
+            int lifetime = Random.Next(1,MaxLifetime); 
+            int agingVelocity = Random.Next(1,MaxAgingVelocity);
+            double velocity = Random.NextDouble() * MaxVelocity;
+            return new Particle(CreateRandomPosition(), MaxLifetime, agingVelocity, velocity);
         }
 
         private Vector2d CreateRandomPosition()
         {
-            double x = random.NextDouble() * maxX;
-            double y = random.NextDouble() * maxY;
+            double x = Random.NextDouble() * Width;
+            double y = Random.NextDouble() * Height;
             return new Vector2d(x, y);
         }
     }

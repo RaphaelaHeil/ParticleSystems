@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
-
-namespace ParticleSystems
+﻿namespace ParticleSystems
 {
+    /// <summary>
+    /// Interface to group classes generating particles. 
+    /// </summary>
     interface ParticleGenerator
     {
+        /// <summary>
+        /// Generates a new particle.
+        /// </summary>
+        /// <returns>Newly generated particle</returns>
         Particle GenerateParticle();
     }
 }

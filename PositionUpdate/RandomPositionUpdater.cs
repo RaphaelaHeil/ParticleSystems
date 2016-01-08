@@ -1,31 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
 
 namespace ParticleSystems
 {
     class RandomPositionUpdater : PositionUpdater
     {
-        private int upperX = 5;
-        private int upperY = 5;
+        private int UpperX = 5;
+        private int UpperY = 5;
         private Random random = new Random();
 
-        public void UpdatePosition(Particle particle)
+        /// <summary>
+        /// Default constructur, uses default values and generates translations in the range [-defaultValue*0.5 : defaultValue*0.5], both for x and y.
+        /// </summary>
+        public RandomPositionUpdater()
         {
-            double x = (random.NextDouble() - 0.5) * upperX;
-            double y = (random.NextDouble() - 0.5) * upperY;
-            particle.updatePosition(new Vector2d(x, y));
-
+            //nothing to do here, default values are already set :) 
         }
 
+        /// <summary>
+        /// Constructs a RandomPosititionUpdater that generates translations in the range [-maxX*0.5 : maxX*0.5] and [-maxY*0.5 : maxY*0.5] respectively.
+        /// </summary>
+        /// <param name="maxX">Upper bound for the x coordinate range</param>
+        /// <param name="maxY">Upper bound for the y coordinate range</param>
+        public RandomPositionUpdater(int maxX, int maxY)
+        {
+            UpperX = maxX;
+            UpperY = maxY;
+        }
+
+        /// <see cref="PositionUpdater.UpdatePositions(List{Particle})"/>
         public void UpdatePositions(List<Particle> particles)
         {
             foreach(var particle in particles)
             {
-                UpdatePosition(particle);
+                double x = (random.NextDouble() - 0.5) * UpperX;
+                double y = (random.NextDouble() - 0.5) * UpperY;
+                particle.updatePosition(new Vector2d(x, y));
             }
         }
     }

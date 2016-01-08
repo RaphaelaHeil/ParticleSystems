@@ -3,28 +3,33 @@ using System.Drawing;
 using System.Windows.Forms;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
+using System.IO;
+using OpenTK;
 
 namespace ParticleSystems
 {
-
+    /// <summary>
+    /// Entry point of the application.
+    /// </summary>
     public partial class MainFrame : Form
     {
         private ParticleSystemRegistration particleSystemRegistration = new ParticleSystemRegistration();
+        private System.Timers.Timer timer = new System.Timers.Timer(TICK_IN_MS);
+        private Timer fpsTimer = new Timer();
+        private IdHolder idHolder = new IdHolder();
+        private ParticleSystem selectedParticleSystem;
 
-        private const double DEFAULT = 1000.0 / 60.0; //TODO: figure this out ... :/ 
+        private const double TICK_IN_MS = 15.0;
+        private const double SMOOTHING = 0.8;
 
-
-        private Stopwatch stopWatch = new Stopwatch();
         private bool glControlLoaded = false;
         private bool ready = false;
         private bool stopped = true;
         private bool paused = true;
-
-        private ParticleSystem selectedParticleSystem;
-
-        private System.Timers.Timer timer = new System.Timers.Timer(DEFAULT);
-        private Timer fpsTimer = new Timer();
+        private double FpsMeasurement = 30;
         private long frameCounter = 0;
+        private long droppedFrames = 0;
+
 
         public MainFrame()
         {
@@ -37,6 +42,141 @@ namespace ParticleSystems
 
             fpsTimer.Tick += fpsTimerListener;
             fpsTimer.Interval = 1000;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            idHolder.Width = glControl.Width;
+            idHolder.Height = glControl.Height;
+
+            InitializeProgram();
+
+            glControlLoaded = true;
+            GL.ClearColor(Color.CornflowerBlue);
+            SetupViewport();
+
+        }
+
+        private void onRender(object sender, PaintEventArgs e)
+        {
+            if (!glControlLoaded)
+            {
+                return;
+            }
+
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.PointSize(3f);
+
+            if (ready)
+            {
+                if (selectedParticleSystem.RenderFrame())
+                {
+                    frameCounter++;
+                }
+                else
+                {
+                    droppedFrames++;
+                }
+            }
+            glControl.SwapBuffers();
+        }
+
+        private void InitializeProgram()
+        {
+            int vert, frag;
+
+            idHolder.ProgId = GL.CreateProgram();
+            LoadShader("vertex.glsl", ShaderType.VertexShader, idHolder.ProgId, out vert);
+            LoadShader("fragment.glsl", ShaderType.FragmentShader, idHolder.ProgId, out frag);
+
+            idHolder.VertexId = vert;
+            idHolder.FragmentId = frag;
+
+            GL.LinkProgram(idHolder.ProgId);
+            Console.WriteLine(GL.GetProgramInfoLog(idHolder.ProgId));
+
+            GL.UseProgram(idHolder.ProgId);
+
+            GL.DetachShader(idHolder.ProgId, idHolder.VertexId);
+            GL.DetachShader(idHolder.ProgId, idHolder.FragmentId);
+        }
+
+        /// <summary>
+        /// Loads shader based on the provided input.
+        /// </summary>
+        /// <param name="filename">Source file of the shader (*.glsl). </param>
+        /// <param name="type">ShaderType <seealso cref="ShaderType"/></param>
+        /// <param name="program">Address of the program in which the shader will be run.</param>
+        /// <param name="address">Address to which the compiled shader will be assigned.</param>
+        private void LoadShader(String filename, ShaderType type, int program, out int address)
+        {
+            address = GL.CreateShader(type);
+            using (StreamReader sr = new StreamReader(filename))
+            {
+                GL.ShaderSource(address, sr.ReadToEnd());
+            }
+
+            GL.CompileShader(address);
+            GL.AttachShader(program, address);
+            Console.WriteLine(GL.GetShaderInfoLog(address));
+        }
+
+        private void timerListener(object sender, EventArgs eventArgs)
+        {
+            glControl.Invalidate();
+        }
+
+        private void fpsTimerListener(object sender, EventArgs eventArgs)
+        {
+            FpsMeasurement = (FpsMeasurement * SMOOTHING) + (frameCounter * (1 - SMOOTHING));
+            framesPerSecondOutput.Text = ((int)Math.Round(FpsMeasurement)).ToString();
+            frameCounter = 0;
+            Console.WriteLine("Dropped Frames: " + droppedFrames);
+            droppedFrames = 0;
+        }
+
+        private void SetupViewport()
+        {
+
+            GL.Viewport(0, 0, idHolder.Width, idHolder.Height);
+        }
+
+        private void initialiseBasedOnSelection()
+        {
+            ParticleSettings particleSettings = new ParticleSettings();
+
+            particleSettings.SetInitialNumberOfParticles(Math.Abs(int.Parse(initialAmountInput.Text)));
+            particleSettings.SetAgingVelocity(Math.Abs(int.Parse(agingVelocityInput.Text)));
+            particleSettings.SetLifetime(Math.Abs(int.Parse(lifetimeInput.Text)));
+            particleSettings.SetNewParticlesPerFrame(Math.Abs(int.Parse(newParticlesInput.Text)));
+            particleSettings.SetVelocity(Math.Abs(int.Parse(velocityInput.Text)));
+
+            particleSettings.SetAgingVelocityIsRandomlyGenerated(agingRand.Checked);
+            particleSettings.SetLifetimeIsRandomlyGenerated(lifetimeRand.Checked);
+            particleSettings.SetNumberOfNewParticlesIsRandomlyGenerated(newPerFrameRand.Checked);
+            particleSettings.SetVelocityIsRandomlyGenerated(velocityRand.Checked);
+
+            Context context = new Context(idHolder);
+
+            //TODO: read context ... 
+
+            selectedParticleSystem.Init(particleSettings, context);
+            ready = true;
+        }
+
+        private void particleSystemSelected(object sender, EventArgs e)
+        {
+            if (particleSystemSelection.SelectedIndex >= 0)
+            {
+                frameControls.Enabled = true;
+                selectedParticleSystem = particleSystemRegistration.GetParticleSystemInstance((string)particleSystemSelection.SelectedItem);
+                particleSystemDescription.Text = selectedParticleSystem.GetDescription();
+
+                psSettings.Controls.Remove(particleSystemSettingsPanel);
+                particleSystemSettingsPanel = selectedParticleSystem.GetParticleSystemSettingsPanel();
+                psSettings.Controls.Add(particleSystemSettingsPanel);
+            }
+            Invalidate();
         }
 
         private void startButton_Click(object sender, EventArgs e)
@@ -92,115 +232,7 @@ namespace ParticleSystems
 
         private void frameButton_Click(object sender, EventArgs e)
         {
-            selectedParticleSystem.PrepareFrame();
             glControl.Invalidate();
-        }
-
-        private void initialiseBasedOnSelection()
-        {
-            ParticleSettings particleSettings = new ParticleSettings();
-
-            particleSettings.SetInitialNumberOfParticles(Math.Abs(int.Parse(initialAmountInput.Text)));
-            particleSettings.SetAgingVelocity(Math.Abs(int.Parse(agingVelocityInput.Text)));
-            particleSettings.SetLifetime(Math.Abs(int.Parse(lifetimeInput.Text)));
-            particleSettings.SetNewParticlesPerFrame(Math.Abs(int.Parse(newParticlesInput.Text)));
-            particleSettings.SetVelocity(Math.Abs(int.Parse(velocityInput.Text)));
-
-            particleSettings.SetAgingVelocityIsRandomlyGenerated(agingRand.Checked);
-            particleSettings.SetLifetimeIsRandomlyGenerated(lifetimeRand.Checked);
-            particleSettings.SetNumberOfNewParticlesIsRandomlyGenerated(newPerFrameRand.Checked);
-            particleSettings.SetVelocityIsRandomlyGenerated(velocityRand.Checked);
-
-            Context context = new Context();
-
-            //TODO: read context ... :S 
-
-            selectedParticleSystem.Initialise(particleSettings, context);
-            ready = true;
-        }
-
-        private void timerListener(object sender, EventArgs eventArgs)
-        {
-            selectedParticleSystem.PrepareFrame();
-            glControl.Invalidate();
-            stopWatch.Reset();
-        }
-
-        private void fpsTimerListener(object sender, EventArgs eventArgs)
-        {
-            framesPerSecondOutput.Text = frameCounter.ToString();
-            frameCounter = 0;
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            glControlLoaded = true;
-            GL.ClearColor(Color.SkyBlue);
-            SetupViewport();
-        }
-
-        private void SetupViewport()
-        {
-            int w = glControl.Width;
-            int h = glControl.Height;
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(0, w, 0, h, -1, 1);
-            GL.Viewport(0, 0, w, h);
-        }
-
-
-        private void onRender(object sender, PaintEventArgs e)
-        {
-            if (!glControlLoaded)
-            {
-                return;
-            }
-
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-
-            GL.PointSize(3f);
-            GL.Begin(PrimitiveType.Points);
-            GL.Color3(Color.Black);
-
-            
-
-            //TODO: prepare VBO(s) 
-            if (ready) {
-                selectedParticleSystem.RenderFrame();
-                frameCounter++;
-            }
-
-
-            //TODO: change to shader mode stuff
-            //e.g. manager.renderFrame()
-
-            //foreach (Particle particle in manager.GetParticles())
-            //{
-            //    GL.Color3(new Vector3(particle.getRemainingLifetime() * 0.05f));
-            //    GL.Vertex2(particle.GetPosition());
-            //}
-
-            GL.End();
-
-            glControl.SwapBuffers();
-        }
-
-        private void particleSystemSelected(object sender, EventArgs e)
-        {
-            if (particleSystemSelection.SelectedIndex >= 0)
-            {
-                frameControls.Enabled = true;
-                selectedParticleSystem = particleSystemRegistration.GetParticleSystemInstance((string)particleSystemSelection.SelectedItem);
-                particleSystemDescription.Text = selectedParticleSystem.GetDescription();
-
-                psSettings.Controls.Remove(particleSystemSettingsPanel);
-                particleSystemSettingsPanel = selectedParticleSystem.GetParticleSystemSettingsPanel();
-                psSettings.Controls.Add(particleSystemSettingsPanel);
-            }
-            Invalidate();
         }
     }
 }

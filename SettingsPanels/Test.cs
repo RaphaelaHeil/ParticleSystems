@@ -8,8 +8,6 @@ namespace ParticleSystems
 {
     class Test : ParticleSystemSettingsPanel
     {
-        private System.Windows.Forms.GroupBox groupBox1;
-
         public Test()
         {
             InitializeComponent();

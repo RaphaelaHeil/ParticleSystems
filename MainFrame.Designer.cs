@@ -178,7 +178,7 @@
             this.psSettings.Controls.Add(this.particleSystemSettingsPanel);
             this.psSettings.Location = new System.Drawing.Point(7, 91);
             this.psSettings.Name = "psSettings";
-            this.psSettings.Size = new System.Drawing.Size(452, 174);
+            this.psSettings.Size = new System.Drawing.Size(452, 189);
             this.psSettings.TabIndex = 12;
             this.psSettings.TabStop = false;
             this.psSettings.Text = "System specific settings";
@@ -190,7 +190,7 @@
             this.particleSystemSettings.Controls.Add(this.psSettings);
             this.particleSystemSettings.Location = new System.Drawing.Point(623, 12);
             this.particleSystemSettings.Name = "particleSystemSettings";
-            this.particleSystemSettings.Size = new System.Drawing.Size(470, 274);
+            this.particleSystemSettings.Size = new System.Drawing.Size(470, 286);
             this.particleSystemSettings.TabIndex = 13;
             this.particleSystemSettings.TabStop = false;
             this.particleSystemSettings.Text = "Particle system settings";
@@ -228,7 +228,7 @@
             this.generalSettings.Controls.Add(this.groupBox6);
             this.generalSettings.Controls.Add(this.groupBox5);
             this.generalSettings.Controls.Add(this.amountGroupBox);
-            this.generalSettings.Location = new System.Drawing.Point(623, 292);
+            this.generalSettings.Location = new System.Drawing.Point(623, 304);
             this.generalSettings.Name = "generalSettings";
             this.generalSettings.Size = new System.Drawing.Size(470, 254);
             this.generalSettings.TabIndex = 14;
@@ -302,7 +302,7 @@
             // newPerFrameRand
             // 
             this.newPerFrameRand.AutoSize = true;
-            this.newPerFrameRand.Location = new System.Drawing.Point(306, 12);
+            this.newPerFrameRand.Location = new System.Drawing.Point(305, 16);
             this.newPerFrameRand.Name = "newPerFrameRand";
             this.newPerFrameRand.Size = new System.Drawing.Size(107, 17);
             this.newPerFrameRand.TabIndex = 7;
@@ -313,7 +313,7 @@
             // 
             this.newPerFrameExact.AutoSize = true;
             this.newPerFrameExact.Checked = true;
-            this.newPerFrameExact.Location = new System.Drawing.Point(209, 12);
+            this.newPerFrameExact.Location = new System.Drawing.Point(210, 16);
             this.newPerFrameExact.Name = "newPerFrameExact";
             this.newPerFrameExact.Size = new System.Drawing.Size(89, 17);
             this.newPerFrameExact.TabIndex = 8;
@@ -425,9 +425,9 @@
             this.frameControls.Controls.Add(this.pauseButton);
             this.frameControls.Controls.Add(this.frameButton);
             this.frameControls.Enabled = false;
-            this.frameControls.Location = new System.Drawing.Point(623, 552);
+            this.frameControls.Location = new System.Drawing.Point(623, 564);
             this.frameControls.Name = "frameControls";
-            this.frameControls.Size = new System.Drawing.Size(470, 60);
+            this.frameControls.Size = new System.Drawing.Size(470, 48);
             this.frameControls.TabIndex = 15;
             this.frameControls.TabStop = false;
             this.frameControls.Text = "Frame Controls";
@@ -453,9 +453,9 @@
             // particleSystemSettingsPanel
             // 
             this.particleSystemSettingsPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.particleSystemSettingsPanel.Location = new System.Drawing.Point(9, 16);
+            this.particleSystemSettingsPanel.Location = new System.Drawing.Point(6, 19);
             this.particleSystemSettingsPanel.Name = "particleSystemSettingsPanel";
-            this.particleSystemSettingsPanel.Size = new System.Drawing.Size(437, 150);
+            this.particleSystemSettingsPanel.Size = new System.Drawing.Size(437, 167);
             this.particleSystemSettingsPanel.TabIndex = 0;
             // 
             // MainFrame
