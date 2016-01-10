@@ -2,9 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using OpenTK.Graphics.OpenGL;
-using System.Diagnostics;
 using System.IO;
-using OpenTK;
 
 namespace ParticleSystems
 {
@@ -176,6 +174,11 @@ namespace ParticleSystems
                 particleSystemSettingsPanel = selectedParticleSystem.GetParticleSystemSettingsPanel();
                 psSettings.Controls.Add(particleSystemSettingsPanel);
             }
+            //disable general Settings if Wind Simulation is selected
+            if(particleSystemSelection.SelectedIndex == 1)
+            {
+                generalSettings.Enabled = false;
+            }
             Invalidate();
         }
 
@@ -204,7 +207,14 @@ namespace ParticleSystems
                 pauseButton.Enabled = false;
                 frameButton.Enabled = false;
                 particleSystemSettings.Enabled = true;
-                generalSettings.Enabled = true;
+                //disable general Settings if Wind Simulation is selected
+                if (particleSystemSelection.SelectedIndex == 1)
+                {
+                    generalSettings.Enabled = false;
+                }else
+                {
+                    generalSettings.Enabled = true;
+                }
             }
         }
 

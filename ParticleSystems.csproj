@@ -55,6 +55,9 @@
     <Compile Include="IdHolder.cs" />
     <Compile Include="LifetimeHandler.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="ParticleGeneration\AirFlowParticleGenerator.cs" />
+    <Compile Include="ParticleSystems\AirFlowParticleSystem.cs" />
+    <Compile Include="PositionUpdate\AirFlowPositionUpdater.cs" />
     <Compile Include="PositionUpdate\LinearPositionUpdater.cs" />
     <Compile Include="ParticleSystems\LinearUpdatingParticleSystem.cs" />
     <Compile Include="MainFrame.cs">
@@ -69,6 +72,12 @@
     <Compile Include="ParticleSystems\ParticleSystem.cs" />
     <Compile Include="ParticleSystemRegistration.cs" />
     <Compile Include="RenderHelper.cs" />
+    <Compile Include="SettingsPanels\AirFlowUserSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SettingsPanels\AirFlowUserSettings.Designer.cs">
+      <DependentUpon>AirFlowUserSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="SettingsPanels\ParticleSystemSettingsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -85,6 +94,9 @@
     </Compile>
     <EmbeddedResource Include="MainFrame.resx">
       <DependentUpon>MainFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsPanels\AirFlowUserSettings.resx">
+      <DependentUpon>AirFlowUserSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsPanels\ParticleSystemSettingsPanel.resx">
       <DependentUpon>ParticleSystemSettingsPanel.cs</DependentUpon>

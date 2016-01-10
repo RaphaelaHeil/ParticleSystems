@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ParticleSystems
 {
@@ -26,7 +24,10 @@ namespace ParticleSystems
 
             systems.Add("Linear Updating System", Expression.Lambda<Func<ParticleSystem>>(
             Expression.New(typeof(LinearilyUpdatingParticleSystem).GetConstructor(Type.EmptyTypes))
-             ).Compile());     
+             ).Compile());
+            systems.Add("Wind Simulation System", Expression.Lambda<Func<ParticleSystem>>(
+            Expression.New(typeof(AirFlowParticleSystem).GetConstructor(Type.EmptyTypes))
+             ).Compile());
         }
 
         public String[] GetParticleSystemNames()
