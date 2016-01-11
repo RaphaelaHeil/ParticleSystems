@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenTK;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace ParticleSystems
 {
@@ -14,6 +15,7 @@ namespace ParticleSystems
         protected ParticleSystemSettingsPanel Panel;
         protected ParticleSettings ParticleSettings;
         protected Context Context;
+        protected List<Particle> Particles = new List<Particle>();
         protected Vector2d[] ParticlePositions = { };
         protected Vector3d[] ParticleColours = { };
 

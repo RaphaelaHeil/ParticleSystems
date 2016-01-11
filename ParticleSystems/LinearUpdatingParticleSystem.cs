@@ -29,26 +29,24 @@ namespace ParticleSystems
         }
 
         protected override void UpdateVBOs()
-        {
-            List<Particle> particles = Context.GetParticles();
-           
-            ParticlePositions = new Vector2d[particles.Count]; //TODO: find a safer solution :( 
-            ParticleColours = new Vector3d[particles.Count];
-            for(int i=0; i < particles.Count; i++)
+        {           
+            ParticlePositions = new Vector2d[Particles.Count]; //TODO: find a safer solution :( 
+            ParticleColours = new Vector3d[Particles.Count];
+            for(int i=0; i < Particles.Count; i++)
             {
-                ParticlePositions[i] = particles.ElementAt(i).GetPosition();
+                ParticlePositions[i] = Particles.ElementAt(i).GetPosition();
                 ParticleColours[i] = new Vector3d(0.0); //TODO: change accordingly
             }
         }
 
         protected override void DecrementLifetime()
         {
-            LifetimeHandler.DecrementLifetime(Context.GetParticles());
+            LifetimeHandler.DecrementLifetime(Particles);
         }
 
         protected override void RemoveExpiredParticles()
         {
-            ExpirationHandler.handleExpiration(Context.GetParticles());
+            ExpirationHandler.handleExpiration(Particles);
         }
 
         protected override void GenerateNewParticles()
@@ -58,28 +56,28 @@ namespace ParticleSystems
                 int random = Rand.Next(ParticleSettings.GetNumberOfNewParticlesPerFrame());
                 for (int i = 0; i < random; i++)
                 {
-                    Context.addParticle(ParticleGenerator.GenerateParticle());
+                    Particles.Add(ParticleGenerator.GenerateParticle());
                 }
             }
             else
             {
                 for (int i = 0; i < ParticleSettings.GetNumberOfNewParticlesPerFrame(); i++)
                 {
-                    Context.addParticle(ParticleGenerator.GenerateParticle());
+                    Particles.Add(ParticleGenerator.GenerateParticle());
                 }
             }
         }
 
         protected override void UpdateParticlePositions()
         {
-            PositionUpdater.UpdatePositions(Context.GetParticles());
+            PositionUpdater.UpdatePositions(Particles);
         }
 
         private void CreateInitialParticles()
         {
             for (int i = 0; i < ParticleSettings.GetInitialNumberOfParticles(); i++)
             {
-                Context.addParticle(ParticleGenerator.GenerateParticle());
+                Particles.Add(ParticleGenerator.GenerateParticle());
             }
         }
 
