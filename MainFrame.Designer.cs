@@ -39,41 +39,41 @@
             this.frameButton = new System.Windows.Forms.Button();
             this.pauseButton = new System.Windows.Forms.Button();
             this.psSettings = new System.Windows.Forms.GroupBox();
-            this.particleSystemSettingsPanel = new ParticleSystems.ParticleSystemSettingsPanel();
             this.particleSystemSettings = new System.Windows.Forms.GroupBox();
             this.descriptionPanel = new System.Windows.Forms.Panel();
             this.particleSystemDescription = new System.Windows.Forms.Label();
             this.particleSystemSelection = new System.Windows.Forms.ComboBox();
             this.generalSettings = new System.Windows.Forms.GroupBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.ageVelocityPanel = new System.Windows.Forms.Panel();
             this.agingRand = new System.Windows.Forms.RadioButton();
             this.agingExact = new System.Windows.Forms.RadioButton();
             this.agingVelocityInput = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.newPerFramePanel = new System.Windows.Forms.Panel();
             this.newPerFrameRand = new System.Windows.Forms.RadioButton();
             this.newPerFrameExact = new System.Windows.Forms.RadioButton();
             this.newParticlesInput = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.lifetimePanel = new System.Windows.Forms.Panel();
             this.lifetimeExact = new System.Windows.Forms.RadioButton();
             this.lifetimeRand = new System.Windows.Forms.RadioButton();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.velocityPanel = new System.Windows.Forms.Panel();
             this.velocityRand = new System.Windows.Forms.RadioButton();
             this.velocityExact = new System.Windows.Forms.RadioButton();
-            this.amountGroupBox = new System.Windows.Forms.GroupBox();
+            this.amountPanel = new System.Windows.Forms.Panel();
             this.frameControls = new System.Windows.Forms.GroupBox();
             this.framesPerSecondOutput = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.particleSystemSettingsPanel = new ParticleSystems.ParticleSystemSettingsPanel();
             this.psSettings.SuspendLayout();
             this.particleSystemSettings.SuspendLayout();
             this.descriptionPanel.SuspendLayout();
             this.generalSettings.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.amountGroupBox.SuspendLayout();
+            this.ageVelocityPanel.SuspendLayout();
+            this.newPerFramePanel.SuspendLayout();
+            this.lifetimePanel.SuspendLayout();
+            this.velocityPanel.SuspendLayout();
+            this.amountPanel.SuspendLayout();
             this.frameControls.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,7 +90,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Location = new System.Drawing.Point(7, 7);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(123, 13);
             this.label1.TabIndex = 1;
@@ -98,7 +98,7 @@
             // 
             // initialAmountInput
             // 
-            this.initialAmountInput.Location = new System.Drawing.Point(146, 14);
+            this.initialAmountInput.Location = new System.Drawing.Point(146, 4);
             this.initialAmountInput.Name = "initialAmountInput";
             this.initialAmountInput.Size = new System.Drawing.Size(43, 20);
             this.initialAmountInput.TabIndex = 2;
@@ -117,7 +117,7 @@
             // 
             // lifetimeInput
             // 
-            this.lifetimeInput.Location = new System.Drawing.Point(146, 13);
+            this.lifetimeInput.Location = new System.Drawing.Point(146, 4);
             this.lifetimeInput.Name = "lifetimeInput";
             this.lifetimeInput.Size = new System.Drawing.Size(43, 20);
             this.lifetimeInput.TabIndex = 4;
@@ -126,7 +126,7 @@
             // 
             // velocityInput
             // 
-            this.velocityInput.Location = new System.Drawing.Point(146, 14);
+            this.velocityInput.Location = new System.Drawing.Point(146, 4);
             this.velocityInput.Name = "velocityInput";
             this.velocityInput.Size = new System.Drawing.Size(43, 20);
             this.velocityInput.TabIndex = 5;
@@ -136,7 +136,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 16);
+            this.label2.Location = new System.Drawing.Point(7, 7);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 6;
@@ -145,7 +145,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 16);
+            this.label3.Location = new System.Drawing.Point(7, 7);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 7;
@@ -176,20 +176,12 @@
             // psSettings
             // 
             this.psSettings.Controls.Add(this.particleSystemSettingsPanel);
-            this.psSettings.Location = new System.Drawing.Point(7, 91);
+            this.psSettings.Location = new System.Drawing.Point(6, 108);
             this.psSettings.Name = "psSettings";
-            this.psSettings.Size = new System.Drawing.Size(452, 189);
+            this.psSettings.Size = new System.Drawing.Size(458, 234);
             this.psSettings.TabIndex = 12;
             this.psSettings.TabStop = false;
             this.psSettings.Text = "System specific settings";
-            // 
-            // particleSystemSettingsPanel
-            // 
-            this.particleSystemSettingsPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.particleSystemSettingsPanel.Location = new System.Drawing.Point(6, 19);
-            this.particleSystemSettingsPanel.Name = "particleSystemSettingsPanel";
-            this.particleSystemSettingsPanel.Size = new System.Drawing.Size(437, 167);
-            this.particleSystemSettingsPanel.TabIndex = 0;
             // 
             // particleSystemSettings
             // 
@@ -198,7 +190,7 @@
             this.particleSystemSettings.Controls.Add(this.psSettings);
             this.particleSystemSettings.Location = new System.Drawing.Point(623, 12);
             this.particleSystemSettings.Name = "particleSystemSettings";
-            this.particleSystemSettings.Size = new System.Drawing.Size(470, 286);
+            this.particleSystemSettings.Size = new System.Drawing.Size(470, 348);
             this.particleSystemSettings.TabIndex = 13;
             this.particleSystemSettings.TabStop = false;
             this.particleSystemSettings.Text = "Particle system settings";
@@ -208,7 +200,7 @@
             this.descriptionPanel.Controls.Add(this.particleSystemDescription);
             this.descriptionPanel.Location = new System.Drawing.Point(7, 46);
             this.descriptionPanel.Name = "descriptionPanel";
-            this.descriptionPanel.Size = new System.Drawing.Size(458, 42);
+            this.descriptionPanel.Size = new System.Drawing.Size(457, 56);
             this.descriptionPanel.TabIndex = 1;
             // 
             // particleSystemDescription
@@ -216,7 +208,7 @@
             this.particleSystemDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.particleSystemDescription.Location = new System.Drawing.Point(0, 0);
             this.particleSystemDescription.Name = "particleSystemDescription";
-            this.particleSystemDescription.Size = new System.Drawing.Size(458, 42);
+            this.particleSystemDescription.Size = new System.Drawing.Size(457, 56);
             this.particleSystemDescription.TabIndex = 0;
             // 
             // particleSystemSelection
@@ -231,35 +223,34 @@
             // 
             // generalSettings
             // 
-            this.generalSettings.Controls.Add(this.groupBox8);
-            this.generalSettings.Controls.Add(this.groupBox7);
-            this.generalSettings.Controls.Add(this.groupBox6);
-            this.generalSettings.Controls.Add(this.groupBox5);
-            this.generalSettings.Controls.Add(this.amountGroupBox);
+            this.generalSettings.Controls.Add(this.ageVelocityPanel);
+            this.generalSettings.Controls.Add(this.newPerFramePanel);
+            this.generalSettings.Controls.Add(this.lifetimePanel);
+            this.generalSettings.Controls.Add(this.velocityPanel);
+            this.generalSettings.Controls.Add(this.amountPanel);
             this.generalSettings.Cursor = System.Windows.Forms.Cursors.Default;
-            this.generalSettings.Location = new System.Drawing.Point(623, 304);
+            this.generalSettings.Location = new System.Drawing.Point(623, 366);
             this.generalSettings.Name = "generalSettings";
-            this.generalSettings.Size = new System.Drawing.Size(470, 254);
+            this.generalSettings.Size = new System.Drawing.Size(470, 192);
             this.generalSettings.TabIndex = 14;
             this.generalSettings.TabStop = false;
             this.generalSettings.Text = "General particle settings";
             // 
-            // groupBox8
+            // ageVelocityPanel
             // 
-            this.groupBox8.Controls.Add(this.agingRand);
-            this.groupBox8.Controls.Add(this.agingExact);
-            this.groupBox8.Controls.Add(this.agingVelocityInput);
-            this.groupBox8.Controls.Add(this.label7);
-            this.groupBox8.Location = new System.Drawing.Point(7, 157);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(458, 40);
-            this.groupBox8.TabIndex = 14;
-            this.groupBox8.TabStop = false;
+            this.ageVelocityPanel.Controls.Add(this.agingRand);
+            this.ageVelocityPanel.Controls.Add(this.agingExact);
+            this.ageVelocityPanel.Controls.Add(this.agingVelocityInput);
+            this.ageVelocityPanel.Controls.Add(this.label7);
+            this.ageVelocityPanel.Location = new System.Drawing.Point(6, 121);
+            this.ageVelocityPanel.Name = "ageVelocityPanel";
+            this.ageVelocityPanel.Size = new System.Drawing.Size(458, 28);
+            this.ageVelocityPanel.TabIndex = 14;
             // 
             // agingRand
             // 
             this.agingRand.AutoSize = true;
-            this.agingRand.Location = new System.Drawing.Point(305, 12);
+            this.agingRand.Location = new System.Drawing.Point(305, 5);
             this.agingRand.Name = "agingRand";
             this.agingRand.Size = new System.Drawing.Size(107, 17);
             this.agingRand.TabIndex = 7;
@@ -270,7 +261,7 @@
             // 
             this.agingExact.AutoSize = true;
             this.agingExact.Checked = true;
-            this.agingExact.Location = new System.Drawing.Point(209, 14);
+            this.agingExact.Location = new System.Drawing.Point(210, 5);
             this.agingExact.Name = "agingExact";
             this.agingExact.Size = new System.Drawing.Size(89, 17);
             this.agingExact.TabIndex = 8;
@@ -280,7 +271,7 @@
             // 
             // agingVelocityInput
             // 
-            this.agingVelocityInput.Location = new System.Drawing.Point(145, 14);
+            this.agingVelocityInput.Location = new System.Drawing.Point(146, 4);
             this.agingVelocityInput.Name = "agingVelocityInput";
             this.agingVelocityInput.Size = new System.Drawing.Size(44, 20);
             this.agingVelocityInput.TabIndex = 5;
@@ -290,28 +281,27 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 16);
+            this.label7.Location = new System.Drawing.Point(7, 7);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(74, 13);
             this.label7.TabIndex = 7;
             this.label7.Text = "Aging Velocity";
             // 
-            // groupBox7
+            // newPerFramePanel
             // 
-            this.groupBox7.Controls.Add(this.newPerFrameRand);
-            this.groupBox7.Controls.Add(this.newPerFrameExact);
-            this.groupBox7.Controls.Add(this.newParticlesInput);
-            this.groupBox7.Controls.Add(this.label6);
-            this.groupBox7.Location = new System.Drawing.Point(6, 65);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(458, 40);
-            this.groupBox7.TabIndex = 13;
-            this.groupBox7.TabStop = false;
+            this.newPerFramePanel.Controls.Add(this.newPerFrameRand);
+            this.newPerFramePanel.Controls.Add(this.newPerFrameExact);
+            this.newPerFramePanel.Controls.Add(this.newParticlesInput);
+            this.newPerFramePanel.Controls.Add(this.label6);
+            this.newPerFramePanel.Location = new System.Drawing.Point(6, 53);
+            this.newPerFramePanel.Name = "newPerFramePanel";
+            this.newPerFramePanel.Size = new System.Drawing.Size(458, 28);
+            this.newPerFramePanel.TabIndex = 13;
             // 
             // newPerFrameRand
             // 
             this.newPerFrameRand.AutoSize = true;
-            this.newPerFrameRand.Location = new System.Drawing.Point(305, 16);
+            this.newPerFrameRand.Location = new System.Drawing.Point(305, 5);
             this.newPerFrameRand.Name = "newPerFrameRand";
             this.newPerFrameRand.Size = new System.Drawing.Size(107, 17);
             this.newPerFrameRand.TabIndex = 7;
@@ -322,7 +312,7 @@
             // 
             this.newPerFrameExact.AutoSize = true;
             this.newPerFrameExact.Checked = true;
-            this.newPerFrameExact.Location = new System.Drawing.Point(210, 16);
+            this.newPerFrameExact.Location = new System.Drawing.Point(210, 5);
             this.newPerFrameExact.Name = "newPerFrameExact";
             this.newPerFrameExact.Size = new System.Drawing.Size(89, 17);
             this.newPerFrameExact.TabIndex = 8;
@@ -332,7 +322,7 @@
             // 
             // newParticlesInput
             // 
-            this.newParticlesInput.Location = new System.Drawing.Point(145, 14);
+            this.newParticlesInput.Location = new System.Drawing.Point(146, 4);
             this.newParticlesInput.Name = "newParticlesInput";
             this.newParticlesInput.Size = new System.Drawing.Size(44, 20);
             this.newParticlesInput.TabIndex = 5;
@@ -342,29 +332,28 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 16);
+            this.label6.Location = new System.Drawing.Point(7, 7);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(118, 13);
             this.label6.TabIndex = 7;
             this.label6.Text = "New particles per frame";
             // 
-            // groupBox6
+            // lifetimePanel
             // 
-            this.groupBox6.Controls.Add(this.lifetimeExact);
-            this.groupBox6.Controls.Add(this.lifetimeRand);
-            this.groupBox6.Controls.Add(this.lifetimeInput);
-            this.groupBox6.Controls.Add(this.label2);
-            this.groupBox6.Location = new System.Drawing.Point(7, 111);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(458, 40);
-            this.groupBox6.TabIndex = 13;
-            this.groupBox6.TabStop = false;
+            this.lifetimePanel.Controls.Add(this.lifetimeExact);
+            this.lifetimePanel.Controls.Add(this.lifetimeRand);
+            this.lifetimePanel.Controls.Add(this.lifetimeInput);
+            this.lifetimePanel.Controls.Add(this.label2);
+            this.lifetimePanel.Location = new System.Drawing.Point(6, 87);
+            this.lifetimePanel.Name = "lifetimePanel";
+            this.lifetimePanel.Size = new System.Drawing.Size(458, 28);
+            this.lifetimePanel.TabIndex = 13;
             // 
             // lifetimeExact
             // 
             this.lifetimeExact.AutoSize = true;
             this.lifetimeExact.Checked = true;
-            this.lifetimeExact.Location = new System.Drawing.Point(210, 13);
+            this.lifetimeExact.Location = new System.Drawing.Point(210, 5);
             this.lifetimeExact.Name = "lifetimeExact";
             this.lifetimeExact.Size = new System.Drawing.Size(89, 17);
             this.lifetimeExact.TabIndex = 3;
@@ -375,29 +364,28 @@
             // lifetimeRand
             // 
             this.lifetimeRand.AutoSize = true;
-            this.lifetimeRand.Location = new System.Drawing.Point(305, 13);
+            this.lifetimeRand.Location = new System.Drawing.Point(305, 5);
             this.lifetimeRand.Name = "lifetimeRand";
             this.lifetimeRand.Size = new System.Drawing.Size(107, 17);
             this.lifetimeRand.TabIndex = 4;
             this.lifetimeRand.Text = "random (0, value)";
             this.lifetimeRand.UseVisualStyleBackColor = true;
             // 
-            // groupBox5
+            // velocityPanel
             // 
-            this.groupBox5.Controls.Add(this.velocityRand);
-            this.groupBox5.Controls.Add(this.velocityExact);
-            this.groupBox5.Controls.Add(this.velocityInput);
-            this.groupBox5.Controls.Add(this.label3);
-            this.groupBox5.Location = new System.Drawing.Point(7, 203);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(458, 40);
-            this.groupBox5.TabIndex = 12;
-            this.groupBox5.TabStop = false;
+            this.velocityPanel.Controls.Add(this.velocityRand);
+            this.velocityPanel.Controls.Add(this.velocityExact);
+            this.velocityPanel.Controls.Add(this.velocityInput);
+            this.velocityPanel.Controls.Add(this.label3);
+            this.velocityPanel.Location = new System.Drawing.Point(6, 155);
+            this.velocityPanel.Name = "velocityPanel";
+            this.velocityPanel.Size = new System.Drawing.Size(458, 28);
+            this.velocityPanel.TabIndex = 12;
             // 
             // velocityRand
             // 
             this.velocityRand.AutoSize = true;
-            this.velocityRand.Location = new System.Drawing.Point(305, 12);
+            this.velocityRand.Location = new System.Drawing.Point(305, 5);
             this.velocityRand.Name = "velocityRand";
             this.velocityRand.Size = new System.Drawing.Size(141, 17);
             this.velocityRand.TabIndex = 7;
@@ -408,7 +396,7 @@
             // 
             this.velocityExact.AutoSize = true;
             this.velocityExact.Checked = true;
-            this.velocityExact.Location = new System.Drawing.Point(210, 12);
+            this.velocityExact.Location = new System.Drawing.Point(210, 5);
             this.velocityExact.Name = "velocityExact";
             this.velocityExact.Size = new System.Drawing.Size(89, 17);
             this.velocityExact.TabIndex = 8;
@@ -416,15 +404,14 @@
             this.velocityExact.Text = "exact amount";
             this.velocityExact.UseVisualStyleBackColor = true;
             // 
-            // amountGroupBox
+            // amountPanel
             // 
-            this.amountGroupBox.Controls.Add(this.initialAmountInput);
-            this.amountGroupBox.Controls.Add(this.label1);
-            this.amountGroupBox.Location = new System.Drawing.Point(6, 19);
-            this.amountGroupBox.Name = "amountGroupBox";
-            this.amountGroupBox.Size = new System.Drawing.Size(458, 40);
-            this.amountGroupBox.TabIndex = 11;
-            this.amountGroupBox.TabStop = false;
+            this.amountPanel.Controls.Add(this.initialAmountInput);
+            this.amountPanel.Controls.Add(this.label1);
+            this.amountPanel.Location = new System.Drawing.Point(6, 19);
+            this.amountPanel.Name = "amountPanel";
+            this.amountPanel.Size = new System.Drawing.Size(458, 28);
+            this.amountPanel.TabIndex = 11;
             // 
             // frameControls
             // 
@@ -459,6 +446,14 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "Frames per Second:";
             // 
+            // particleSystemSettingsPanel
+            // 
+            this.particleSystemSettingsPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.particleSystemSettingsPanel.Location = new System.Drawing.Point(6, 19);
+            this.particleSystemSettingsPanel.Name = "particleSystemSettingsPanel";
+            this.particleSystemSettingsPanel.Size = new System.Drawing.Size(437, 209);
+            this.particleSystemSettingsPanel.TabIndex = 0;
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -476,16 +471,16 @@
             this.particleSystemSettings.ResumeLayout(false);
             this.descriptionPanel.ResumeLayout(false);
             this.generalSettings.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
-            this.amountGroupBox.ResumeLayout(false);
-            this.amountGroupBox.PerformLayout();
+            this.ageVelocityPanel.ResumeLayout(false);
+            this.ageVelocityPanel.PerformLayout();
+            this.newPerFramePanel.ResumeLayout(false);
+            this.newPerFramePanel.PerformLayout();
+            this.lifetimePanel.ResumeLayout(false);
+            this.lifetimePanel.PerformLayout();
+            this.velocityPanel.ResumeLayout(false);
+            this.velocityPanel.PerformLayout();
+            this.amountPanel.ResumeLayout(false);
+            this.amountPanel.PerformLayout();
             this.frameControls.ResumeLayout(false);
             this.frameControls.PerformLayout();
             this.ResumeLayout(false);
@@ -508,19 +503,19 @@
         private System.Windows.Forms.GroupBox particleSystemSettings;
         private System.Windows.Forms.GroupBox generalSettings;
         private System.Windows.Forms.GroupBox frameControls;
-        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Panel lifetimePanel;
         private System.Windows.Forms.RadioButton lifetimeExact;
         private System.Windows.Forms.RadioButton lifetimeRand;
-        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Panel velocityPanel;
         private System.Windows.Forms.RadioButton velocityRand;
         private System.Windows.Forms.RadioButton velocityExact;
-        private System.Windows.Forms.GroupBox amountGroupBox;
-        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Panel amountPanel;
+        private System.Windows.Forms.Panel newPerFramePanel;
         private System.Windows.Forms.RadioButton newPerFrameRand;
         private System.Windows.Forms.RadioButton newPerFrameExact;
         private System.Windows.Forms.TextBox newParticlesInput;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Panel ageVelocityPanel;
         private System.Windows.Forms.RadioButton agingRand;
         private System.Windows.Forms.RadioButton agingExact;
         private System.Windows.Forms.TextBox agingVelocityInput;

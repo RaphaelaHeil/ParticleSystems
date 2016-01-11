@@ -12,8 +12,7 @@ namespace ParticleSystems
         private const int TIMEOUT_IN_MS = 20;
 
         private RenderHelper RenderHelper;
-        protected ParticleSystemSettingsPanel Panel;
-        protected ParticleSettings ParticleSettings;
+        protected ParticleSettings ParticleSettings = new ParticleSettings();
         protected Context Context;
         protected List<Particle> Particles = new List<Particle>();
         protected Vector2d[] ParticlePositions = { };
@@ -24,10 +23,9 @@ namespace ParticleSystems
         /// </summary>
         /// <param name="settings">Particle system settings</param>
         /// <param name="context">Particle system context</param>
-        public void Init(ParticleSettings settings, Context context)
+        public void Init(Context context)
         {
             Context = context;
-            ParticleSettings = settings;
             RenderHelper = new RenderHelper(Context.GetIdHolder());
             Initialise();
         }
@@ -71,13 +69,16 @@ namespace ParticleSystems
         }
 
         /// <summary>
+        /// Gets the system's particle settings, i.e. default values to fill the GUI with and whether certain elements are enabled or not. 
+        /// </summary>
+        /// <returns></returns>
+        public abstract ParticleSettings GetParticleSettings();
+
+        /// <summary>
         /// Gets the system's settings panel to be displayed in the UI.
         /// </summary>
         /// <returns>The system's settings panel</returns>
-        public ParticleSystemSettingsPanel GetParticleSystemSettingsPanel()
-        {
-            return Panel;
-        }
+        public abstract ParticleSystemSettingsPanel GetParticleSystemSettingsPanel();
 
         /// <summary>
         /// Gets the particle system's description.
@@ -114,5 +115,12 @@ namespace ParticleSystems
         /// Retrieve the particle positions and intended colours for rendering and prepare the two arrays ParticlePositions and ParticleColours.
         /// </summary>
         protected abstract void UpdateVBOs();
+
+        protected virtual void GetDefaultGUIValues()
+        {
+            // max Lifetime default = 100;
+            // Input xyz deaktiviert
+            // 
+        }
     }
 }

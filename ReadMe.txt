@@ -25,3 +25,5 @@ Anlegen eines neuen ParticleSystemSettingsPanel (Beispiel: s. TestPanel)
 4) Aufrufen der grafischen Designoberfläche: Rechtsklick auf der neu erstellten Klasse -> Ansicht Desgner wählen oder Shift+F7 drücken
 
 HINWEIS: Die Größe des Panels sollte beibehalten werden, damit es ohne Probleme automatisch in die restliche Anwendung eingefügt werden kann. 
+Um sicherzustellen, dass tatsächlich die gleiche Größe verwendet wird kann als vorletzter Aufruf in InitializeComponents (vor PerformLayout) "this.Size = base.Size;" verwendet werden. 
+Die Größenänderung wird dann auch direkt auf den Designer übertragen/dort angezeigt.

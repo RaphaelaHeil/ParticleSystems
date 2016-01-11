@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using OpenTK;
+using ParticleSystems.SettingsPanels;
 
 namespace ParticleSystems
 {
@@ -13,17 +13,15 @@ namespace ParticleSystems
         private Random Rand = new Random();
 
         private RandomParticleGenerator ParticleGenerator;
-        
-        public LinearilyUpdatingParticleSystem()
-        {
-            Panel = new Test();
-        }
+        private LinearSettings Panel = new LinearSettings();
 
         protected override void Initialise()
         {
             ParticleGenerator = new RandomParticleGenerator(Context.GetIdHolder().Width, Context.GetIdHolder().Height, ParticleSettings.GetLifetime(), ParticleSettings.GetAgingVelocity(), ParticleSettings.GetVelocity());
             CreateInitialParticles();
-            
+
+            PositionUpdater = new LinearPositionUpdater(Panel.GetXDirectionChange(), Panel.GetYDirectionChange());
+
             //TODO: create stuff from settings
             //TODO: generate initial particles
         }
@@ -83,7 +81,18 @@ namespace ParticleSystems
 
         public override string GetDescription()
         {
-            return "A simple particle system for demonstration purposes that updates the particles positions linearly. XXX";
+            return "A simple particle system for demonstration purposes that updates the particle's positions linearly.";
+        }
+
+        public override ParticleSystemSettingsPanel GetParticleSystemSettingsPanel()
+        {
+            return Panel;
+        }
+
+        public override ParticleSettings GetParticleSettings()
+        {
+            ParticleSettings.WithAgingVelocityEnabled(false);
+            return ParticleSettings;
         }
     }
 }

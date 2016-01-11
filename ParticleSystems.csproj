@@ -78,6 +78,9 @@
     <Compile Include="SettingsPanels\AirFlowUserSettings.Designer.cs">
       <DependentUpon>AirFlowUserSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingsPanels\LinearSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="SettingsPanels\ParticleSystemSettingsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -97,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsPanels\AirFlowUserSettings.resx">
       <DependentUpon>AirFlowUserSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsPanels\LinearSettings.resx">
+      <DependentUpon>LinearSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsPanels\ParticleSystemSettingsPanel.resx">
       <DependentUpon>ParticleSystemSettingsPanel.cs</DependentUpon>

@@ -26,7 +26,7 @@ namespace ParticleSystems
         /// </summary>
         /// <param name="deltaX">Translation to be applied to the x coordinate</param>
         /// <param name="deltaY">Translation to be applied to the y coordinate</param>
-        public LinearPositionUpdater(int deltaX, int deltaY)
+        public LinearPositionUpdater(double deltaX, double deltaY)
         {
             Translation = new Vector2d(deltaX, deltaY);
         }

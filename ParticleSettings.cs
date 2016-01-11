@@ -2,104 +2,176 @@
 {
     class ParticleSettings
     {
-        private int initialNumberOfParticles = 20;
-        private int newParticlesPerFrame = 10;
-        private int lifetime = 5;
-        private int agingVelocity = 1;
-        private double velocity = 1;
-        private bool numberOfNewParticlesRandomlyGenerated = false;
-        private bool lifetimeRandomlyGenerated = false;
-        private bool agingVelocityRandomlyGenerated = false;
-        private bool velocityRandomlyGenerated = false;
+        private int InitialNumberOfParticles = 20;
+        private int NewParticlesPerFrame = 10;
+        private int Lifetime = 5;
+        private int AgingVelocity = 1;
+        private double Velocity = 1;
 
-        public void SetInitialNumberOfParticles(int InitialNumberOfParticles)
+        private bool NumberOfNewParticlesRandomlyGenerated = false;
+        private bool LifetimeRandomlyGenerated = false;
+        private bool AgingVelocityRandomlyGenerated = false;
+        private bool VelocityRandomlyGenerated = false;
+
+        private bool InitialNumberOfParticlesEnabled = true;
+        private bool NewParticlesPerFrameEnabled = true;
+        private bool LifetimeEnabled = true;
+        private bool AgingVelocityEnabled = true;
+        private bool VelocityEnabled = true;
+
+
+        public ParticleSettings WithInitialNumberOfParticles(int initialNumberOfParticles)
         {
-            initialNumberOfParticles = InitialNumberOfParticles;
+            InitialNumberOfParticles = initialNumberOfParticles;
+            return this;
         }
 
-        public void SetNewParticlesPerFrame(int NewParticlesPerFrame)
+        public ParticleSettings WithNewParticlesPerFrame(int newParticlesPerFrame)
         {
-            newParticlesPerFrame = NewParticlesPerFrame;
+            NewParticlesPerFrame = newParticlesPerFrame;
+            return this;
         }
 
-        public void SetLifetime(int Lifetime)
+        public ParticleSettings WithLifetime(int Lifetime)
         {
-            lifetime = Lifetime;
+            this.Lifetime = Lifetime;
+            return this;
         }
 
-        public void SetAgingVelocity(int AgingVelocity)
+        public ParticleSettings WithAgingVelocity(int AgingVelocity)
         {
-            agingVelocity = AgingVelocity;
+            this.AgingVelocity = AgingVelocity;
+            return this;
         }
 
-        public void SetVelocity(double Velocity)
+        public ParticleSettings WithVelocity(double Velocity)
         {
-            velocity = Velocity;
+            this.Velocity = Velocity;
+            return this;
         }
 
-        public void SetNumberOfNewParticlesIsRandomlyGenerated(bool randomly)
+        public ParticleSettings WithNumberOfNewParticlesIsRandomlyGenerated(bool randomly)
         {
-            numberOfNewParticlesRandomlyGenerated = randomly;
+            NumberOfNewParticlesRandomlyGenerated = randomly;
+            return this;
         }
 
-        public void SetLifetimeIsRandomlyGenerated(bool randomly)
+        public ParticleSettings WithLifetimeIsRandomlyGenerated(bool randomly)
         {
-            lifetimeRandomlyGenerated = randomly;
+            LifetimeRandomlyGenerated = randomly;
+            return this;
         }
 
-        public void SetAgingVelocityIsRandomlyGenerated(bool randomly)
+        public ParticleSettings WithAgingVelocityIsRandomlyGenerated(bool randomly)
         {
-            agingVelocityRandomlyGenerated = randomly;
+            AgingVelocityRandomlyGenerated = randomly;
+            return this;
         }
 
-        public void SetVelocityIsRandomlyGenerated(bool randomly)
+        public ParticleSettings WithVelocityIsRandomlyGenerated(bool randomly)
         {
-            velocityRandomlyGenerated = randomly;
+            VelocityRandomlyGenerated = randomly;
+            return this;
+        }
+
+        public ParticleSettings WithInitialNumberOfParticlesEnabled(bool initialNumberOfParticlesEnabled)
+        {
+            InitialNumberOfParticlesEnabled = initialNumberOfParticlesEnabled;
+            return this;
+        }
+
+        public ParticleSettings WithNewParticlesPerFrameEnabled(bool newParticlesPerFrameEnabled)
+        {
+            NewParticlesPerFrameEnabled = newParticlesPerFrameEnabled;
+            return this;
+        }
+
+        public ParticleSettings WithLifetimeEnabled(bool lifetimeEnabled)
+        {
+            LifetimeEnabled = lifetimeEnabled;
+            return this;
+        }
+
+        public ParticleSettings WithAgingVelocityEnabled(bool agingVelocityEnabled)
+        {
+            AgingVelocityEnabled = agingVelocityEnabled;
+            return this;
+        }
+
+        public ParticleSettings WithVelocityEnabled(bool velocityEnabled)
+        {
+            VelocityEnabled = velocityEnabled;
+            return this;
         }
 
         public int GetInitialNumberOfParticles()
         {
-            return initialNumberOfParticles;
+            return InitialNumberOfParticles;
         }
 
         public int GetNumberOfNewParticlesPerFrame()
         {
-            return newParticlesPerFrame;
+            return NewParticlesPerFrame;
         }
 
         public int GetLifetime()
         {
-            return lifetime;
+            return Lifetime;
         }
 
         public int GetAgingVelocity()
         {
-            return agingVelocity;
+            return AgingVelocity;
         }
 
         public double GetVelocity()
         {
-            return velocity;
+            return Velocity;
         }
 
         public bool IsNumberOfNewParticlesRandomlyGenerated()
         {
-            return numberOfNewParticlesRandomlyGenerated;
+            return NumberOfNewParticlesRandomlyGenerated;
         }
 
         public bool IsLifetimeRandomlyGenerated()
         {
-            return lifetimeRandomlyGenerated;
+            return LifetimeRandomlyGenerated;
         }
 
         public bool IsAgingVelocityRandomlyGenerated()
         {
-            return agingVelocityRandomlyGenerated;
+            return AgingVelocityRandomlyGenerated;
         }
 
         public bool IsVelocityRandomlyGenerated()
         {
-            return velocityRandomlyGenerated;
+            return VelocityRandomlyGenerated;
+        }
+
+        public bool IsInitialNumberOfParticlesEnabled()
+        {
+            return InitialNumberOfParticlesEnabled;
+        }
+
+        public bool IsNewParticlesPerFrameEnabled()
+        {
+            return NewParticlesPerFrameEnabled;
+        }
+
+        public bool IsLifetimeEnabled()
+        {
+            return LifetimeEnabled;
+        }
+
+        public bool IsAgingVelocityEnabled()
+        {
+            return AgingVelocityEnabled;
+        }
+
+        public bool IsVelocityEnabled()
+        {
+            return VelocityEnabled;
         }
     }
 }

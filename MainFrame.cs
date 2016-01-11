@@ -141,24 +141,24 @@ namespace ParticleSystems
 
         private void initialiseBasedOnSelection()
         {
-            ParticleSettings particleSettings = new ParticleSettings();
+            ParticleSettings particleSettings = selectedParticleSystem.GetParticleSettings();
 
-            particleSettings.SetInitialNumberOfParticles(Math.Abs(int.Parse(initialAmountInput.Text)));
-            particleSettings.SetAgingVelocity(Math.Abs(int.Parse(agingVelocityInput.Text)));
-            particleSettings.SetLifetime(Math.Abs(int.Parse(lifetimeInput.Text)));
-            particleSettings.SetNewParticlesPerFrame(Math.Abs(int.Parse(newParticlesInput.Text)));
-            particleSettings.SetVelocity(Math.Abs(int.Parse(velocityInput.Text)));
+            particleSettings.WithInitialNumberOfParticles(Math.Abs(int.Parse(initialAmountInput.Text)));
+            particleSettings.WithAgingVelocity(Math.Abs(int.Parse(agingVelocityInput.Text)));
+            particleSettings.WithLifetime(Math.Abs(int.Parse(lifetimeInput.Text)));
+            particleSettings.WithNewParticlesPerFrame(Math.Abs(int.Parse(newParticlesInput.Text)));
+            particleSettings.WithVelocity(Math.Abs(int.Parse(velocityInput.Text)));
 
-            particleSettings.SetAgingVelocityIsRandomlyGenerated(agingRand.Checked);
-            particleSettings.SetLifetimeIsRandomlyGenerated(lifetimeRand.Checked);
-            particleSettings.SetNumberOfNewParticlesIsRandomlyGenerated(newPerFrameRand.Checked);
-            particleSettings.SetVelocityIsRandomlyGenerated(velocityRand.Checked);
+            particleSettings.WithAgingVelocityIsRandomlyGenerated(agingRand.Checked);
+            particleSettings.WithLifetimeIsRandomlyGenerated(lifetimeRand.Checked);
+            particleSettings.WithNumberOfNewParticlesIsRandomlyGenerated(newPerFrameRand.Checked);
+            particleSettings.WithVelocityIsRandomlyGenerated(velocityRand.Checked);
 
             Context context = new Context(idHolder);
 
             //TODO: read context ... 
 
-            selectedParticleSystem.Init(particleSettings, context);
+            selectedParticleSystem.Init(context);
             ready = true;
         }
 
@@ -173,11 +173,7 @@ namespace ParticleSystems
                 psSettings.Controls.Remove(particleSystemSettingsPanel);
                 particleSystemSettingsPanel = selectedParticleSystem.GetParticleSystemSettingsPanel();
                 psSettings.Controls.Add(particleSystemSettingsPanel);
-            }
-            //disable general Settings if Wind Simulation is selected
-            if(particleSystemSelection.SelectedIndex == 1)
-            {
-                generalSettings.Enabled = false;
+                prepareGeneralSettingsPanel(true);
             }
             Invalidate();
         }
@@ -207,14 +203,7 @@ namespace ParticleSystems
                 pauseButton.Enabled = false;
                 frameButton.Enabled = false;
                 particleSystemSettings.Enabled = true;
-                //disable general Settings if Wind Simulation is selected
-                if (particleSystemSelection.SelectedIndex == 1)
-                {
-                    generalSettings.Enabled = false;
-                }else
-                {
-                    generalSettings.Enabled = true;
-                }
+                prepareGeneralSettingsPanel(false);
             }
         }
 
@@ -238,6 +227,61 @@ namespace ParticleSystems
                 paused = true;
             }
 
+        }
+
+        private void prepareGeneralSettingsPanel(bool overwriteValues)
+        {
+            ParticleSettings particleSettings = selectedParticleSystem.GetParticleSettings();
+            if (overwriteValues)
+            {
+                //set default values for TextBoxes
+                agingVelocityInput.Text = particleSettings.GetAgingVelocity().ToString();
+                initialAmountInput.Text = particleSettings.GetInitialNumberOfParticles().ToString();
+                newParticlesInput.Text = particleSettings.GetNumberOfNewParticlesPerFrame().ToString();
+                lifetimeInput.Text = particleSettings.GetLifetime().ToString();
+                velocityInput.Text = particleSettings.GetVelocity().ToString();
+
+                //set default selection for RadioButtons
+                if (particleSettings.IsAgingVelocityRandomlyGenerated())
+                {
+                    agingRand.Checked = true;
+                }
+                else
+                {
+                    agingExact.Checked = true;
+                }
+                if (particleSettings.IsLifetimeRandomlyGenerated())
+                {
+                    lifetimeRand.Checked = true;
+                }
+                else
+                {
+                    lifetimeExact.Checked = true;
+                }
+                if (particleSettings.IsNumberOfNewParticlesRandomlyGenerated())
+                {
+                    newPerFrameRand.Checked = true;
+                }
+                else
+                {
+                    newPerFrameExact.Checked = true;
+                }
+                if (particleSettings.IsVelocityRandomlyGenerated())
+                {
+                    velocityRand.Checked = true;
+                }
+                else
+                {
+                    velocityExact.Checked = true;
+                }
+            }
+
+            ageVelocityPanel.Enabled = particleSettings.IsAgingVelocityEnabled();
+            amountPanel.Enabled = particleSettings.IsInitialNumberOfParticlesEnabled();
+            lifetimePanel.Enabled = particleSettings.IsLifetimeEnabled();
+            newPerFrameRand.Enabled = particleSettings.IsNewParticlesPerFrameEnabled();
+            velocityPanel.Enabled =  particleSettings.IsVelocityEnabled();
+           
         }
 
         private void frameButton_Click(object sender, EventArgs e)
