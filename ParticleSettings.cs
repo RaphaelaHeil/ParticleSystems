@@ -1,4 +1,6 @@
-﻿namespace ParticleSystems
+﻿using System.Drawing;
+
+namespace ParticleSystems
 {
     class ParticleSettings
     {
@@ -19,6 +21,7 @@
         private bool AgingVelocityEnabled = true;
         private bool VelocityEnabled = true;
 
+        private Color GlControlBackgroundColor = Color.CornflowerBlue;
 
         public ParticleSettings WithInitialNumberOfParticles(int initialNumberOfParticles)
         {
@@ -104,6 +107,12 @@
             return this;
         }
 
+        public ParticleSettings WithGlBackgroundColor(Color glControlBackgroundColor)
+        {
+            GlControlBackgroundColor = glControlBackgroundColor;
+            return this;
+        }
+
         public int GetInitialNumberOfParticles()
         {
             return InitialNumberOfParticles;
@@ -127,6 +136,11 @@
         public double GetVelocity()
         {
             return Velocity;
+        }
+
+        public Color getGlControlBackgroundColor()
+        {
+            return GlControlBackgroundColor;
         }
 
         public bool IsNumberOfNewParticlesRandomlyGenerated()

@@ -13,6 +13,7 @@ namespace ParticleSystems {
         private int MaxLifetime;
         private int MaxAgingVelocity;
         private double MaxVelocity;
+        private int particlePos;
 
         private Random Random = new Random();
 
@@ -30,11 +31,12 @@ namespace ParticleSystems {
             this.MaxLifetime = maxLifetime;
             this.MaxAgingVelocity = maxAgingVelocity;
             this.MaxVelocity = maxVelocity;
+            this.particlePos = 0;
         }
 
         public Particle GenerateParticle() {
-            int lifetime = Random.Next(1, MaxLifetime);
-            int agingVelocity = Random.Next(1, MaxAgingVelocity);
+            int lifetime = MaxLifetime;
+            int agingVelocity = MaxAgingVelocity;
             double velocity = Random.NextDouble() * MaxVelocity;
             return new Particle(CreateStartingPosition(), MaxLifetime, agingVelocity, velocity);
         }

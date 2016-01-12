@@ -73,12 +73,18 @@ namespace ParticleSystems.SettingsPanels
 
         public double GetXDirectionChange()
         {
-            return double.Parse(this.xDirectionInput.Text);
+            if (this.xDirectionInput.Text != "")
+                return double.Parse(this.xDirectionInput.Text);
+            else
+                return 0;
         }
 
         public double GetYDirectionChange()
         {
-            return double.Parse(this.yDirectionInput.Text);
+            if (this.yDirectionInput.Text != "")
+                return double.Parse(this.yDirectionInput.Text);
+            else
+                return 0;
         }
     }
 }

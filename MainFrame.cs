@@ -154,6 +154,9 @@ namespace ParticleSystems
             particleSettings.WithNumberOfNewParticlesIsRandomlyGenerated(newPerFrameRand.Checked);
             particleSettings.WithVelocityIsRandomlyGenerated(velocityRand.Checked);
 
+            //change the Backgroundcolor of the glControl
+            GL.ClearColor(particleSettings.getGlControlBackgroundColor());
+
             Context context = new Context(idHolder);
 
             //TODO: read context ... 
@@ -203,6 +206,7 @@ namespace ParticleSystems
                 pauseButton.Enabled = false;
                 frameButton.Enabled = false;
                 particleSystemSettings.Enabled = true;
+                generalSettings.Enabled = true;
                 prepareGeneralSettingsPanel(false);
             }
         }

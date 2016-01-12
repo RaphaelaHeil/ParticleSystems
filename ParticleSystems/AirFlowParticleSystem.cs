@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using OpenTK;
 using System;
+using System.Drawing;
 
 namespace ParticleSystems
 {
@@ -18,22 +18,13 @@ namespace ParticleSystems
 
         public AirFlowParticleSystem()
         {
-           // Panel = new AirFlowUserSettings(); wird jetzt nicht mehr gebraucht :)
-           // wenn du ansonsten hier nichts mehr machen willst kannst du den Konstruktor auch komplett rausschmeißen :) 
+           //Panel = new AirFlowUserSettings();
         }
 
         protected override void Initialise()
         {
-            int width = Context.GetIdHolder().Width;
-            ParticleSettings.WithInitialNumberOfParticles(0);
-            ParticleSettings.WithNewParticlesPerFrame(150);
-            double lifetime = width * 0.5;
-            ParticleSettings.WithLifetime((int)lifetime);
-            ParticleSettings.WithVelocity(5);
-            ParticleSettings.WithAgingVelocity(1);
-
             ParticleGenerator = new AirFlowParticleGenerator(
-                width,
+                Context.GetIdHolder().Width,
                 Context.GetIdHolder().Height,
                 ParticleSettings.GetLifetime(),
                 ParticleSettings.GetAgingVelocity(),
@@ -51,8 +42,11 @@ namespace ParticleSystems
             ParticleColours = new Vector3d[Particles.Count];
             for (int i = 0; i < Particles.Count; i++)
             {
+                Panel = (AirFlowUserSettings)GetParticleSystemSettingsPanel();
                 ParticlePositions[i] = Particles.ElementAt(i).GetPosition();
-                ParticleColours[i] = new Vector3d(0.0); //TODO: change accordingly
+                Color color = Panel.getColor();
+                Vector3d vec3color = new Vector3d(color.R, color.G, color.B);
+                ParticleColours[i] = vec3color; //TODO: change accordingly
             }
         }
 
@@ -115,8 +109,16 @@ namespace ParticleSystems
 
         public override ParticleSettings GetParticleSettings()
         {
-            throw new NotImplementedException(); //TODO: hier kannst du deine default werte einstellen und ob die einzelnen auswahlmöglichkeiten aktiviert sein sollen oder nicht :) 
-            //du könntest also z.B. einen Wert festsetzen und das Panel dann sperren. Dann kann der User zwar nichts machen, sieht aber was Sache ist ... oder so :D
+            Panel = (AirFlowUserSettings)GetParticleSystemSettingsPanel();
+            ParticleSettings.WithInitialNumberOfParticles(0);
+            ParticleSettings.WithNewParticlesPerFrame(150);
+            ParticleSettings.WithLifetime(170); //the particle dies outside the right side of the draw-area
+            ParticleSettings.WithVelocity(5);
+            Color color = Panel.getColor();
+            Color complementaryColor = Color.FromArgb((255 - color.R), (255 - color.G), (255 - color.B));
+            ParticleSettings.WithGlBackgroundColor(complementaryColor);
+
+            return ParticleSettings;
         }
     }
 }
