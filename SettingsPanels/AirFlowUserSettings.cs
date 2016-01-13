@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace ParticleSystems
+namespace ParticleSystems.SettingsPanels
 {
     public partial class AirFlowUserSettings : ParticleSystemSettingsPanel {
         public AirFlowUserSettings()

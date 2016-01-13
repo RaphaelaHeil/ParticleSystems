@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenTK;
+using ParticleSystems.Particles;
 
-namespace ParticleSystems
+namespace ParticleSystems.PositionUpdate
 {
     class RandomPositionUpdater : PositionUpdater
     {

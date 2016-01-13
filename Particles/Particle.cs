@@ -1,17 +1,17 @@
 ﻿using OpenTK;
 
-namespace ParticleSystems
+namespace ParticleSystems.Particles
 {
     /// <summary>
     /// Base particle, representing the general structure of a particle. 
     /// </summary>
     class Particle
     {
-        private Vector2d Position;
-        private int RemainingLifetime;
-        private int AgingVelocity;
-        private bool Expired = false;
-        private double Velocity = 1.0;
+        protected Vector2d Position;
+        protected int RemainingLifetime;
+        protected int AgingVelocity;
+        protected bool Expired = false;
+        protected double Velocity = 1.0;
 
         /// <summary>
         /// Constructor with default velocity, i.e. 1.0.

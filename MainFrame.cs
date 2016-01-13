@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using OpenTK.Graphics.OpenGL;
 using System.IO;
+using ParticleSystems.Systems;
 
 namespace ParticleSystems
 {
@@ -63,7 +64,7 @@ namespace ParticleSystems
             }
 
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            GL.PointSize(3f);
+            GL.PointSize(4f);
 
             if (ready)
             {
@@ -129,7 +130,7 @@ namespace ParticleSystems
             FpsMeasurement = (FpsMeasurement * SMOOTHING) + (frameCounter * (1 - SMOOTHING));
             framesPerSecondOutput.Text = ((int)Math.Round(FpsMeasurement)).ToString();
             frameCounter = 0;
-            Console.WriteLine("Dropped Frames: " + droppedFrames);
+          //  Console.WriteLine("Dropped Frames: " + droppedFrames);
             droppedFrames = 0;
         }
 
@@ -283,7 +284,7 @@ namespace ParticleSystems
             ageVelocityPanel.Enabled = particleSettings.IsAgingVelocityEnabled();
             amountPanel.Enabled = particleSettings.IsInitialNumberOfParticlesEnabled();
             lifetimePanel.Enabled = particleSettings.IsLifetimeEnabled();
-            newPerFrameRand.Enabled = particleSettings.IsNewParticlesPerFrameEnabled();
+            newPerFramePanel.Enabled = particleSettings.IsNewParticlesPerFrameEnabled();
             velocityPanel.Enabled =  particleSettings.IsVelocityEnabled();
            
         }

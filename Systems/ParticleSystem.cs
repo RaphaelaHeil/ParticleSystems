@@ -2,8 +2,10 @@
 using OpenTK;
 using System.Threading;
 using System.Collections.Generic;
+using ParticleSystems.Particles;
+using ParticleSystems.SettingsPanels;
 
-namespace ParticleSystems
+namespace ParticleSystems.Systems
 {
     //TODO
     abstract class ParticleSystem
@@ -14,7 +16,7 @@ namespace ParticleSystems
         private RenderHelper RenderHelper;
         protected ParticleSettings ParticleSettings = new ParticleSettings();
         protected Context Context;
-        protected List<Particle> Particles = new List<Particle>();
+        protected List<Particle> Particles;
         protected Vector2d[] ParticlePositions = { };
         protected Vector3d[] ParticleColours = { };
 
@@ -25,6 +27,7 @@ namespace ParticleSystems
         /// <param name="context">Particle system context</param>
         public void Init(Context context)
         {
+            Particles = new List<Particle>();
             Context = context;
             RenderHelper = new RenderHelper(Context.GetIdHolder());
             Initialise();

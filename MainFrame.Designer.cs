@@ -1,4 +1,6 @@
-﻿namespace ParticleSystems
+﻿using ParticleSystems.SettingsPanels;
+
+namespace ParticleSystems
 {
     partial class MainFrame
     {
@@ -64,7 +66,7 @@
             this.frameControls = new System.Windows.Forms.GroupBox();
             this.framesPerSecondOutput = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.particleSystemSettingsPanel = new ParticleSystems.ParticleSystemSettingsPanel();
+            this.particleSystemSettingsPanel = new ParticleSystems.SettingsPanels.ParticleSystemSettingsPanel();
             this.psSettings.SuspendLayout();
             this.particleSystemSettings.SuspendLayout();
             this.descriptionPanel.SuspendLayout();

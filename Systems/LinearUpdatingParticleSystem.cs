@@ -2,8 +2,10 @@
 using System.Linq;
 using OpenTK;
 using ParticleSystems.SettingsPanels;
+using ParticleSystems.PositionUpdate;
+using ParticleSystems.ParticleGeneration;
 
-namespace ParticleSystems
+namespace ParticleSystems.Systems
 {
     class LinearilyUpdatingParticleSystem : ParticleSystem
     {

@@ -1,4 +1,6 @@
-﻿namespace ParticleSystems
+﻿using ParticleSystems.Particles;
+
+namespace ParticleSystems.ParticleGeneration
 {
     /// <summary>
     /// Interface to group classes generating particles. 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ParticleSystems.Systems;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -27,6 +28,9 @@ namespace ParticleSystems
              ).Compile());
             systems.Add("Wind Simulation System", Expression.Lambda<Func<ParticleSystem>>(
             Expression.New(typeof(AirFlowParticleSystem).GetConstructor(Type.EmptyTypes))
+             ).Compile());
+            systems.Add("Particle Swarm Optimisation", Expression.Lambda<Func<ParticleSystem>>(
+            Expression.New(typeof(ParticleSwarmSystem).GetConstructor(Type.EmptyTypes))
              ).Compile());
         }
 

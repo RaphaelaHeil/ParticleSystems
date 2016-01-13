@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
+using ParticleSystems.Particles;
 
-namespace ParticleSystems {
+namespace ParticleSystems.ParticleGeneration
+{
     class AirFlowParticleGenerator : ParticleGenerator 
     {
         private int Width;

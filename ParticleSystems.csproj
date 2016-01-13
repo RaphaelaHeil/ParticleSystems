@@ -56,10 +56,16 @@
     <Compile Include="LifetimeHandler.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ParticleGeneration\AirFlowParticleGenerator.cs" />
-    <Compile Include="ParticleSystems\AirFlowParticleSystem.cs" />
+    <Compile Include="ParticleGeneration\SwarmParticleGenerator.cs" />
+    <Compile Include="SettingsPanels\ParticleSwarmSettingsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Systems\AirFlowParticleSystem.cs" />
+    <Compile Include="Systems\ParticleSwarmSystem.cs" />
+    <Compile Include="Particles\SwarmParticle.cs" />
     <Compile Include="PositionUpdate\AirFlowPositionUpdater.cs" />
     <Compile Include="PositionUpdate\LinearPositionUpdater.cs" />
-    <Compile Include="ParticleSystems\LinearUpdatingParticleSystem.cs" />
+    <Compile Include="Systems\LinearUpdatingParticleSystem.cs" />
     <Compile Include="MainFrame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,8 +75,9 @@
     <Compile Include="Particles\Particle.cs" />
     <Compile Include="ParticleGeneration\ParticleGenerator.cs" />
     <Compile Include="ParticleSettings.cs" />
-    <Compile Include="ParticleSystems\ParticleSystem.cs" />
+    <Compile Include="Systems\ParticleSystem.cs" />
     <Compile Include="ParticleSystemRegistration.cs" />
+    <Compile Include="PositionUpdate\SwarmPositionUpdater.cs" />
     <Compile Include="RenderHelper.cs" />
     <Compile Include="SettingsPanels\AirFlowUserSettings.cs">
       <SubType>UserControl</SubType>
@@ -95,6 +102,8 @@
     <Compile Include="SettingsPanels\Test.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Strategies\ParticleSwarmFitnessStrategy.cs" />
+    <Compile Include="Strategies\ParticleSwarmPNormFitnessStrategy.cs" />
     <EmbeddedResource Include="MainFrame.resx">
       <DependentUpon>MainFrame.cs</DependentUpon>
     </EmbeddedResource>

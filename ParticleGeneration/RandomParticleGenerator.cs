@@ -1,7 +1,8 @@
 ﻿using System;
 using OpenTK;
+using ParticleSystems.Particles;
 
-namespace ParticleSystems
+namespace ParticleSystems.ParticleGeneration
 {
     /// <summary>
     /// Generates regular particles with random values.

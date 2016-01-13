@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
+using ParticleSystems.Particles;
 
-namespace ParticleSystems
+namespace ParticleSystems.PositionUpdate
 {
 
     /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 
-namespace ParticleSystems {
+namespace ParticleSystems.SettingsPanels
+{
     public partial class AirFlowUserSettings
     {
         private Label label1;
