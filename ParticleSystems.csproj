@@ -61,6 +61,7 @@
     <Compile Include="SettingsPanels\ParticleSwarmSettingsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Strategies\PlaceableObject.cs" />
     <Compile Include="Systems\AirFlowParticleSystem.cs" />
     <Compile Include="Systems\ParticleSwarmSystem.cs" />
     <Compile Include="Particles\SwarmParticle.cs" />

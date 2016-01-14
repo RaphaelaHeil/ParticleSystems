@@ -41,6 +41,7 @@ namespace ParticleSystems
             this.frameButton = new System.Windows.Forms.Button();
             this.pauseButton = new System.Windows.Forms.Button();
             this.psSettings = new System.Windows.Forms.GroupBox();
+            this.particleSystemSettingsPanel = new ParticleSystems.SettingsPanels.ParticleSystemSettingsPanel();
             this.particleSystemSettings = new System.Windows.Forms.GroupBox();
             this.descriptionPanel = new System.Windows.Forms.Panel();
             this.particleSystemDescription = new System.Windows.Forms.Label();
@@ -66,7 +67,6 @@ namespace ParticleSystems
             this.frameControls = new System.Windows.Forms.GroupBox();
             this.framesPerSecondOutput = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.particleSystemSettingsPanel = new ParticleSystems.SettingsPanels.ParticleSystemSettingsPanel();
             this.psSettings.SuspendLayout();
             this.particleSystemSettings.SuspendLayout();
             this.descriptionPanel.SuspendLayout();
@@ -184,6 +184,14 @@ namespace ParticleSystems
             this.psSettings.TabIndex = 12;
             this.psSettings.TabStop = false;
             this.psSettings.Text = "System specific settings";
+            // 
+            // particleSystemSettingsPanel
+            // 
+            this.particleSystemSettingsPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.particleSystemSettingsPanel.Location = new System.Drawing.Point(6, 19);
+            this.particleSystemSettingsPanel.Name = "particleSystemSettingsPanel";
+            this.particleSystemSettingsPanel.Size = new System.Drawing.Size(437, 209);
+            this.particleSystemSettingsPanel.TabIndex = 0;
             // 
             // particleSystemSettings
             // 
@@ -447,14 +455,6 @@ namespace ParticleSystems
             this.label4.Size = new System.Drawing.Size(102, 13);
             this.label4.TabIndex = 10;
             this.label4.Text = "Frames per Second:";
-            // 
-            // particleSystemSettingsPanel
-            // 
-            this.particleSystemSettingsPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.particleSystemSettingsPanel.Location = new System.Drawing.Point(6, 19);
-            this.particleSystemSettingsPanel.Name = "particleSystemSettingsPanel";
-            this.particleSystemSettingsPanel.Size = new System.Drawing.Size(437, 209);
-            this.particleSystemSettingsPanel.TabIndex = 0;
             // 
             // MainFrame
             // 

@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using OpenTK.Graphics.OpenGL;
 using System.IO;
 using ParticleSystems.Systems;
+using ParticleSystems.SettingsPanels;
+using System.Collections.Generic;
 
 namespace ParticleSystems
 {
@@ -17,6 +19,7 @@ namespace ParticleSystems
         private Timer fpsTimer = new Timer();
         private IdHolder idHolder = new IdHolder();
         private ParticleSystem selectedParticleSystem;
+        private ParticleSystemSettingsPanel panelSystemSettingsPanel;
 
         private const double TICK_IN_MS = 15.0;
         private const double SMOOTHING = 0.8;
@@ -77,6 +80,38 @@ namespace ParticleSystems
                     droppedFrames++;
                 }
             }
+
+            bool placeObjectAllowed = true;
+            if (placeObjectAllowed)
+            {
+                if (selectedParticleSystem is AirFlowParticleSystem)
+                {
+                    if (particleSystemSettingsPanel is AirFlowUserSettings)
+                    {
+                        AirFlowUserSettings panel = (AirFlowUserSettings)particleSystemSettingsPanel;
+                        List<PlaceableObject> placableObjectList = panel.PlacableObjectList;
+
+                        foreach (PlaceableObject po in placableObjectList)
+                        {
+                            string objectShape = po.getObjectShape();
+                            double posX = po.getPositionX();
+                            double posY = po.getPositionY();
+                            int sizeH = po.getSizeHeight();
+                            int sizeW = po.getSizeWidth();
+
+                            if(objectShape == "Square")
+                            GL.Color3(Color.Red);
+                            GL.Begin(PrimitiveType.Quads);
+                            GL.Vertex2(posX - (int)(sizeW / 2), posY - (int)(sizeH / 2));
+                            GL.Vertex2(posX - (int)(sizeW / 2), posY + (int)(sizeH / 2));
+                            GL.Vertex2(posX + (int)(sizeW / 2), posY + (int)(sizeH / 2));
+                            GL.Vertex2(posX + (int)(sizeW / 2), posY - (int)(sizeH / 2));
+                            GL.End();
+                        }
+                    }
+                }
+            }
+
             glControl.SwapBuffers();
         }
 
@@ -144,6 +179,7 @@ namespace ParticleSystems
         {
             ParticleSettings particleSettings = selectedParticleSystem.GetParticleSettings();
 
+
             particleSettings.WithInitialNumberOfParticles(Math.Abs(int.Parse(initialAmountInput.Text)));
             particleSettings.WithAgingVelocity(Math.Abs(int.Parse(agingVelocityInput.Text)));
             particleSettings.WithLifetime(Math.Abs(int.Parse(lifetimeInput.Text)));
@@ -172,6 +208,7 @@ namespace ParticleSystems
             {
                 frameControls.Enabled = true;
                 selectedParticleSystem = particleSystemRegistration.GetParticleSystemInstance((string)particleSystemSelection.SelectedItem);
+                panelSystemSettingsPanel = selectedParticleSystem.GetParticleSystemSettingsPanel();
                 particleSystemDescription.Text = selectedParticleSystem.GetDescription();
 
                 psSettings.Controls.Remove(particleSystemSettingsPanel);

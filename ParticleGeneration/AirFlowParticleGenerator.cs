@@ -11,7 +11,6 @@ namespace ParticleSystems.ParticleGeneration
         private int MaxLifetime;
         private int MaxAgingVelocity;
         private double MaxVelocity;
-        private int particlePos;
 
         private Random Random = new Random();
 
@@ -29,7 +28,6 @@ namespace ParticleSystems.ParticleGeneration
             this.MaxLifetime = maxLifetime;
             this.MaxAgingVelocity = maxAgingVelocity;
             this.MaxVelocity = maxVelocity;
-            this.particlePos = 0;
         }
 
         public Particle GenerateParticle() {
