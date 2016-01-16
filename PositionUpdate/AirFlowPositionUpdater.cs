@@ -31,40 +31,45 @@ namespace ParticleSystems.PositionUpdate
         public void UpdatePositions(List<Particle> particles)
         {
             List<PlaceableObject> placableObjectList = context.getPlacableObjectList();
-            Vector2d Translation = new Vector2d();
-
             foreach (var particle in particles) {
                 int particlePosX = (int)particle.GetPosition().X;
                 int particlePosY = (int)particle.GetPosition().Y;
 
-                if (placableObjectList.Count != 0) {
-                    foreach (PlaceableObject po in placableObjectList) {
-                        int poPosX = (int)(po.getPosition().X - (po.getSize().X / 2));
-                        int crossRange = (int)(po.getPosition().X + (po.getSize().X / 2)); //range to cross the object
-
-                        int poPosY = (int)po.getPosition().Y;
-                        int up = (int)(poPosY - (po.getSize().Y / 2));
-                        int down = (int)(poPosY + (po.getSize().Y / 2));
-
-                        if ((particlePosX <= poPosX && particlePosX >= poPosX - 20) &&
-                             (particlePosY >= up && particlePosY <= down)) {
-                            if (particlePosY >= poPosY) {
-                                Translation = TranslationYup;
-                                break;
-                            }
-                            else {
-                                Translation = TranslationYdown;
-                                break;
-                            }
-                        }
-                        else
-                            Translation = TranslationX;
-                    }
-                }
-                else
-                    Translation = TranslationX;
+                Vector2d Translation = passObstacles(particlePosX, particlePosY, placableObjectList);
                 particle.updatePosition(Translation);
             }
+        }
+
+        private Vector2d passObstacles(int particlePosX, int particlePosY, List<PlaceableObject> placableObjectList) {
+            Vector2d Translation = new Vector2d();
+            if (placableObjectList.Count != 0) {
+                foreach (PlaceableObject po in placableObjectList) {
+                    int poPosX = (int)(po.getPosition().X - (po.getSize().X / 2));
+                    int crossRange = (int)(po.getPosition().X + (po.getSize().X / 2)); //range to cross the object
+
+                    int poPosY = (int)po.getPosition().Y;
+                    int up = (int)(poPosY - (po.getSize().Y / 2));
+                    int down = (int)(poPosY + (po.getSize().Y / 2));
+
+                    if ((particlePosX <= poPosX && particlePosX >= poPosX - 20) &&
+                         (particlePosY >= up && particlePosY <= down)) {
+                        if (particlePosY >= poPosY) {
+                            Translation = TranslationYup;
+                            break;
+                        }
+                        else {
+                            Translation = TranslationYdown;
+                            break;
+                        }
+                    }
+                    else
+                        Translation = TranslationX;
+                }
+            }
+            else
+                Translation = TranslationX;
+
+            return Translation;
         }
 
         public void SetContext(Context context) {
