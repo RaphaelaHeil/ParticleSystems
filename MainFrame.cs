@@ -5,7 +5,7 @@ using OpenTK.Graphics.OpenGL;
 using System.IO;
 using ParticleSystems.Systems;
 using ParticleSystems.SettingsPanels;
-using System.Collections.Generic;
+using ParticleSystems.MoreOptionsForm;
 
 namespace ParticleSystems
 {
@@ -20,6 +20,7 @@ namespace ParticleSystems
         private IdHolder idHolder = new IdHolder();
         private ParticleSystem selectedParticleSystem;
         private ParticleSystemSettingsPanel panelSystemSettingsPanel;
+        private Context context = new Context();
 
         private const double TICK_IN_MS = 15.0;
         private const double SMOOTHING = 0.8;
@@ -163,7 +164,7 @@ namespace ParticleSystems
             //change the Backgroundcolor of the glControl
             GL.ClearColor(particleSettings.getGlControlBackgroundColor());
 
-            Context context = new Context(idHolder);
+            context.setIdHolder(idHolder);
 
             //TODO: read context ... 
 
@@ -298,6 +299,16 @@ namespace ParticleSystems
         private void frameButton_Click(object sender, EventArgs e)
         {
             glControl.Invalidate();
+        }
+
+        public void createObject(string objectShape, int positionX, int positionY, int sizeHeight, int sizeWidth) {
+            PlaceableObject po = new PlaceableObject(objectShape, positionX, positionY, sizeHeight, sizeWidth);
+            context.addPlacableObjectToList(po);
+        }
+
+        private void moreOptions_Click(object sender, EventArgs e) {
+            MoreOptionsWindow moreOptions = new MoreOptionsWindow(this, context);
+            moreOptions.Show();
         }
     }
 }

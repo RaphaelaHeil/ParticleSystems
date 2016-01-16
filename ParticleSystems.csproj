@@ -56,6 +56,9 @@
     <Compile Include="IdHolder.cs" />
     <Compile Include="LifetimeHandler.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="MoreOptionsForm\MoreOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ParticleGeneration\AirFlowParticleGenerator.cs" />
     <Compile Include="ParticleGeneration\SwarmParticleGenerator.cs" />
     <Compile Include="SettingsPanels\ParticleSwarmSettingsPanel.cs">
@@ -108,6 +111,9 @@
     <Compile Include="Strategies\ParticleSwarmPNormFitnessStrategy.cs" />
     <EmbeddedResource Include="MainFrame.resx">
       <DependentUpon>MainFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MoreOptionsForm\MoreOptions.resx">
+      <DependentUpon>MoreOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsPanels\AirFlowUserSettings.resx">
       <DependentUpon>AirFlowUserSettings.cs</DependentUpon>

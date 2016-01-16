@@ -31,9 +31,6 @@ namespace ParticleSystems.PositionUpdate
         public void UpdatePositions(List<Particle> particles)
         {
             List<PlaceableObject> placableObjectList = context.getPlacableObjectList();
-            placableObjectList.Add(new PlaceableObject("Square", 450, 450, 100, 100));
-            placableObjectList.Add(new PlaceableObject("Square", 300, 300, 100, 100));
-            placableObjectList.Add(new PlaceableObject("Square", 150, 150, 100, 100));
             Vector2d Translation = new Vector2d();
 
             foreach (var particle in particles) {

@@ -10,17 +10,22 @@ namespace ParticleSystems
         private IdHolder IdHolder;
         private List<PlaceableObject> placableObjectList;
 
-        public Context(IdHolder idHolder)
+        public Context()
         {
-            IdHolder = idHolder;
             placableObjectList = new List<PlaceableObject>();
         }
-        
-        //private List<Obstacle>
+  
+        public void setIdHolder(IdHolder idHolder) {
+            IdHolder = idHolder;
+        }
 
         public IdHolder GetIdHolder()
         {
             return IdHolder;
+        }
+
+        public void addPlacableObjectToList(PlaceableObject po) {
+            placableObjectList.Add(po);
         }
 
         public List<PlaceableObject> getPlacableObjectList() {

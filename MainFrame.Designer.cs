@@ -67,6 +67,7 @@ namespace ParticleSystems
             this.frameControls = new System.Windows.Forms.GroupBox();
             this.framesPerSecondOutput = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.moreOptions = new System.Windows.Forms.Button();
             this.psSettings.SuspendLayout();
             this.particleSystemSettings.SuspendLayout();
             this.descriptionPanel.SuspendLayout();
@@ -195,6 +196,7 @@ namespace ParticleSystems
             // 
             // particleSystemSettings
             // 
+            this.particleSystemSettings.Controls.Add(this.moreOptions);
             this.particleSystemSettings.Controls.Add(this.descriptionPanel);
             this.particleSystemSettings.Controls.Add(this.particleSystemSelection);
             this.particleSystemSettings.Controls.Add(this.psSettings);
@@ -456,6 +458,16 @@ namespace ParticleSystems
             this.label4.TabIndex = 10;
             this.label4.Text = "Frames per Second:";
             // 
+            // moreOptions
+            // 
+            this.moreOptions.Location = new System.Drawing.Point(384, 17);
+            this.moreOptions.Name = "moreOptions";
+            this.moreOptions.Size = new System.Drawing.Size(80, 23);
+            this.moreOptions.TabIndex = 13;
+            this.moreOptions.Text = "More Options";
+            this.moreOptions.UseVisualStyleBackColor = true;
+            this.moreOptions.Click += new System.EventHandler(this.moreOptions_Click);
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -529,6 +541,7 @@ namespace ParticleSystems
         private System.Windows.Forms.Label framesPerSecondOutput;
         private System.Windows.Forms.Label label4;
         private ParticleSystemSettingsPanel particleSystemSettingsPanel;
+        private System.Windows.Forms.Button moreOptions;
     }
 }
 

@@ -69,21 +69,18 @@ namespace ParticleSystems.Systems {
         protected override void GenerateNewParticles() {
             //create a air wave at a random intervall
             //the random wave has a random mutiple number of paricles (20 - 40 times) and a reduced lifetime, also random (5 - 15)
-            //int randWave = Rand.Next(0, 50);
-            //int randNewParticlesOnWave = Rand.Next(20, 40);
-            //int randReducedLifeTime = Rand.Next(5, 15);
-            //if (randWave == 25) {
-            //    for (int i = 0; i < (ParticleSettings.GetNumberOfNewParticlesPerFrame() * randNewParticlesOnWave); i++) {
-            //        Particles.Add(ParticleGenerator.GenerateParticle());
-            //    }
-            //}
-            //else {
-            //    for (int i = 0; i < (ParticleSettings.GetNumberOfNewParticlesPerFrame() * 0.8); i++) {
-            //        Particles.Add(ParticleGenerator.GenerateParticle());
-            //    }
-            //}
-            for (int i = 0; i < (ParticleSettings.GetNumberOfNewParticlesPerFrame() * 0.8); i++) {
-                Particles.Add(ParticleGenerator.GenerateParticle());
+            int randWave = Rand.Next(0, 50);
+            int randNewParticlesOnWave = Rand.Next(20, 40);
+            int randReducedLifeTime = Rand.Next(5, 15);
+            if (randWave == 25) {
+                for (int i = 0; i < (ParticleSettings.GetNumberOfNewParticlesPerFrame() * randNewParticlesOnWave); i++) {
+                    Particles.Add(ParticleGenerator.GenerateParticle());
+                }
+            }
+            else {
+                for (int i = 0; i < (ParticleSettings.GetNumberOfNewParticlesPerFrame() * 0.8); i++) {
+                    Particles.Add(ParticleGenerator.GenerateParticle());
+                }
             }
         }
 
@@ -108,9 +105,9 @@ namespace ParticleSystems.Systems {
 
         public override ParticleSettings GetParticleSettings() {
             Panel = (AirFlowUserSettings)GetParticleSystemSettingsPanel();
-            ParticleSettings.WithInitialNumberOfParticles(2000);
-            ParticleSettings.WithNewParticlesPerFrame(0);
-            ParticleSettings.WithLifetime(200); //the particle dies outside the right side of the draw-area
+            ParticleSettings.WithInitialNumberOfParticles(0);
+            ParticleSettings.WithNewParticlesPerFrame(150);
+            ParticleSettings.WithLifetime(170); //the particle dies outside the right side of the draw-area
             ParticleSettings.WithVelocity(5);
             Color color = Panel.getColor();
             Color complementaryColor = Color.FromArgb((255 - color.R), (255 - color.G), (255 - color.B));
