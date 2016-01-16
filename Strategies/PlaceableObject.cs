@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,18 +10,14 @@ namespace ParticleSystems
     class PlaceableObject
     {
         private string objectShape;
-        private int positionX;
-        private int positionY;
-        private int sizeHeight;
-        private int sizeWidth;
+        private Vector2d position;
+        private Vector2d size;
 
         public PlaceableObject(string objectShape, int positionX, int positionY, int sizeHeight, int sizeWidth)
         {
             this.objectShape = objectShape;
-            this.positionX = positionX;
-            this.positionY = positionY;
-            this.sizeHeight = sizeHeight;
-            this.sizeWidth = sizeWidth;
+            position = new Vector2d(positionX, positionY);
+            size = new Vector2d(sizeHeight, sizeWidth);
         }
 
         //------------------- getter, setter ------------------------
@@ -32,38 +29,21 @@ namespace ParticleSystems
         {
             return this.objectShape;
         }
-        public void setPositionX(int positionX)
+        public void setPositionX(Vector2d position)
         {
-            this.positionX = positionX;
+            this.position = position;
         }
-        public int getPositionX()
+        public Vector2d getPosition()
         {
-            return this.positionX;
+            return this.position;
         }
-        public void setPositionY(int positionY)
+        public void setSize(Vector2d size)
         {
-            this.positionY = positionY;
+            this.size = size;
         }
-        public int getPositionY()
+        public Vector2d getSize()
         {
-            return this.positionY;
-        }
-        public void setSizeHeight(int sizeHeight)
-        {
-            this.sizeHeight = sizeHeight;
-        }
-        public int getSizeHeight()
-        {
-            return this.sizeHeight;
-        }
-        public void setSizeWidth(int sizeWidth)
-        {
-            this.sizeWidth = sizeWidth;
-        }
-
-        public int getSizeWidth()
-        {
-            return this.sizeWidth;
+            return this.size;
         }
     }
 }

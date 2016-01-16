@@ -15,5 +15,6 @@ namespace ParticleSystems.PositionUpdate
         /// </summary>
         /// <param name="particles">Particles to be updated</param>
         void UpdatePositions(List<Particle> particles);
+        void SetContext(Context context);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using OpenTK;
 using ParticleSystems.Particles;
 
@@ -30,6 +31,10 @@ namespace ParticleSystems.PositionUpdate
         public LinearPositionUpdater(double deltaX, double deltaY)
         {
             Translation = new Vector2d(deltaX, deltaY);
+        }
+
+        public void SetContext(Context context) {
+            throw new NotImplementedException();
         }
 
         /// <see cref="PositionUpdater.UpdatePositions(List{Particle})"/>

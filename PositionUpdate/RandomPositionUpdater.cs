@@ -40,5 +40,9 @@ namespace ParticleSystems.PositionUpdate
                 particle.updatePosition(new Vector2d(x, y));
             }
         }
+
+        public void SetContext(Context context) {
+            throw new NotImplementedException();
+        }
     }
 }

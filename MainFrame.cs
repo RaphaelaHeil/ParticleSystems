@@ -81,37 +81,6 @@ namespace ParticleSystems
                 }
             }
 
-            bool placeObjectAllowed = true;
-            if (placeObjectAllowed)
-            {
-                if (selectedParticleSystem is AirFlowParticleSystem)
-                {
-                    if (particleSystemSettingsPanel is AirFlowUserSettings)
-                    {
-                        AirFlowUserSettings panel = (AirFlowUserSettings)particleSystemSettingsPanel;
-                        List<PlaceableObject> placableObjectList = panel.PlacableObjectList;
-
-                        foreach (PlaceableObject po in placableObjectList)
-                        {
-                            string objectShape = po.getObjectShape();
-                            double posX = po.getPositionX();
-                            double posY = po.getPositionY();
-                            int sizeH = po.getSizeHeight();
-                            int sizeW = po.getSizeWidth();
-
-                            if(objectShape == "Square")
-                            GL.Color3(Color.Red);
-                            GL.Begin(PrimitiveType.Quads);
-                            GL.Vertex2(posX - (int)(sizeW / 2), posY - (int)(sizeH / 2));
-                            GL.Vertex2(posX - (int)(sizeW / 2), posY + (int)(sizeH / 2));
-                            GL.Vertex2(posX + (int)(sizeW / 2), posY + (int)(sizeH / 2));
-                            GL.Vertex2(posX + (int)(sizeW / 2), posY - (int)(sizeH / 2));
-                            GL.End();
-                        }
-                    }
-                }
-            }
-
             glControl.SwapBuffers();
         }
 

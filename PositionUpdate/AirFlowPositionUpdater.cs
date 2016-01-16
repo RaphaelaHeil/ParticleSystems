@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using OpenTK;
 using ParticleSystems.Particles;
 
@@ -10,35 +11,67 @@ namespace ParticleSystems.PositionUpdate
     /// </summary>
     class AirFlowPositionUpdater : PositionUpdater
     {
-
+        private Context context;
         private const int DEFAULT_DELTA = 1;
-        private Vector2d Translation;
+        private Vector2d TranslationX;
+        private Vector2d TranslationYup;
+        private Vector2d TranslationYdown;
 
         /// <summary>
         /// Default constructor, sets x and y updates to 1 each.
         /// </summary>
         public AirFlowPositionUpdater()
         {
-            Translation = new Vector2d(DEFAULT_DELTA, 0);
-        }
-
-        /// <summary>
-        /// Constructs a LinearPositionUpdater that translates the positions by the given values.
-        /// </summary>
-        /// <param name="deltaX">Translation to be applied to the x coordinate</param>
-        /// <param name="deltaY">Translation to be applied to the y coordinate</param>
-        public AirFlowPositionUpdater(int deltaX, int deltaY)
-        {
-            Translation = new Vector2d(deltaX, deltaY);
+            TranslationX = new Vector2d(DEFAULT_DELTA, 0);
+            TranslationYup = new Vector2d(0, DEFAULT_DELTA);
+            TranslationYdown = new Vector2d(0, -DEFAULT_DELTA);
         }
 
         /// <see cref="PositionUpdater.UpdatePositions(List{Particle})"/>
         public void UpdatePositions(List<Particle> particles)
         {
-            foreach (var particle in particles)
-            {
+            List<PlaceableObject> placableObjectList = context.getPlacableObjectList();
+            placableObjectList.Add(new PlaceableObject("Square", 450, 450, 100, 100));
+            placableObjectList.Add(new PlaceableObject("Square", 300, 300, 100, 100));
+            placableObjectList.Add(new PlaceableObject("Square", 150, 150, 100, 100));
+            Vector2d Translation = new Vector2d();
+
+            foreach (var particle in particles) {
+                int particlePosX = (int)particle.GetPosition().X;
+                int particlePosY = (int)particle.GetPosition().Y;
+
+                if (placableObjectList.Count != 0) {
+                    foreach (PlaceableObject po in placableObjectList) {
+                        int poPosX = (int)(po.getPosition().X - (po.getSize().X / 2));
+                        int crossRange = (int)(po.getPosition().X + (po.getSize().X / 2)); //range to cross the object
+
+                        int poPosY = (int)po.getPosition().Y;
+                        int up = (int)(poPosY - (po.getSize().Y / 2));
+                        int down = (int)(poPosY + (po.getSize().Y / 2));
+
+                        if ((particlePosX <= poPosX && particlePosX >= poPosX - 20) &&
+                             (particlePosY >= up && particlePosY <= down)) {
+                            if (particlePosY >= poPosY) {
+                                Translation = TranslationYup;
+                                break;
+                            }
+                            else {
+                                Translation = TranslationYdown;
+                                break;
+                            }
+                        }
+                        else
+                            Translation = TranslationX;
+                    }
+                }
+                else
+                    Translation = TranslationX;
                 particle.updatePosition(Translation);
             }
+        }
+
+        public void SetContext(Context context) {
+            this.context = context;
         }
     }
 }

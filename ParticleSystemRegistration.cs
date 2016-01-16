@@ -26,7 +26,7 @@ namespace ParticleSystems
             systems.Add("Linear Updating System", Expression.Lambda<Func<ParticleSystem>>(
             Expression.New(typeof(LinearilyUpdatingParticleSystem).GetConstructor(Type.EmptyTypes))
              ).Compile());
-            systems.Add("Wind Simulation System", Expression.Lambda<Func<ParticleSystem>>(
+            systems.Add("Airflow Simulation System", Expression.Lambda<Func<ParticleSystem>>(
             Expression.New(typeof(AirFlowParticleSystem).GetConstructor(Type.EmptyTypes))
              ).Compile());
             systems.Add("Particle Swarm Optimisation", Expression.Lambda<Func<ParticleSystem>>(

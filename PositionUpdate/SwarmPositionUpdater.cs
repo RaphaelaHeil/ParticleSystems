@@ -40,5 +40,9 @@ namespace ParticleSystems.PositionUpdate
             // substituted by custom method signature to avoid casting :) 
             throw new NotImplementedException("Not implemented. Use custom implementation with explicit List of SwarmParticles!");
         }
+
+        public void SetContext(Context context) {
+            throw new NotImplementedException();
+        }
     }
 }

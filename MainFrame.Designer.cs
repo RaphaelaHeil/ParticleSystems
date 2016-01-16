@@ -467,6 +467,7 @@ namespace ParticleSystems
             this.Controls.Add(this.glControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainFrame";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Particle System Explorer";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.psSettings.ResumeLayout(false);
