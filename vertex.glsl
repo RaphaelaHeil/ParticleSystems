@@ -1,7 +1,8 @@
-﻿#version 330
-in vec2 vertexPosition;
-in vec3 vertexColour;
-out vec3 vColour;
+﻿#version 120
+
+attribute vec2 vertexPosition;
+attribute vec3 vertexColour;
+varying vec3 vColour;
 uniform mat4 mProjection;
 
 // Vertex Shader  
