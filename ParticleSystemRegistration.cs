@@ -32,6 +32,9 @@ namespace ParticleSystems
             systems.Add("Particle Swarm Optimisation", Expression.Lambda<Func<ParticleSystem>>(
             Expression.New(typeof(ParticleSwarmSystem).GetConstructor(Type.EmptyTypes))
              ).Compile());
+			systems.Add("Fire Particle System", Expression.Lambda<Func<ParticleSystem>>(
+				Expression.New(typeof(FireParticleSystem).GetConstructor(Type.EmptyTypes))
+			).Compile());
         }
 
         public String[] GetParticleSystemNames()

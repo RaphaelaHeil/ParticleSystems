@@ -8,7 +8,7 @@ namespace ParticleSystems.PositionUpdate
     /// <summary>
     /// Linearily translates particle positions.
     /// </summary>
-    class AirFlowPositionUpdater : PositionUpdater
+    class FirePositionUpdater : PositionUpdater
     {
 
         private const int DEFAULT_DELTA = 1;
@@ -17,7 +17,7 @@ namespace ParticleSystems.PositionUpdate
         /// <summary>
         /// Default constructor, sets x and y updates to 1 each.
         /// </summary>
-        public AirFlowPositionUpdater()
+		public FirePositionUpdater()
         {
             Translation = new Vector2d(DEFAULT_DELTA, 0);
         }
@@ -27,7 +27,7 @@ namespace ParticleSystems.PositionUpdate
         /// </summary>
         /// <param name="deltaX">Translation to be applied to the x coordinate</param>
         /// <param name="deltaY">Translation to be applied to the y coordinate</param>
-        public AirFlowPositionUpdater(int deltaY, int deltaX)
+		public FirePositionUpdater(int deltaY, int deltaX)
         {
             Translation = new Vector2d(deltaY, deltaX);
         }
@@ -40,5 +40,9 @@ namespace ParticleSystems.PositionUpdate
                 particle.updatePosition(Translation);
             }
         }
+
+		public void SetContext(Context context){
+
+		}
     }
 }

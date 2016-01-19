@@ -15,7 +15,7 @@ namespace ParticleSystems.Systems
 		private ExpirationHandler ExpirationHandler = new ExpirationHandler();
 		private Random Rand = new Random();
 
-		private FireUserSettings Panel = new FireUserSettings();
+		//private FireUserSettings Panel = new FireUserSettings();
 
 		private AirFlowParticleGenerator ParticleGenerator;
 
