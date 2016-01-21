@@ -30,17 +30,23 @@ namespace ParticleSystems.ParticleGeneration
             this.MaxVelocity = maxVelocity;
         }
 
-        public Particle GenerateParticle() {
+        public AirParticle GenerateParticle() {
             int lifetime = MaxLifetime;
             int agingVelocity = MaxAgingVelocity;
             double velocity = Random.NextDouble() * MaxVelocity;
-            return new Particle(CreateStartingPosition(), MaxLifetime, agingVelocity, velocity);
+            return new AirParticle(CreateStartingPosition(), MaxLifetime, agingVelocity, velocity);
         }
 
         private Vector2d CreateStartingPosition() {
             double x = -100;
             double y = Random.NextDouble() * Height;
             return new Vector2d(x, y);
+        }
+
+        Particle ParticleGenerator.GenerateParticle()
+        {
+            // substituted by custom method signature to avoid casting :) 
+            throw new NotImplementedException("Not implemented. Use custom implementation with explicit List of AirParticles!");
         }
     }
 }

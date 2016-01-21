@@ -5,17 +5,19 @@ using System.Drawing;
 using ParticleSystems.PositionUpdate;
 using ParticleSystems.ParticleGeneration;
 using ParticleSystems.SettingsPanels;
+using ParticleSystems.Particles;
+using System.Collections.Generic;
 
 namespace ParticleSystems.Systems {
     class AirFlowParticleSystem : ParticleSystem {
-        private PositionUpdater PositionUpdater = new AirFlowPositionUpdater();
-        private LifetimeHandler LifetimeHandler = new LifetimeHandler();
-        private ExpirationHandler ExpirationHandler = new ExpirationHandler();
+        private AirFlowPositionUpdater AirFlowPositionUpdater = new AirFlowPositionUpdater();
         private Random Rand = new Random();
 
         private AirFlowUserSettings Panel = new AirFlowUserSettings();
 
         private AirFlowParticleGenerator ParticleGenerator;
+
+        private new List<AirParticle> Particles;
 
         public AirFlowParticleSystem() {
 
@@ -23,6 +25,7 @@ namespace ParticleSystems.Systems {
         }
 
         protected override void Initialise() {
+            Particles = new List<AirParticle>();
             ParticleGenerator = new AirFlowParticleGenerator(
                 Context.GetIdHolder().Width,
                 Context.GetIdHolder().Height,
@@ -59,11 +62,14 @@ namespace ParticleSystems.Systems {
         }
 
         protected override void DecrementLifetime() {
-            LifetimeHandler.DecrementLifetime(Particles);
+            foreach (AirParticle particle in Particles)
+            {
+                particle.applyAging();
+            }
         }
 
         protected override void RemoveExpiredParticles() {
-            ExpirationHandler.handleExpiration(Particles);
+            Particles.RemoveAll(particle => particle.IsExpired());
         }
 
         protected override void GenerateNewParticles() {
@@ -85,8 +91,10 @@ namespace ParticleSystems.Systems {
         }
 
         protected override void UpdateParticlePositions() {
-            PositionUpdater.SetContext(Context);
-            PositionUpdater.UpdatePositions(Particles);
+
+            AirFlowPositionUpdater.SetContext(Context);
+            AirFlowPositionUpdater.SetSettingsPanel(Panel);
+            AirFlowPositionUpdater.UpdateAirPositions(Particles);
         }
 
         private void CreateInitialParticles() {
@@ -105,10 +113,10 @@ namespace ParticleSystems.Systems {
 
         public override ParticleSettings GetParticleSettings() {
             Panel = (AirFlowUserSettings)GetParticleSystemSettingsPanel();
-            ParticleSettings.WithInitialNumberOfParticles(0);
-            ParticleSettings.WithNewParticlesPerFrame(150);
-            ParticleSettings.WithLifetime(170); //the particle dies outside the right side of the draw-area
-            ParticleSettings.WithVelocity(5);
+            ParticleSettings.WithInitialNumberOfParticles(500);
+            ParticleSettings.WithNewParticlesPerFrame(5);
+            ParticleSettings.WithLifetime(1000); //the particle dies outside the right side of the draw-area
+            ParticleSettings.WithVelocity(1);
             Color color = Panel.getColor();
             Color complementaryColor = Color.FromArgb((255 - color.R), (255 - color.G), (255 - color.B));
             ParticleSettings.WithGlBackgroundColor(complementaryColor);

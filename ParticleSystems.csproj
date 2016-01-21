@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="ParticleGeneration\AirFlowParticleGenerator.cs" />
     <Compile Include="ParticleGeneration\SwarmParticleGenerator.cs" />
+    <Compile Include="Particles\AirParticle.cs" />
     <Compile Include="SettingsPanels\ParticleSwarmSettingsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -157,7 +158,9 @@
     <None Include="vertex.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Compile Include="SettingsPanels\FireUserSettings.cs" />
+    <Compile Include="SettingsPanels\FireUserSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

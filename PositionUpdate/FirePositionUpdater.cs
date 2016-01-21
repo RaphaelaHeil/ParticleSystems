@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using OpenTK;
 using ParticleSystems.Particles;
+using ParticleSystems.SettingsPanels;
 
 namespace ParticleSystems.PositionUpdate
 {
@@ -44,5 +46,10 @@ namespace ParticleSystems.PositionUpdate
 		public void SetContext(Context context){
 
 		}
+
+        public void SetSettingsPanel(ParticleSystemSettingsPanel settingsPanel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

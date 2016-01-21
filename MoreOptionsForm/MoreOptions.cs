@@ -28,6 +28,7 @@ namespace ParticleSystems.MoreOptionsForm {
             this.mainFrame = mainFrame;
             this.context = context;
             InitializeComponent();
+            fillPlacedObjectListFromContext();
         }
 
         private void InitializeComponent() {
