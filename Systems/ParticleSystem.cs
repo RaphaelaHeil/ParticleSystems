@@ -25,11 +25,11 @@ namespace ParticleSystems.Systems
         /// </summary>
         /// <param name="settings">Particle system settings</param>
         /// <param name="context">Particle system context</param>
-        public void Init(Context context)
+        public void Init(Context context, RenderHelper renderHelper)
         {
             Particles = new List<Particle>();
             Context = context;
-            RenderHelper = new RenderHelper(Context.GetIdHolder());
+            RenderHelper = renderHelper; //  new RenderHelper(Context.GetIdHolder());
             Initialise();
         }
 

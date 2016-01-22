@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
-namespace ParticleSystems.MoreOptionsForm {
-    class MoreOptionsWindow : Form {
+namespace ParticleSystems.MoreOptionsForm
+{
+    class MoreOptionsWindow : Form
+    {
         GroupBox placeObjectListBox;
         GroupBox placeObjectBox;
         Button placeButton;
@@ -18,22 +19,25 @@ namespace ParticleSystems.MoreOptionsForm {
         Label positionLabel;
         ComboBox objectSelect;
         Label objectLabel;
-        ListBox placedObjectList;
 
-        MainFrame mainFrame;
+        private CheckedListBox checkedListBox1;
+        private Button button1;
         Context context;
+        MainFrame MainFrame;
 
-
-        public MoreOptionsWindow(MainFrame mainFrame, Context context) {
-            this.mainFrame = mainFrame;
+        public MoreOptionsWindow(MainFrame mainFrame, Context context)
+        {
             this.context = context;
+            MainFrame = mainFrame;
             InitializeComponent();
             fillPlacedObjectListFromContext();
         }
 
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             this.placeObjectListBox = new System.Windows.Forms.GroupBox();
-            this.placedObjectList = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.placeObjectBox = new System.Windows.Forms.GroupBox();
             this.placeButton = new System.Windows.Forms.Button();
             this.wLabel = new System.Windows.Forms.Label();
@@ -54,7 +58,8 @@ namespace ParticleSystems.MoreOptionsForm {
             // 
             // placeObjectListBox
             // 
-            this.placeObjectListBox.Controls.Add(this.placedObjectList);
+            this.placeObjectListBox.Controls.Add(this.button1);
+            this.placeObjectListBox.Controls.Add(this.checkedListBox1);
             this.placeObjectListBox.Location = new System.Drawing.Point(185, 6);
             this.placeObjectListBox.Name = "placeObjectListBox";
             this.placeObjectListBox.Size = new System.Drawing.Size(290, 175);
@@ -62,13 +67,23 @@ namespace ParticleSystems.MoreOptionsForm {
             this.placeObjectListBox.TabStop = false;
             this.placeObjectListBox.Text = "Placed Object List";
             // 
-            // placedObjectList
+            // button1
             // 
-            this.placedObjectList.FormattingEnabled = true;
-            this.placedObjectList.Location = new System.Drawing.Point(6, 17);
-            this.placedObjectList.Name = "placedObjectList";
-            this.placedObjectList.Size = new System.Drawing.Size(278, 147);
-            this.placedObjectList.TabIndex = 0;
+            this.button1.Location = new System.Drawing.Point(171, 146);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(113, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Remove selected";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(6, 19);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(278, 124);
+            this.checkedListBox1.TabIndex = 9;
             // 
             // placeObjectBox
             // 
@@ -94,6 +109,7 @@ namespace ParticleSystems.MoreOptionsForm {
             // 
             // placeButton
             // 
+            this.placeButton.Enabled = false;
             this.placeButton.Location = new System.Drawing.Point(81, 142);
             this.placeButton.Name = "placeButton";
             this.placeButton.Size = new System.Drawing.Size(80, 23);
@@ -219,12 +235,13 @@ namespace ParticleSystems.MoreOptionsForm {
             // 
             // MoreOptionsWindow
             // 
-            this.ClientSize = new System.Drawing.Size(484, 191);
+            this.ClientSize = new System.Drawing.Size(482, 192);
             this.Controls.Add(this.placeObjectBox);
             this.Controls.Add(this.placeObjectListBox);
             this.Name = "MoreOptionsWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "More Options";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MoreOptionsWindow_FormClosed);
             this.placeObjectListBox.ResumeLayout(false);
             this.placeObjectBox.ResumeLayout(false);
             this.placeObjectBox.PerformLayout();
@@ -232,39 +249,60 @@ namespace ParticleSystems.MoreOptionsForm {
 
         }
 
-        private void placeButton_Click(object sender, System.EventArgs e) {
+        private void placeButton_Click(object sender, System.EventArgs e)
+        {
             string objectShape = objectSelect.SelectedItem.ToString();
             int positionX = int.Parse(posX.Text);
             int positionY = int.Parse(posY.Text);
             int sizeHeight = int.Parse(sizeH.Text);
             int sizeWidth = sizeHeight;
-            if (objectShape == "rectangle")
+            if (objectShape == "Rectangle")
+            {
                 sizeWidth = int.Parse(sizeW.Text);
+            }
 
-            mainFrame.createObject(objectShape, positionX, positionY, sizeHeight, sizeWidth);
-            putVisibleObjectToGlControl(objectShape, positionX, positionY, sizeHeight, sizeWidth);
+            PlaceableObject placeableObject = new PlaceableObject(objectShape, positionX, positionY, sizeHeight, sizeWidth);
+
+            context.addPlacableObject(placeableObject);
+            putVisibleObjectToGlControl(placeableObject);
         }
 
-        private void objectSelect_SelectedIndexChanged(object sender, System.EventArgs e) {
+        private void objectSelect_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            placeButton.Enabled = true;
             string objectShape = objectSelect.SelectedItem.ToString();
             if (objectShape == "Rectangle")
+            {
                 sizeW.Enabled = true;
-            else
+            }
+            else {
                 sizeW.Enabled = false;
-        }
-
-        private void fillPlacedObjectListFromContext() {
-            List<PlaceableObject> placableObjectList = context.getPlacableObjectList();
-            if (placableObjectList.Count != 0) {
-                this.placedObjectList.Items.Clear();
-                foreach (PlaceableObject po in placableObjectList)
-                    this.placedObjectList.Items.Add("> Object: " + po.getObjectShape() + " - Position: " + po.getPosition().X + ", " + po.getPosition().Y + " - Size: " + po.getSize().X + ", " + po.getSize().Y);
-
             }
         }
 
-        private void putVisibleObjectToGlControl(string objectShape, int positionX, int positionY, int sizeHeight, int sizeWidth) {
-            this.placedObjectList.Items.Add("> Object: "+objectShape+" - Position: "+positionX+", "+positionY+" - Size: "+sizeHeight+", "+sizeWidth);
+        private void fillPlacedObjectListFromContext()
+        {
+                checkedListBox1.Items.Clear();
+                checkedListBox1.Items.AddRange(context.getPlacableObjects().ToArray());
+        }
+
+        private void putVisibleObjectToGlControl(PlaceableObject placeableObject)
+        {
+            checkedListBox1.Items.Add(placeableObject);
+        }
+
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+            while (checkedListBox1.CheckedItems.Count > 0)
+            {
+                context.removePlaceableObject((PlaceableObject)checkedListBox1.CheckedItems[0]);
+                checkedListBox1.Items.Remove(checkedListBox1.CheckedItems[0]);
+            }
+        }
+
+        private void MoreOptionsWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            MainFrame.MoreOptionsFormClosed();
         }
     }
 }
