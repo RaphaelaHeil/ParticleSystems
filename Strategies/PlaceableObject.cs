@@ -9,11 +9,13 @@ namespace ParticleSystems
 {
     class PlaceableObject
     {
-        private string objectShape;
+        public enum Shape { Square, Rectangle};
+
+        private Shape objectShape;
         private Vector2d position;
         private Vector2d size;
 
-        public PlaceableObject(string objectShape, int positionX, int positionY, int sizeWidth, int sizeHeight)
+        public PlaceableObject(Shape objectShape, int positionX, int positionY, int sizeWidth, int sizeHeight)
         {
             this.objectShape = objectShape;
             position = new Vector2d(positionX, positionY);
@@ -21,11 +23,11 @@ namespace ParticleSystems
         }
 
         //------------------- getter, setter ------------------------
-        public void setObjectShape(string objectShape)
+        public void setObjectShape(Shape objectShape)
         {
             this.objectShape = objectShape;
         }
-        public string getObjectShape()
+        public Shape getObjectShape()
         {
             return this.objectShape;
         }

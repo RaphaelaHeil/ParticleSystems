@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace ParticleSystems.MoreOptionsForm
 {
@@ -215,9 +216,10 @@ namespace ParticleSystems.MoreOptionsForm
             // 
             this.objectSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.objectSelect.FormattingEnabled = true;
-            this.objectSelect.Items.AddRange(new object[] {
-            "Square",
-            "Rectangle"});
+
+
+
+            this.objectSelect.DataSource = Enum.GetValues(typeof(PlaceableObject.Shape));
             this.objectSelect.Location = new System.Drawing.Point(81, 17);
             this.objectSelect.Name = "objectSelect";
             this.objectSelect.Size = new System.Drawing.Size(80, 21);
@@ -251,12 +253,12 @@ namespace ParticleSystems.MoreOptionsForm
 
         private void placeButton_Click(object sender, System.EventArgs e)
         {
-            string objectShape = objectSelect.SelectedItem.ToString();
+            PlaceableObject.Shape objectShape = (PlaceableObject.Shape)objectSelect.SelectedItem;
             int positionX = int.Parse(posX.Text);
             int positionY = int.Parse(posY.Text);
             int sizeHeight = int.Parse(sizeH.Text);
             int sizeWidth = sizeHeight;
-            if (objectShape == "Rectangle")
+            if (objectShape == PlaceableObject.Shape.Rectangle)
             {
                 sizeWidth = int.Parse(sizeW.Text);
             }
@@ -270,8 +272,8 @@ namespace ParticleSystems.MoreOptionsForm
         private void objectSelect_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             placeButton.Enabled = true;
-            string objectShape = objectSelect.SelectedItem.ToString();
-            if (objectShape == "Rectangle")
+            PlaceableObject.Shape objectShape = (PlaceableObject.Shape)objectSelect.SelectedItem;
+            if (objectShape == PlaceableObject.Shape.Rectangle)
             {
                 sizeW.Enabled = true;
             }
