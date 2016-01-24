@@ -21,11 +21,8 @@ namespace ParticleSystems.SettingsPanels
             this.colorIndicator = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.checkVortex = new System.Windows.Forms.CheckBox();
-            this.sinus = new System.Windows.Forms.TextBox();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cosinus = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.checkInteraction = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.colorIndicator)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,52 +73,27 @@ namespace ParticleSystems.SettingsPanels
             this.checkVortex.Text = "Vortex";
             this.checkVortex.UseVisualStyleBackColor = true;
             // 
-            // sinus
-            // 
-            this.sinus.Location = new System.Drawing.Point(61, 79);
-            this.sinus.Name = "sinus";
-            this.sinus.Size = new System.Drawing.Size(100, 20);
-            this.sinus.TabIndex = 7;
-            this.sinus.Text = "0";
-            // 
             // contextMenuStrip2
             // 
             this.contextMenuStrip2.Name = "contextMenuStrip2";
             this.contextMenuStrip2.Size = new System.Drawing.Size(61, 4);
             // 
-            // cosinus
+            // checkInteraction
             // 
-            this.cosinus.Location = new System.Drawing.Point(61, 105);
-            this.cosinus.Name = "cosinus";
-            this.cosinus.Size = new System.Drawing.Size(100, 20);
-            this.cosinus.TabIndex = 9;
-            this.cosinus.Text = "0";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 82);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(36, 13);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Sinus:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 108);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 13);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Cosinus:";
+            this.checkInteraction.AutoSize = true;
+            this.checkInteraction.Checked = true;
+            this.checkInteraction.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkInteraction.Location = new System.Drawing.Point(13, 54);
+            this.checkInteraction.Name = "checkInteraction";
+            this.checkInteraction.Size = new System.Drawing.Size(76, 17);
+            this.checkInteraction.TabIndex = 7;
+            this.checkInteraction.Text = "Interaction";
+            this.checkInteraction.UseVisualStyleBackColor = true;
             // 
             // AirFlowUserSettings
             // 
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.cosinus);
-            this.Controls.Add(this.sinus);
+            this.Controls.Add(this.checkInteraction);
             this.Controls.Add(this.checkVortex);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.colorIndicator);
@@ -147,9 +119,12 @@ namespace ParticleSystems.SettingsPanels
                 return false;
         }
 
-        private void resetButton_MouseClick(object sender, MouseEventArgs e)
+        public bool GetInteraction()
         {
-            //ToDo: Reset the drawing-area
+            if (this.checkInteraction.Checked)
+                return true;
+            else
+                return false;
         }
 
         private void colorIndicator_MouseClick(object sender, MouseEventArgs e)
@@ -160,22 +135,5 @@ namespace ParticleSystems.SettingsPanels
             }
         }
 
-        public void setSinus(double sinus)
-        {
-            this.sinus.Text = ""+sinus;
-        }
-        public int getSinus()
-        {
-            return int.Parse(this.sinus.Text);
-        }
-
-        public void setCosinus(double cosinus)
-        {
-            this.cosinus.Text = "" + cosinus;
-        }
-        public int getCosinuss()
-        {
-            return int.Parse(this.cosinus.Text);
-        }
     }
 }

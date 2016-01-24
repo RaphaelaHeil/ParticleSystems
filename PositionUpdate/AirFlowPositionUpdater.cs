@@ -17,10 +17,11 @@ namespace ParticleSystems.PositionUpdate
         private Vector2d TranslationX;
         private Vector2d TranslationYup;
         private Vector2d TranslationYdown;
-        private Vector4d[,] GridArray;
-        private AirParticle[,] AirParticleArray;
 
         private AirFlowUserSettings airFlowSettings;
+        private ParticleGrid<AirParticle> ParticleGrid;
+        List<AirParticle>[,] ParticleGridArrayList;
+        List<PlaceableObject> placableObjectList;
 
         private Random Random = new Random();
         /// <summary>
@@ -39,8 +40,10 @@ namespace ParticleSystems.PositionUpdate
             Vector2d Position;
             Vector2d Translation = new Vector2d(DEFAULT_DELTA, 0);
 
-            List<PlaceableObject> placableObjectList = context.getPlacableObjects();
-            
+            placableObjectList = context.getPlacableObjects();
+            ParticleGrid.putParticlesToParticleGridArrayList(particles);
+            ParticleGridArrayList = ParticleGrid.GetParticleGridArrayList();
+
             foreach (var particle in particles) {
                 if (particle.GetMaxLifetime() == 0)
                     particle.SetMaxLifetime(particle.GetRemainingLifetime() + 1);
@@ -53,15 +56,23 @@ namespace ParticleSystems.PositionUpdate
                 if (airFlowSettings.GetVortex())
                 {
                     double offset = particle.GetVelocity() * 4;
-                    //Position = passVortex(particlePosX, particlePosY, placableObjectList, (int)offset);
-                    Position = ineraction(particlePosX, particlePosY, particle, particles);
+                    if (airFlowSettings.GetInteraction())
+                        Position = ineraction(particlePosX, particlePosY, particle);
+                    else
+                        Position = new Vector2d(particlePosX, particlePosY);
+                    Position = passVortex(Position.X, Position.Y, (int)offset);
+
                 }
                     
                 else
                 {
-                    Translation = passObstacles((int)particlePosX, (int)particlePosY, placableObjectList);
-                    //Position = new Vector2d(particlePosX, particlePosY);
-                    Position = ineraction(particlePosX, particlePosY, particle, particles);
+                    if (airFlowSettings.GetInteraction())
+                        Position = ineraction(particlePosX, particlePosY, particle);
+                    else
+                        Position = new Vector2d(particlePosX, particlePosY);
+                    Translation = passObstacles((int)Position.X, (int)Position.Y);
+
+
                 }
                    
                 if (particle.GetRemainingLifetime() == 5)
@@ -77,33 +88,58 @@ namespace ParticleSystems.PositionUpdate
             }
         }
 
-        private Vector2d ineraction(double pPosX, double pPosY, AirParticle curentParticle, List<AirParticle> particles) {
+        private Vector2d ineraction(double pPosX, double pPosY, AirParticle curentParticle) {
+            int column = (int)(pPosX / ParticleGrid.GetFiieldSize());
+            int row = (int)(pPosY / ParticleGrid.GetFiieldSize());
             Vector2d Position = new Vector2d(pPosX + 1, pPosY);
-            foreach (AirParticle particle in particles) {
-                double otherParticePosX = particle.GetPosition().X;
-                double otherParticePosY = particle.GetPosition().Y;
-                int range = 5;
-                if (!curentParticle.Equals(particle)) {
-                    if ( (pPosY <= otherParticePosY + range && pPosY >= otherParticePosY - range) &&
-                       (pPosX <= otherParticePosX + range && pPosX >= otherParticePosX - range) )
+            if (column < ParticleGrid.GetGridColumnSize() && row < ParticleGrid.GetGridRowSize())
+            {
+                foreach (AirParticle particle in ParticleGridArrayList[column, row])
+                {
+                    double otherParticePosX = particle.GetPosition().X;
+                    double otherParticePosY = particle.GetPosition().Y;
+                    int range = 5;
+
+                    if (!curentParticle.Equals(particle))
                     {
-                        if(pPosY < otherParticePosY)
-                            Position = new Vector2d(pPosX + 1, pPosY + 2);
-                        else if (pPosY >= otherParticePosY)
-                            Position = new Vector2d(pPosX + 1, pPosY - 2);
+                        if ((pPosY <= otherParticePosY + range && pPosY >= otherParticePosY - range) &&
+                           (pPosX <= otherParticePosX + range && pPosX >= otherParticePosX - range))
+                        {
+                            if (pPosY < otherParticePosY)
+                            {
+                                Position = new Vector2d(pPosX + 1, pPosY + 2);
+                                if (( pPosY + 2) > context.GetIdHolder().Height )
+                                    Position = new Vector2d(pPosX + 1, pPosY - 2);
+                            }
+                               
+                            else if (pPosY >= otherParticePosY)
+                            {
+                                Position = new Vector2d(pPosX + 1, pPosY - 2);
+                                if ((pPosY - 2) < 0)
+                                    Position = new Vector2d(pPosX + 1, pPosY + 2);
+                            } 
 
-
-                        if(pPosX < otherParticePosX)
-                            Position = new Vector2d(pPosX + 2, Position.Y);
-                        else if (pPosX >= otherParticePosX)
-                            Position = new Vector2d(pPosX - 2, Position.Y);
+                            if (pPosX < otherParticePosX)
+                            {
+                                Position = new Vector2d(pPosX + 2, Position.Y);
+                                if ((pPosX + 2) > context.GetIdHolder().Width)
+                                    Position = new Vector2d(pPosX - 2, Position.Y);
+                            }
+                                
+                            else if (pPosX >= otherParticePosX)
+                            {
+                                Position = new Vector2d(pPosX - 2, Position.Y);
+                                if ((pPosX - 2) < 0)
+                                    Position = new Vector2d(pPosX + 2, Position.Y);
+                            }     
+                        }
                     }
                 }
             }
             return Position;
         }
 
-        private Vector2d passVortex(double pPosX, double pPosY, List<PlaceableObject> placableObjectList, int offset)
+        private Vector2d passVortex(double pPosX, double pPosY, int offset)
         {
             Vector2d Position = new Vector2d();
             if (placableObjectList.Count != 0)
@@ -118,24 +154,25 @@ namespace ParticleSystems.PositionUpdate
                     if ((pPosX >= left && pPosX <= right) &&
                          (pPosY >= top && pPosY <= bottom ))
                     {
-                        Vector2d middle = po.getPosition();
-                        double change = 0.5;
-                        //under left edge
-                        if (pPosX < middle.X && pPosY > middle.Y) {
-                            Position = new Vector2d(pPosX +1, pPosY + change);
-                        }
-                        //under right edge
-                        else if (pPosX > middle.X && pPosY > middle.Y) {
-                            Position = new Vector2d(pPosX + 1, pPosY - change);
-                        }
-                        //upper left edge
-                        else if (pPosX < middle.X && pPosY < middle.Y) {
-                            Position = new Vector2d(pPosX + 1, pPosY - change);
-                        }
-                        //right left edge
-                        else if (pPosX > middle.X && pPosY < middle.Y) {
-                            Position = new Vector2d(pPosX + 1, pPosY + change);
-                        }
+
+                        //Vector2d middle = po.getPosition();
+                        //double change = 1;
+                        ////under left edge
+                        //if (pPosX < middle.X && pPosY > middle.Y) {
+                        //    Position = new Vector2d(pPosX +1, pPosY + change);
+                        //}
+                        ////under right edge
+                        //else if (pPosX > middle.X && pPosY > middle.Y) {
+                        //    Position = new Vector2d(pPosX + 1, pPosY - change);
+                        //}
+                        ////upper left edge
+                        //else if (pPosX < middle.X && pPosY < middle.Y) {
+                        //    Position = new Vector2d(pPosX + 1, pPosY - change);
+                        //}
+                        ////right left edge
+                        //else if (pPosX > middle.X && pPosY < middle.Y) {
+                        //    Position = new Vector2d(pPosX + 1, pPosY + change);
+                        //}
                     }
                     else
                         Position = new Vector2d(pPosX, pPosY);
@@ -146,7 +183,7 @@ namespace ParticleSystems.PositionUpdate
             return Position;
         }
 
-        private Vector2d passObstacles(int pPosX, int pPosY, List<PlaceableObject> placableObjectList) {
+        private Vector2d passObstacles(int pPosX, int pPosY) {
             Vector2d Translation = new Vector2d();
             if (placableObjectList.Count != 0) {
                 foreach (PlaceableObject po in placableObjectList) {
@@ -179,16 +216,8 @@ namespace ParticleSystems.PositionUpdate
             return Translation;
         }
 
-        public void SetContext(Context context) {
-            this.context = context;
-        }
-
-        public void SetGridArray(Vector4d[,] GridArray) {
-            this.GridArray = GridArray;
-        }
-
-        public void SetAirParticleArray(AirParticle[,] AirParticleArray) {
-            this.AirParticleArray = AirParticleArray;
+        public void SetParticleGrid(ParticleGrid<AirParticle> particleGrid) {
+            this.ParticleGrid = particleGrid;
         }
 
         public void SetSettingsPanel(ParticleSystemSettingsPanel settingsPanel)
@@ -200,6 +229,11 @@ namespace ParticleSystems.PositionUpdate
         {
             // substituted by custom method signature to avoid casting :) 
             throw new NotImplementedException("Not implemented. Use custom implementation with explicit List of AirParticles!");
+        }
+
+        public void SetContext(Context context)
+        {
+            this.context = context;
         }
     }
 }

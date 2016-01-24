@@ -12,10 +12,7 @@ namespace ParticleSystems.SettingsPanels
         private ContextMenuStrip contextMenuStrip1;
         private System.ComponentModel.IContainer components;
         private CheckBox checkVortex;
-        private TextBox sinus;
         private ContextMenuStrip contextMenuStrip2;
-        private TextBox cosinus;
-        private Label label4;
-        private Label label3;
+        private CheckBox checkInteraction;
     }
 }

@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="ParticleGeneration\AirFlowParticleGenerator.cs" />
     <Compile Include="ParticleGeneration\SwarmParticleGenerator.cs" />
+    <Compile Include="ParticleGrid.cs" />
     <Compile Include="Particles\AirParticle.cs" />
     <Compile Include="SettingsPanels\ParticleSwarmSettingsPanel.cs">
       <SubType>UserControl</SubType>

@@ -18,8 +18,7 @@ namespace ParticleSystems.Systems {
         private AirFlowParticleGenerator ParticleGenerator;
 
         private new List<AirParticle> Particles;
-        private Vector4d[,] GridArray;
-        private AirParticle[,] AirParticleArray;
+        private ParticleGrid<AirParticle> ParticleGrid;
 
         public AirFlowParticleSystem() {
 
@@ -36,7 +35,8 @@ namespace ParticleSystems.Systems {
                 ParticleSettings.GetVelocity()
             );
             CreateInitialParticles();
-            CreateParticleGrid();
+            ParticleGrid = new ParticleGrid<AirParticle>(Context);
+            ParticleGrid.putParticlesToParticleGridArrayList(Particles);
             //TODO: create stuff from settings
             //TODO: generate initial particles
         }
@@ -83,6 +83,7 @@ namespace ParticleSystems.Systems {
 
         protected override void UpdateParticlePositions() {
             AirFlowPositionUpdater.SetContext(Context);
+            AirFlowPositionUpdater.SetParticleGrid(ParticleGrid);
             AirFlowPositionUpdater.SetSettingsPanel(Panel);
             AirFlowPositionUpdater.UpdateAirPositions(Particles);
         }
@@ -112,30 +113,6 @@ namespace ParticleSystems.Systems {
             ParticleSettings.WithGlBackgroundColor(complementaryColor);
 
             return ParticleSettings;
-        }
-
-        private Vector4d[,] CreateParticleGrid() {
-            int fieldSize = 50;
-            int girdSizeColumn = Context.GetIdHolder().Height / fieldSize;
-            int girdSizeRow = Context.GetIdHolder().Width / fieldSize;
-
-
-            GridArray = new Vector4d[girdSizeColumn, girdSizeRow]; //12x12 Grid by glControlSize = 600
-            for (int i = 0; i < girdSizeColumn; i++) {
-                for (int j = 0; j < girdSizeRow; j++) {
-                    GridArray[i, j] = new Vector4d(i * fieldSize, j * fieldSize,
-                        (i * fieldSize) + fieldSize, (j * fieldSize) + fieldSize);
-                }
-            }
-            return GridArray;
-        }
-
-        private void putParticlesToAirParticleArray() {
-            int fieldSize = 50;
-            int girdSizeColumn = Context.GetIdHolder().Height / fieldSize;
-            int girdSizeRow = Context.GetIdHolder().Width / fieldSize;
-
-            AirParticleArray = new AirParticle[girdSizeColumn, girdSizeRow];
         }
     }
 }
