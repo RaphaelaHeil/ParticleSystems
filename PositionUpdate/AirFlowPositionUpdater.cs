@@ -39,7 +39,7 @@ namespace ParticleSystems.PositionUpdate
             Vector2d Position;
             Vector2d Translation = new Vector2d(DEFAULT_DELTA, 0);
 
-            List<PlaceableObject> placableObjectList = context.getPlacableObjectList();
+            List<PlaceableObject> placableObjectList = context.getPlacableObjects();
             
             foreach (var particle in particles) {
                 if (particle.GetMaxLifetime() == 0)

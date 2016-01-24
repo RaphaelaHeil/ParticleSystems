@@ -21,6 +21,7 @@ namespace ParticleSystems
         private ParticleSystem selectedParticleSystem;
         private ParticleSystemSettingsPanel panelSystemSettingsPanel;
         private Context context = new Context();
+        private RenderHelper RenderHelper;
 
         private const double TICK_IN_MS = 15.0;
         private const double SMOOTHING = 0.8;
@@ -41,6 +42,8 @@ namespace ParticleSystems
             particleSystemSelection.Items.AddRange(particleSystemRegistration.GetParticleSystemNames());
             particleSystemSelection.EndUpdate();
 
+           
+
             timer.Elapsed += timerListener;
 
             fpsTimer.Tick += fpsTimerListener;
@@ -54,10 +57,11 @@ namespace ParticleSystems
 
             InitializeProgram();
 
+            RenderHelper = new RenderHelper(idHolder);
+
             glControlLoaded = true;
             GL.ClearColor(Color.CornflowerBlue);
             SetupViewport();
-
         }
 
         private void onRender(object sender, PaintEventArgs e)
@@ -70,6 +74,9 @@ namespace ParticleSystems
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.PointSize(4f);
 
+            RenderHelper.RenderPlaceables(context.GetPlaceableObjectVertices());
+
+            
             if (ready)
             {
                 if (selectedParticleSystem.RenderFrame())
@@ -141,7 +148,6 @@ namespace ParticleSystems
 
         private void SetupViewport()
         {
-
             GL.Viewport(0, 0, idHolder.Width, idHolder.Height);
         }
 
@@ -165,12 +171,9 @@ namespace ParticleSystems
             GL.ClearColor(particleSettings.getGlControlBackgroundColor());
 
             context.setIdHolder(idHolder);
-
-            context.addPlacableObjectToList(new PlaceableObject("Square", 300, 300, 300, 300));
-
             //TODO: read context ... 
 
-            selectedParticleSystem.Init(context);
+            selectedParticleSystem.Init(context, RenderHelper);
             ready = true;
         }
 
@@ -303,14 +306,14 @@ namespace ParticleSystems
             glControl.Invalidate();
         }
 
-        public void createObject(string objectShape, int positionX, int positionY, int sizeHeight, int sizeWidth) {
-            PlaceableObject po = new PlaceableObject(objectShape, positionX, positionY, sizeHeight, sizeWidth);
-            context.addPlacableObjectToList(po);
-        }
-
         private void moreOptions_Click(object sender, EventArgs e) {
             MoreOptionsWindow moreOptions = new MoreOptionsWindow(this, context);
             moreOptions.Show();
+        }
+
+        public void MoreOptionsFormClosed()
+        {
+            glControl.Invalidate();
         }
     }
 }

@@ -41,8 +41,8 @@ namespace ParticleSystems
             this.frameButton = new System.Windows.Forms.Button();
             this.pauseButton = new System.Windows.Forms.Button();
             this.psSettings = new System.Windows.Forms.GroupBox();
-            this.particleSystemSettingsPanel = new ParticleSystems.SettingsPanels.ParticleSystemSettingsPanel();
             this.particleSystemSettings = new System.Windows.Forms.GroupBox();
+            this.moreOptions = new System.Windows.Forms.Button();
             this.descriptionPanel = new System.Windows.Forms.Panel();
             this.particleSystemDescription = new System.Windows.Forms.Label();
             this.particleSystemSelection = new System.Windows.Forms.ComboBox();
@@ -67,7 +67,7 @@ namespace ParticleSystems
             this.frameControls = new System.Windows.Forms.GroupBox();
             this.framesPerSecondOutput = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.moreOptions = new System.Windows.Forms.Button();
+            this.particleSystemSettingsPanel = new ParticleSystems.SettingsPanels.ParticleSystemSettingsPanel();
             this.psSettings.SuspendLayout();
             this.particleSystemSettings.SuspendLayout();
             this.descriptionPanel.SuspendLayout();
@@ -186,17 +186,8 @@ namespace ParticleSystems
             this.psSettings.TabStop = false;
             this.psSettings.Text = "System specific settings";
             // 
-            // particleSystemSettingsPanel
-            // 
-            this.particleSystemSettingsPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.particleSystemSettingsPanel.Location = new System.Drawing.Point(6, 19);
-            this.particleSystemSettingsPanel.Name = "particleSystemSettingsPanel";
-            this.particleSystemSettingsPanel.Size = new System.Drawing.Size(437, 209);
-            this.particleSystemSettingsPanel.TabIndex = 0;
-            // 
             // particleSystemSettings
             // 
-            this.particleSystemSettings.Controls.Add(this.moreOptions);
             this.particleSystemSettings.Controls.Add(this.descriptionPanel);
             this.particleSystemSettings.Controls.Add(this.particleSystemSelection);
             this.particleSystemSettings.Controls.Add(this.psSettings);
@@ -206,6 +197,16 @@ namespace ParticleSystems
             this.particleSystemSettings.TabIndex = 13;
             this.particleSystemSettings.TabStop = false;
             this.particleSystemSettings.Text = "Particle system settings";
+            // 
+            // moreOptions
+            // 
+            this.moreOptions.Location = new System.Drawing.Point(375, -1);
+            this.moreOptions.Name = "moreOptions";
+            this.moreOptions.Size = new System.Drawing.Size(80, 23);
+            this.moreOptions.TabIndex = 13;
+            this.moreOptions.Text = "More Options";
+            this.moreOptions.UseVisualStyleBackColor = true;
+            this.moreOptions.Click += new System.EventHandler(this.moreOptions_Click);
             // 
             // descriptionPanel
             // 
@@ -418,6 +419,7 @@ namespace ParticleSystems
             // 
             // amountPanel
             // 
+            this.amountPanel.Controls.Add(this.moreOptions);
             this.amountPanel.Controls.Add(this.initialAmountInput);
             this.amountPanel.Controls.Add(this.label1);
             this.amountPanel.Location = new System.Drawing.Point(6, 19);
@@ -458,15 +460,13 @@ namespace ParticleSystems
             this.label4.TabIndex = 10;
             this.label4.Text = "Frames per Second:";
             // 
-            // moreOptions
+            // particleSystemSettingsPanel
             // 
-            this.moreOptions.Location = new System.Drawing.Point(384, 17);
-            this.moreOptions.Name = "moreOptions";
-            this.moreOptions.Size = new System.Drawing.Size(80, 23);
-            this.moreOptions.TabIndex = 13;
-            this.moreOptions.Text = "More Options";
-            this.moreOptions.UseVisualStyleBackColor = true;
-            this.moreOptions.Click += new System.EventHandler(this.moreOptions_Click);
+            this.particleSystemSettingsPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.particleSystemSettingsPanel.Location = new System.Drawing.Point(6, 19);
+            this.particleSystemSettingsPanel.Name = "particleSystemSettingsPanel";
+            this.particleSystemSettingsPanel.Size = new System.Drawing.Size(437, 209);
+            this.particleSystemSettingsPanel.TabIndex = 0;
             // 
             // MainFrame
             // 
