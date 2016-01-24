@@ -17,6 +17,8 @@ namespace ParticleSystems.PositionUpdate
         private Vector2d TranslationX;
         private Vector2d TranslationYup;
         private Vector2d TranslationYdown;
+        private Vector4d[,] GridArray;
+        private AirParticle[,] AirParticleArray;
 
         private AirFlowUserSettings airFlowSettings;
 
@@ -51,13 +53,15 @@ namespace ParticleSystems.PositionUpdate
                 if (airFlowSettings.GetVortex())
                 {
                     double offset = particle.GetVelocity() * 4;
-                    Position = passVortex(particlePosX, particlePosY, placableObjectList, (int)offset);
+                    //Position = passVortex(particlePosX, particlePosY, placableObjectList, (int)offset);
+                    Position = ineraction(particlePosX, particlePosY, particle, particles);
                 }
                     
                 else
                 {
                     Translation = passObstacles((int)particlePosX, (int)particlePosY, placableObjectList);
-                    Position = new Vector2d(particlePosX, particlePosY);
+                    //Position = new Vector2d(particlePosX, particlePosY);
+                    Position = ineraction(particlePosX, particlePosY, particle, particles);
                 }
                    
                 if (particle.GetRemainingLifetime() == 5)
@@ -73,6 +77,32 @@ namespace ParticleSystems.PositionUpdate
             }
         }
 
+        private Vector2d ineraction(double pPosX, double pPosY, AirParticle curentParticle, List<AirParticle> particles) {
+            Vector2d Position = new Vector2d(pPosX + 1, pPosY);
+            foreach (AirParticle particle in particles) {
+                double otherParticePosX = particle.GetPosition().X;
+                double otherParticePosY = particle.GetPosition().Y;
+                int range = 5;
+                if (!curentParticle.Equals(particle)) {
+                    if ( (pPosY <= otherParticePosY + range && pPosY >= otherParticePosY - range) &&
+                       (pPosX <= otherParticePosX + range && pPosX >= otherParticePosX - range) )
+                    {
+                        if(pPosY < otherParticePosY)
+                            Position = new Vector2d(pPosX + 1, pPosY + 2);
+                        else if (pPosY >= otherParticePosY)
+                            Position = new Vector2d(pPosX + 1, pPosY - 2);
+
+
+                        if(pPosX < otherParticePosX)
+                            Position = new Vector2d(pPosX + 2, Position.Y);
+                        else if (pPosX >= otherParticePosX)
+                            Position = new Vector2d(pPosX - 2, Position.Y);
+                    }
+                }
+            }
+            return Position;
+        }
+
         private Vector2d passVortex(double pPosX, double pPosY, List<PlaceableObject> placableObjectList, int offset)
         {
             Vector2d Position = new Vector2d();
@@ -85,42 +115,30 @@ namespace ParticleSystems.PositionUpdate
                     int top = (int)(po.getPosition().Y - (po.getSize().Y / 2));
                     int bottom = (int)(po.getPosition().Y + (po.getSize().Y / 2));
 
-                    if ((pPosX > left && pPosX < right) &&
-                         (pPosY > top && pPosY < bottom ))
+                    if ((pPosX >= left && pPosX <= right) &&
+                         (pPosY >= top && pPosY <= bottom ))
                     {
                         Vector2d middle = po.getPosition();
-                        airFlowSettings.setSinus(airFlowSettings.getSinus()+1);
-                        if(pPosX < middle.X)
-                        {
-                            double leftSinusRange = 1 / (pPosX - middle.X);
-                            double bottomCosinusRange = 1 / (pPosY - middle.Y);
-
-                            double sin = Math.Sin(leftSinusRange);
-                            double cos = Math.Cos(bottomCosinusRange);
-
-                            Position = new Vector2d(pPosX - sin, pPosY - cos);
-
-                            airFlowSettings.setCosinus(airFlowSettings.getCosinuss() + 1);
-
+                        double change = 0.5;
+                        //under left edge
+                        if (pPosX < middle.X && pPosY > middle.Y) {
+                            Position = new Vector2d(pPosX +1, pPosY + change);
                         }
-                        else if (pPosX >= middle.X)
-                        {
-                            double rightSinusRange = 1 / (pPosX - middle.X);
-                            double topCosinusRange = 1 / (pPosY - middle.Y);
-
-                            double sin = Math.Sin(rightSinusRange);
-                            double cos = Math.Cos(topCosinusRange);
-
-                            Position = new Vector2d(pPosX + sin, pPosY + cos);
-
-                            airFlowSettings.setCosinus(airFlowSettings.getCosinuss() + 1);
+                        //under right edge
+                        else if (pPosX > middle.X && pPosY > middle.Y) {
+                            Position = new Vector2d(pPosX + 1, pPosY - change);
+                        }
+                        //upper left edge
+                        else if (pPosX < middle.X && pPosY < middle.Y) {
+                            Position = new Vector2d(pPosX + 1, pPosY - change);
+                        }
+                        //right left edge
+                        else if (pPosX > middle.X && pPosY < middle.Y) {
+                            Position = new Vector2d(pPosX + 1, pPosY + change);
                         }
                     }
                     else
                         Position = new Vector2d(pPosX, pPosY);
-                    //je näher der partikel an die Mitte des Vortex kommt, umso schneller dreht er sich und desto langsamer wird er
-                    //er verändet dabei seine Position im kosinus und sinus. die lebenszeit heröht sich je dichter er am zentrum ist
-                    //ist der am zentrum angelangt, dreht er sich wieder hinaus
                 }
             }
             else
@@ -163,6 +181,14 @@ namespace ParticleSystems.PositionUpdate
 
         public void SetContext(Context context) {
             this.context = context;
+        }
+
+        public void SetGridArray(Vector4d[,] GridArray) {
+            this.GridArray = GridArray;
+        }
+
+        public void SetAirParticleArray(AirParticle[,] AirParticleArray) {
+            this.AirParticleArray = AirParticleArray;
         }
 
         public void SetSettingsPanel(ParticleSystemSettingsPanel settingsPanel)

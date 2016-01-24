@@ -38,7 +38,7 @@ namespace ParticleSystems.ParticleGeneration
         }
 
         private Vector2d CreateStartingPosition() {
-            double x = -100;
+            double x = 0;
             double y = Random.NextDouble() * Height;
             return new Vector2d(x, y);
         }

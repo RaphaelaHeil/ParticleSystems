@@ -165,7 +165,9 @@ namespace ParticleSystems
             GL.ClearColor(particleSettings.getGlControlBackgroundColor());
 
             context.setIdHolder(idHolder);
-            context.addPlacableObjectToList(new PlaceableObject("Square", 300, 300, 100, 100));
+
+            context.addPlacableObjectToList(new PlaceableObject("Square", 300, 300, 300, 300));
+
             //TODO: read context ... 
 
             selectedParticleSystem.Init(context);
