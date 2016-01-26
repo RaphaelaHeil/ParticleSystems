@@ -5,10 +5,23 @@ using ParticleSystems.PositionUpdate;
 using ParticleSystems.SettingsPanels;
 using ParticleSystems.Strategies;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System;
 
 namespace ParticleSystems.Systems
 {
+
+    public enum Topology
+    {
+
+        [Description("Global Best")]
+        GlobalBest,
+        [Description("Ring (Local Best)")]
+        Ring
+    };
+
+    // public enum Shape { Square, Rectangle};
     class ParticleSwarmSystem : ParticleSystem
     {
 
@@ -22,7 +35,7 @@ namespace ParticleSystems.Systems
 
         public override ParticleSystemSettingsPanel GetParticleSystemSettingsPanel()
         {
-            
+
             return Panel;
         }
 
@@ -31,11 +44,18 @@ namespace ParticleSystems.Systems
         protected override void Initialise()
         {
             Particles = new List<SwarmParticle>();
+
             //TODO read values from Settings
 
             //TODO: get P value/strategy selection from panel!
+            //Panel.GetSelectedTopology();
+            
 
-            ParticleSwarmFitnessStrategy fitnessStrategy = new ParticleSwarmPNormFitnessStrategy(2, Panel.GetTargetPosition());
+            AddOptimaAsPlaceableObjects(Panel.GetOptima());
+            
+
+
+            ParticleSwarmFitnessStrategy fitnessStrategy = new ParticleSwarmPNormFitnessStrategy(2, Panel.GetOptima());
             ParticleGenerator = new SwarmParticleGenerator(fitnessStrategy, Context.GetIdHolder().Width, Context.GetIdHolder().Height);
             PositionUpdater = new SwarmPositionUpdater();
 
@@ -44,7 +64,14 @@ namespace ParticleSystems.Systems
 
         }
 
-
+        private void AddOptimaAsPlaceableObjects(HashSet<Vector2d> optima)
+        {
+            Context.clearPlaceableObjects();
+            foreach(var optimum in optima)
+            {
+                Context.addPlacableObject(new PlaceableObject(PlaceableObject.Shape.Rectangle, (int) optimum.X,(int) optimum.Y, 5,5));
+            }           
+        }
 
         protected override void UpdateParticlePositions()
         {
@@ -58,7 +85,7 @@ namespace ParticleSystems.Systems
             for (int i = 0; i < Particles.Count; i++)
             {
                 ParticlePositions[i] = Particles.ElementAt(i).GetPosition();
-                ParticleColours[i] = new Vector3d(Particles.ElementAt(i).GetBestFitness()/80.0); //TODO: change accordingly
+                ParticleColours[i] = new Vector3d(Particles.ElementAt(i).GetCurrentFitness()/80.0); //TODO: change accordingly
             }
         }
 

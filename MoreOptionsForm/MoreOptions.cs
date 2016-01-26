@@ -293,7 +293,7 @@ namespace ParticleSystems.MoreOptionsForm
             checkedListBox1.Items.Add(placeableObject);
         }
 
-        private void button1_Click(object sender, System.EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             while (checkedListBox1.CheckedItems.Count > 0)
             {

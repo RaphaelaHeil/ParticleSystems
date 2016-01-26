@@ -1,15 +1,16 @@
 ﻿using OpenTK;
 using ParticleSystems.Particles;
+using ParticleSystems.SettingsPanels;
 using System;
 using System.Collections.Generic;
-using ParticleSystems.SettingsPanels;
 
 namespace ParticleSystems.PositionUpdate
 {
-    class SwarmPositionUpdater : PositionUpdater
+    class GlobalBestSwarmPositionUpdater
     {
+
         private Vector2d GlobalBestLocation = new Vector2d(0.0);
-        private double GlobalBestFitness =double.MaxValue;
+        private double GlobalBestFitness = double.MaxValue;
         private bool changed = false;
 
         public void UpdateSwarmPositions(List<SwarmParticle> particles)
@@ -41,7 +42,8 @@ namespace ParticleSystems.PositionUpdate
             throw new NotImplementedException("Not implemented. Use custom implementation with explicit List of SwarmParticles!");
         }
 
-        public void SetContext(Context context) {
+        public void SetContext(Context context)
+        {
             throw new NotImplementedException();
         }
 
@@ -49,5 +51,7 @@ namespace ParticleSystems.PositionUpdate
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

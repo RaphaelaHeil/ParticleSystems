@@ -63,10 +63,12 @@
     <Compile Include="ParticleGeneration\SwarmParticleGenerator.cs" />
     <Compile Include="ParticleGrid.cs" />
     <Compile Include="Particles\AirParticle.cs" />
+    <Compile Include="PositionUpdate\GlobalBestSwarmPositionUpdater.cs" />
     <Compile Include="SettingsPanels\ParticleSwarmSettingsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Strategies\PlaceableObject.cs" />
+    <Compile Include="Strategies\GaussianRandomHelper.cs" />
     <Compile Include="Systems\AirFlowParticleSystem.cs" />
     <Compile Include="Systems\ParticleSwarmSystem.cs" />
     <Compile Include="Particles\SwarmParticle.cs" />
@@ -124,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsPanels\LinearSettings.resx">
       <DependentUpon>LinearSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsPanels\ParticleSwarmSettingsPanel.resx">
+      <DependentUpon>ParticleSwarmSettingsPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsPanels\ParticleSystemSettingsPanel.resx">
       <DependentUpon>ParticleSystemSettingsPanel.cs</DependentUpon>

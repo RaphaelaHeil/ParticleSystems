@@ -40,6 +40,11 @@ namespace ParticleSystems
             placeableObjects.Remove(placeableObject);
         }
 
+        public void clearPlaceableObjects()
+        {
+            placeableObjects.Clear();
+        }
+
         public Vector2d[] GetPlaceableObjectVertices()
         {
             Vector2d[] vertices = new Vector2d[placeableObjects.Count * 4];
