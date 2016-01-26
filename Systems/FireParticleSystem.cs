@@ -42,9 +42,9 @@ namespace ParticleSystems.Systems {
 		protected override void UpdateVBOs() {
 			bool gelb = true;
 			ParticlePositions = new Vector2d[Particles.Count]; 
-			ParticlePositions2 = new Vector2d[Particles.Count];
+		//	ParticlePositions2 = new Vector2d[Particles.Count];
 			ParticleColours = new Vector3d[Particles.Count];
-			ParticleColoursWater = new Vector3d[Particles.Count];
+		//	ParticleColoursWater = new Vector3d[Particles.Count];
 
 
 			for (int i = 0; i < Particles.Count-1; i+=2) {
@@ -77,7 +77,7 @@ namespace ParticleSystems.Systems {
 			for (int i = 0; i < Particles.Count; i++) {
 				
 				ParticlePositions[i] = Particles.ElementAt(i).GetPosition();
-				ParticlePositions2[i] = Particles.ElementAt(i).GetPosition();
+				//ParticlePositions2[i] = Particles.ElementAt(i).GetPosition();
 				//Color color = Panel.getColor();
 
 				double yellow = 1;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using OpenTK;
 using ParticleSystems.Particles;
 using ParticleSystems;
+using ParticleSystems.SettingsPanels;
 namespace ParticleSystems.PositionUpdate
 {
 
@@ -79,6 +80,10 @@ namespace ParticleSystems.PositionUpdate
 
 		public void SetContext(Context context) {
 			this.context = context;
+		}
+
+		public void SetSettingsPanel(ParticleSystemSettingsPanel settingsPanel){
+		//TODO
 		}
 	}
 }
