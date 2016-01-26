@@ -157,7 +157,16 @@
     <None Include="vertex.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Compile Include="SettingsPanels\FireUserSettings.cs" />
+    <Compile Include="ParticleGeneration\FireParticleGenerator.cs" />
+    <Compile Include="SettingsPanels\FireUserSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <EmbeddedResource Include="SettingsPanels\FireUserSettings.resx">
+      <DependentUpon>FireUserSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SettingsPanels\FireUserSettings.Designer.cs">
+      <DependentUpon>FireUserSettings.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
