@@ -11,11 +11,11 @@ namespace ParticleSystems.SettingsPanels
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private ContextMenuStrip contextMenuStrip1;
         private System.ComponentModel.IContainer components;
-
-		private System.Windows.Forms.TextBox minX;
-		private System.Windows.Forms.TextBox maxX;
-
-		private System.Windows.Forms.Label minXLabel;
-		private System.Windows.Forms.Label maxXLabel;
+//
+//		private System.Windows.Forms.TextBox minX;
+//		private System.Windows.Forms.TextBox maxX;
+//
+//		private System.Windows.Forms.Label minXLabel;
+//		private System.Windows.Forms.Label maxXLabel;
     }
 }

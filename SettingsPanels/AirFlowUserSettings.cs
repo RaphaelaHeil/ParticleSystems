@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace ParticleSystems.SettingsPanels
 {
     public partial class AirFlowUserSettings : ParticleSystemSettingsPanel {
-        private List<PlaceableObject> placableObjectList = new List<PlaceableObject>();
 
         public AirFlowUserSettings()
         {
@@ -21,6 +20,9 @@ namespace ParticleSystems.SettingsPanels
             this.label2 = new System.Windows.Forms.Label();
             this.colorIndicator = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.checkVortex = new System.Windows.Forms.CheckBox();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.checkInteraction = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.colorIndicator)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,9 +63,38 @@ namespace ParticleSystems.SettingsPanels
             this.label1.TabIndex = 0;
             this.label1.Text = "Color:";
             // 
+            // checkVortex
+            // 
+            this.checkVortex.AutoSize = true;
+            this.checkVortex.Location = new System.Drawing.Point(13, 31);
+            this.checkVortex.Name = "checkVortex";
+            this.checkVortex.Size = new System.Drawing.Size(56, 17);
+            this.checkVortex.TabIndex = 6;
+            this.checkVortex.Text = "Vortex";
+            this.checkVortex.UseVisualStyleBackColor = true;
+            // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(61, 4);
+            // 
+            // checkInteraction
+            // 
+            this.checkInteraction.AutoSize = true;
+            this.checkInteraction.Checked = true;
+            this.checkInteraction.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkInteraction.Location = new System.Drawing.Point(13, 54);
+            this.checkInteraction.Name = "checkInteraction";
+            this.checkInteraction.Size = new System.Drawing.Size(76, 17);
+            this.checkInteraction.TabIndex = 7;
+            this.checkInteraction.Text = "Interaction";
+            this.checkInteraction.UseVisualStyleBackColor = true;
+            // 
             // AirFlowUserSettings
             // 
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.checkInteraction);
+            this.Controls.Add(this.checkVortex);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.colorIndicator);
             this.Controls.Add(this.label1);
@@ -80,9 +111,20 @@ namespace ParticleSystems.SettingsPanels
             return this.colorIndicator.BackColor;
         }
 
-        private void resetButton_MouseClick(object sender, MouseEventArgs e)
+        public bool GetVortex()
         {
-            //ToDo: Reset the drawing-area
+            if (this.checkVortex.Checked)
+                return true;
+            else
+                return false;
+        }
+
+        public bool GetInteraction()
+        {
+            if (this.checkInteraction.Checked)
+                return true;
+            else
+                return false;
         }
 
         private void colorIndicator_MouseClick(object sender, MouseEventArgs e)
@@ -92,5 +134,6 @@ namespace ParticleSystems.SettingsPanels
                 this.colorIndicator.BackColor = this.colorDialog.Color;
             }
         }
+
     }
 }

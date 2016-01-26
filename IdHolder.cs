@@ -12,6 +12,8 @@
 
         public int VertexColourID { get; set; }
 
+        public int ObstaclePositionID { get; set; }
+
         /// <summary>
         /// Program id
         /// </summary>
@@ -30,6 +32,8 @@
         public int PositionBufferId { get; set; }
 
         public int ColourBufferId { get; set; }
+
+        public int ObstacleBufferId { get; set; }
 
         /// <summary>
         /// Window Width.

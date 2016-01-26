@@ -5,17 +5,20 @@ using System.Drawing;
 using ParticleSystems.PositionUpdate;
 using ParticleSystems.ParticleGeneration;
 using ParticleSystems.SettingsPanels;
+using ParticleSystems.Particles;
+using System.Collections.Generic;
 
 namespace ParticleSystems.Systems {
     class AirFlowParticleSystem : ParticleSystem {
-        private PositionUpdater PositionUpdater = new AirFlowPositionUpdater();
-        private LifetimeHandler LifetimeHandler = new LifetimeHandler();
-        private ExpirationHandler ExpirationHandler = new ExpirationHandler();
+        private AirFlowPositionUpdater AirFlowPositionUpdater = new AirFlowPositionUpdater();
         private Random Rand = new Random();
 
         private AirFlowUserSettings Panel = new AirFlowUserSettings();
 
         private AirFlowParticleGenerator ParticleGenerator;
+
+        private new List<AirParticle> Particles;
+        private ParticleGrid<AirParticle> ParticleGrid;
 
         public AirFlowParticleSystem() {
 
@@ -23,6 +26,7 @@ namespace ParticleSystems.Systems {
         }
 
         protected override void Initialise() {
+            Particles = new List<AirParticle>();
             ParticleGenerator = new AirFlowParticleGenerator(
                 Context.GetIdHolder().Width,
                 Context.GetIdHolder().Height,
@@ -31,7 +35,8 @@ namespace ParticleSystems.Systems {
                 ParticleSettings.GetVelocity()
             );
             CreateInitialParticles();
-
+            ParticleGrid = new ParticleGrid<AirParticle>(Context);
+            ParticleGrid.putParticlesToParticleGridArrayList(Particles);
             //TODO: create stuff from settings
             //TODO: generate initial particles
         }
@@ -39,18 +44,7 @@ namespace ParticleSystems.Systems {
         protected override void UpdateVBOs() {
             ParticlePositions = new Vector2d[Particles.Count]; //TODO: find a safer solution :( 
             ParticleColours = new Vector3d[Particles.Count];
-            for (int i = 0; i < Particles.Count; i++) {
-                Panel = (AirFlowUserSettings)GetParticleSystemSettingsPanel();
-                ParticlePositions[i] = Particles.ElementAt(i).GetPosition();
-                Color color = Panel.getColor();
-                Vector3d vec3color = new Vector3d(color.R, color.G, color.B);
-                ParticleColours[i] = vec3color; //TODO: change accordingly
-            }
-        }
-
-        protected void UpdateVBOs(Color color) {
-            ParticlePositions = new Vector2d[Particles.Count]; //TODO: find a safer solution :( 
-            ParticleColours = new Vector3d[Particles.Count];
+            Color color = Panel.getColor();
             for (int i = 0; i < Particles.Count; i++) {
                 ParticlePositions[i] = Particles.ElementAt(i).GetPosition();
                 Vector3d vec3color = new Vector3d(color.R, color.G, color.B);
@@ -59,11 +53,14 @@ namespace ParticleSystems.Systems {
         }
 
         protected override void DecrementLifetime() {
-            LifetimeHandler.DecrementLifetime(Particles);
+            foreach (AirParticle particle in Particles)
+            {
+                particle.applyAging();
+            }
         }
 
         protected override void RemoveExpiredParticles() {
-            ExpirationHandler.handleExpiration(Particles);
+            Particles.RemoveAll(particle => particle.IsExpired());
         }
 
         protected override void GenerateNewParticles() {
@@ -85,8 +82,10 @@ namespace ParticleSystems.Systems {
         }
 
         protected override void UpdateParticlePositions() {
-            PositionUpdater.SetContext(Context);
-            PositionUpdater.UpdatePositions(Particles);
+            AirFlowPositionUpdater.SetContext(Context);
+            AirFlowPositionUpdater.SetParticleGrid(ParticleGrid);
+            AirFlowPositionUpdater.SetSettingsPanel(Panel);
+            AirFlowPositionUpdater.UpdateAirPositions(Particles);
         }
 
         private void CreateInitialParticles() {
@@ -105,10 +104,10 @@ namespace ParticleSystems.Systems {
 
         public override ParticleSettings GetParticleSettings() {
             Panel = (AirFlowUserSettings)GetParticleSystemSettingsPanel();
-            ParticleSettings.WithInitialNumberOfParticles(0);
-            ParticleSettings.WithNewParticlesPerFrame(150);
-            ParticleSettings.WithLifetime(170); //the particle dies outside the right side of the draw-area
-            ParticleSettings.WithVelocity(5);
+            ParticleSettings.WithInitialNumberOfParticles(10);
+            ParticleSettings.WithNewParticlesPerFrame(1);
+            ParticleSettings.WithLifetime(200); //the particle dies outside the right side of the draw-area
+            ParticleSettings.WithVelocity(3);
             Color color = Panel.getColor();
             Color complementaryColor = Color.FromArgb((255 - color.R), (255 - color.G), (255 - color.B));
             ParticleSettings.WithGlBackgroundColor(complementaryColor);

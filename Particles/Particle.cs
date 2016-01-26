@@ -127,9 +127,5 @@ namespace ParticleSystems.Particles
         {
             return Expired;
         }
-
-		public virtual void SetExpired() {
-			Expired = true;
-		}
     }
 }

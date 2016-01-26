@@ -11,5 +11,8 @@ namespace ParticleSystems.SettingsPanels
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private ContextMenuStrip contextMenuStrip1;
         private System.ComponentModel.IContainer components;
+        private CheckBox checkVortex;
+        private ContextMenuStrip contextMenuStrip2;
+        private CheckBox checkInteraction;
     }
 }
