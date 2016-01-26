@@ -17,8 +17,9 @@ namespace ParticleSystems.Systems {
 
 		private FireParticleGenerator ParticleGenerator;
 
-		private double minX = 280;
-		private double maxX = 320;
+		private int minX = 280;
+		private int maxX = 320;
+        private int einflussbereich = 5;
 
 		public FireParticleSystem() {
 
@@ -33,6 +34,11 @@ namespace ParticleSystems.Systems {
 				ParticleSettings.GetAgingVelocity(),
 				ParticleSettings.GetVelocity()
 			);
+
+            minX = Panel.GetXMin();
+            maxX = Panel.GetXMax();
+            einflussbereich = Panel.GetRange();
+
 			CreateInitialParticles();
 
 			//TODO: create stuff from settings
@@ -50,11 +56,11 @@ namespace ParticleSystems.Systems {
 			for (int i = 0; i < Particles.Count-1; i+=2) {
 				Vector2d fire = Particles.ElementAt (i).GetPosition ();
 				//Vector2d water = Particles.ElementAt (i+1).GetPosition ();
-				if(fire.X <=maxX && fire.X >= minX){
+				if(fire.X <=maxX+einflussbereich && fire.X >= minX-einflussbereich){
 					for (int x = 0; x < Particles.Count-1; x+=2) {
 						//Vector2d fire2 = Particles.ElementAt (x).GetPosition ();
 						Vector2d water = Particles.ElementAt (x+1).GetPosition ();
-						if (Math.Abs((int)fire.X-(int)water.X) <= 3 && Math.Abs((int)fire.Y-(int)water.Y) <= 3) {
+						if (Math.Abs((int)fire.X-(int)water.X) <= einflussbereich && Math.Abs((int)fire.Y-(int)water.Y) <= einflussbereich) {
 
 							//	System.Diagnostics.Debug.WriteLine ("Position: " + Particles.ElementAt(i).GetPosition()+ ", Position i+1: " + Particles.ElementAt(i+1).GetPosition());
 
@@ -157,7 +163,8 @@ namespace ParticleSystems.Systems {
 				Vector3d vec3color = new Vector3d(color.R, color.G, color.B);
 				ParticleColours[i] = vec3color; //TODO: change accordingly
 			}
-		}**/
+		}
+            **/
 
 
 		protected override void DecrementLifetime() {
@@ -173,7 +180,7 @@ namespace ParticleSystems.Systems {
 			for (int i = 0; i < (ParticleSettings.GetNumberOfNewParticlesPerFrame() * 1.0); i++)
 			{
 				Particles.Add(ParticleGenerator.GenerateParticle());
-				Particles.Add(ParticleGenerator.GenerateParticle2());
+				Particles.Add(ParticleGenerator.GenerateParticle2(minX, maxX));
 			}
 		}
 
@@ -185,7 +192,7 @@ namespace ParticleSystems.Systems {
 		private void CreateInitialParticles() {
 			for (int i = 0; i < ParticleSettings.GetInitialNumberOfParticles(); i++) {
 				Particles.Add(ParticleGenerator.GenerateParticle());
-				Particles.Add (ParticleGenerator.GenerateParticle2 ());
+				Particles.Add (ParticleGenerator.GenerateParticle2 (minX, maxX));
 			}
 		}
 
@@ -203,10 +210,6 @@ namespace ParticleSystems.Systems {
 			ParticleSettings.WithNewParticlesPerFrame(20);
 			ParticleSettings.WithLifetime(110); 
 			ParticleSettings.WithVelocity(5);
-			Color color = Panel.getColor();
-			Color complementaryColor = Color.FromArgb((255 - color.R), (255 - color.G), (255 - color.B));
-			ParticleSettings.WithGlBackgroundColor(complementaryColor);
-
 			return ParticleSettings;
 		}
 	}

@@ -42,12 +42,12 @@ namespace ParticleSystems.ParticleGeneration
 			return null;
 		}**/
 
-		public Particle GenerateParticle2() {
+		public Particle GenerateParticle2(int minX, int maxX) {
 			Random rand = new Random();
 			int lifetime = (int)(rand.NextDouble() * 1000);
 			int agingVelocity = MaxAgingVelocity;
 			double velocity = Random.NextDouble() * MaxVelocity;
-			return new Particle(CreateStartingPosition2(), MaxLifetime, agingVelocity, velocity);
+			return new Particle(CreateStartingPosition2(minX, maxX), MaxLifetime, agingVelocity, velocity);
 		}
 
 		private Vector2d CreateStartingPosition() {
@@ -57,11 +57,11 @@ namespace ParticleSystems.ParticleGeneration
 			return new Vector2d(x, y);
 		}
 
-		private Vector2d CreateStartingPosition2() {
+		private Vector2d CreateStartingPosition2(int minX, int maxX) {
 			double y = 580;
 			//double x = Random.NextDouble() * Width;
 			double x = 300 ;
-			x = (double)Random.Next (290, 310);
+			x = (double)Random.Next (minX, maxX);
 			return new Vector2d(x, y);
 		}
 	}
