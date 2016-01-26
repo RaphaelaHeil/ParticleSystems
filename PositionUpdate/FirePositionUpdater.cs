@@ -2,54 +2,83 @@
 using System.Collections.Generic;
 using OpenTK;
 using ParticleSystems.Particles;
-using ParticleSystems.SettingsPanels;
-
+using ParticleSystems;
 namespace ParticleSystems.PositionUpdate
 {
 
-    /// <summary>
-    /// Linearily translates particle positions.
-    /// </summary>
-    class FirePositionUpdater : PositionUpdater
-    {
+	/// <summary>
+	/// Linearily translates particle positions.
+	/// </summary>
+	class FirePositionUpdater : PositionUpdater
+	{
+		private Context context;
+		private const int DEFAULT_DELTA = 1;
+		private Vector2d TranslationX;
+		private Vector2d TranslationYup;
+		private Vector2d TranslationYdown;
+		LifetimeHandler LifetimeHandler = new LifetimeHandler();
+		ExpirationHandler ExpirationHandler = new ExpirationHandler();
 
-        private const int DEFAULT_DELTA = 1;
-        private Vector2d Translation;
 
-        /// <summary>
-        /// Default constructor, sets x and y updates to 1 each.
-        /// </summary>
 		public FirePositionUpdater()
-        {
-            Translation = new Vector2d(DEFAULT_DELTA, 0);
-        }
-
-        /// <summary>
-        /// Constructs a LinearPositionUpdater that translates the positions by the given values.
-        /// </summary>
-        /// <param name="deltaX">Translation to be applied to the x coordinate</param>
-        /// <param name="deltaY">Translation to be applied to the y coordinate</param>
-		public FirePositionUpdater(int deltaY, int deltaX)
-        {
-            Translation = new Vector2d(deltaY, deltaX);
-        }
-
-        /// <see cref="PositionUpdater.UpdatePositions(List{Particle})"/>
-        public void UpdatePositions(List<Particle> particles)
-        {
-            foreach (var particle in particles)
-            {
-                particle.updatePosition(Translation);
-            }
-        }
-
-		public void SetContext(Context context){
-
+		{
+			TranslationX = new Vector2d(DEFAULT_DELTA, 0);
+			TranslationYup = new Vector2d(0, DEFAULT_DELTA);
+			TranslationYdown = new Vector2d(0, -DEFAULT_DELTA);
 		}
 
-        public void SetSettingsPanel(ParticleSystemSettingsPanel settingsPanel)
-        {
-            throw new NotImplementedException();
-        }
-    }
+		/// <see cref="PositionUpdater.UpdatePositions(List{Particle})"/>
+		public void UpdatePositions(List<Particle> particles)
+		{
+			bool isFire = true;
+			//List<PlaceableObject> placableObjectList = context.getPlacableObjectList();
+			foreach (var particle in particles) {
+				int particlePosX = (int)particle.GetPosition().X;
+				int particlePosY = (int)particle.GetPosition().Y;
+				if (isFire) {
+					Random rand = new Random ();
+					double x = rand.NextDouble ();
+
+					if (x > 0.5) 
+					{
+						x = x - 1;
+					}
+					x = x / 5;
+
+					Vector2d Translation = new Vector2d (x, DEFAULT_DELTA);
+					particle.updatePosition (Translation);
+					/**for (int i = 0; i < particles.Count; i++) {
+						if (particlePosX == (particles[i].GetPosition().X) || particlePosY == (particles[i].GetPosition().Y )) {
+							LifetimeHandler.DecrementLifetime (particles);
+							ExpirationHandler.handleExpiration (particles);
+						}
+					}**/
+
+
+
+					isFire = false;
+				} else 
+				{
+					Random rand = new Random();
+					double x = rand.NextDouble();
+
+					if (x > 0.5)
+					{
+						x = x - 1;
+					}
+					x = x / 5;
+
+					Vector2d Translation = new Vector2d(x, -DEFAULT_DELTA);
+					particle.updatePosition(Translation);
+					isFire = true;
+				}
+
+			}
+		}
+
+
+		public void SetContext(Context context) {
+			this.context = context;
+		}
+	}
 }
