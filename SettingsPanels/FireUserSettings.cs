@@ -21,7 +21,6 @@ namespace ParticleSystems.SettingsPanels
             this.label1 = new System.Windows.Forms.Label();
             this.xMin = new System.Windows.Forms.TextBox();
             this.xMax = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.einflussbereich = new System.Windows.Forms.TextBox();
@@ -61,15 +60,6 @@ namespace ParticleSystems.SettingsPanels
             this.xMax.TabIndex = 3;
             this.xMax.Text = "340";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(79, 124);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "label2";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -102,7 +92,6 @@ namespace ParticleSystems.SettingsPanels
             this.Controls.Add(this.einflussbereich);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.xMax);
             this.Controls.Add(this.xMin);
             this.Controls.Add(this.label1);

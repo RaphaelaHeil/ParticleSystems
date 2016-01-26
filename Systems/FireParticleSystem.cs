@@ -48,17 +48,12 @@ namespace ParticleSystems.Systems {
 		protected override void UpdateVBOs() {
 			bool gelb = true;
 			ParticlePositions = new Vector2d[Particles.Count]; 
-		//	ParticlePositions2 = new Vector2d[Particles.Count];
 			ParticleColours = new Vector3d[Particles.Count];
-		//	ParticleColoursWater = new Vector3d[Particles.Count];
-
 
 			for (int i = 0; i < Particles.Count-1; i+=2) {
 				Vector2d fire = Particles.ElementAt (i).GetPosition ();
-				//Vector2d water = Particles.ElementAt (i+1).GetPosition ();
 				if(fire.X <=maxX+einflussbereich && fire.X >= minX-einflussbereich){
 					for (int x = 0; x < Particles.Count-1; x+=2) {
-						//Vector2d fire2 = Particles.ElementAt (x).GetPosition ();
 						Vector2d water = Particles.ElementAt (x+1).GetPosition ();
 						if (Math.Abs((int)fire.X-(int)water.X) <= einflussbereich && Math.Abs((int)fire.Y-(int)water.Y) <= einflussbereich) {
 
@@ -78,16 +73,11 @@ namespace ParticleSystems.Systems {
 			}
 
 			int removed = ExpirationHandler.handleExpiration (Particles);
-		//	Console.WriteLine (removed);
-
 			for (int i = 0; i < Particles.Count; i++) {
 				
 				ParticlePositions[i] = Particles.ElementAt(i).GetPosition();
-				//ParticlePositions2[i] = Particles.ElementAt(i).GetPosition();
-				//Color color = Panel.getColor();
 
 				double yellow = 1;
-				//double blue = 1;
 
 				if (gelb == true ) {
 					yellow = (yellow - (( Particles.ElementAt(i).GetPosition().Y) /120 ));
@@ -210,6 +200,7 @@ namespace ParticleSystems.Systems {
 			ParticleSettings.WithNewParticlesPerFrame(20);
 			ParticleSettings.WithLifetime(110); 
 			ParticleSettings.WithVelocity(5);
+			ParticleSettings.WithGlBackgroundColor (Color.Gray);
 			return ParticleSettings;
 		}
 	}
