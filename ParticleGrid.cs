@@ -12,8 +12,6 @@ namespace ParticleSystems
         private int girdColumnSize;
         private int girdRowSize;
 
-        private int ParticleGridArrayListCount;
-
         public ParticleGrid(Context context, int optinalFieldSize = 50)
         {
             Context = context;
@@ -37,10 +35,12 @@ namespace ParticleSystems
             }
         }
 
-        public void putParticlesToParticleGridArrayList(List<T> particles)
+        public List<T>[,] updateParticleGridArrayListWithCheckingNeightburs(List<T> particles)
         {
             int column = 0;
             int row = 0;
+
+
             foreach(var particle in particles)
             {
                 column = (int)(particle.GetPosition().X / FieldSize);
@@ -53,7 +53,6 @@ namespace ParticleSystems
                         ParticleGridArrayList[column, row].Add(particle);
 
                         CheckNeighbours(column, row, particle);
-                        ParticleGridArrayListCount++;
                     }
                 }
                 else if (column >= girdColumnSize)
@@ -61,6 +60,37 @@ namespace ParticleSystems
                 else if (row >= girdRowSize)
                     ParticleGridArrayList[column, girdRowSize - 1].Remove(particle);
             }
+            return ParticleGridArrayList;
+        }
+
+        public List<T>[,] updateParticleGridArrayListWithNewList(List<T> particles)
+        {
+            CreateParticleGrid();
+            int column = 0;
+            int row = 0;
+            foreach (var particle in particles)
+            {
+                column = (int)(particle.GetPosition().X / FieldSize);
+                row = (int)(particle.GetPosition().Y / FieldSize);
+
+                if (column < girdColumnSize && row < girdRowSize)
+                {
+                    if (ParticleGridArrayList[column, row].IndexOf(particle) == -1)
+                    {
+                        ParticleGridArrayList[column, row].Add(particle);
+                    }
+                }
+                else if (column >= girdColumnSize || row >= girdRowSize)
+                    if(column >= girdColumnSize && row >= girdRowSize)
+                    {
+                        ParticleGridArrayList[girdColumnSize - 1, girdRowSize - 1].Remove(particle);
+                    }
+                    else if(column >= girdColumnSize)
+                        ParticleGridArrayList[girdColumnSize - 1, row].Remove(particle);
+                    else
+                        ParticleGridArrayList[column, girdRowSize - 1].Remove(particle);
+            }
+            return ParticleGridArrayList;
         }
 
         private void CheckNeighbours(int column, int row, T particle)
@@ -146,11 +176,6 @@ namespace ParticleSystems
         public List<T>[,] GetParticleGridArrayList()
         {
             return ParticleGridArrayList;
-        }
-
-        public int GetParticleGridArrayListCount()
-        {
-            return ParticleGridArrayListCount;
         }
 
         public int GetFiieldSize()

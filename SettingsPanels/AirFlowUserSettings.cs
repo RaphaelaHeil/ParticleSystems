@@ -23,6 +23,12 @@ namespace ParticleSystems.SettingsPanels
             this.checkVortex = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.checkInteraction = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.rangeText = new System.Windows.Forms.TextBox();
+            this.repelText = new System.Windows.Forms.TextBox();
+            this.randomRepelCheck = new System.Windows.Forms.CheckBox();
+            this.randomRangeCheckt = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.colorIndicator)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,9 +96,71 @@ namespace ParticleSystems.SettingsPanels
             this.checkInteraction.Text = "Interaction";
             this.checkInteraction.UseVisualStyleBackColor = true;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(122, 35);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(133, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Particle Interaction Range:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(122, 58);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(81, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Repel distance:";
+            // 
+            // rangeText
+            // 
+            this.rangeText.Location = new System.Drawing.Point(261, 32);
+            this.rangeText.Name = "rangeText";
+            this.rangeText.Size = new System.Drawing.Size(43, 20);
+            this.rangeText.TabIndex = 10;
+            this.rangeText.Text = "4";
+            this.rangeText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // repelText
+            // 
+            this.repelText.Location = new System.Drawing.Point(261, 58);
+            this.repelText.Name = "repelText";
+            this.repelText.Size = new System.Drawing.Size(43, 20);
+            this.repelText.TabIndex = 11;
+            this.repelText.Text = "4";
+            this.repelText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // randomRepelCheck
+            // 
+            this.randomRepelCheck.AutoSize = true;
+            this.randomRepelCheck.Location = new System.Drawing.Point(310, 60);
+            this.randomRepelCheck.Name = "randomRepelCheck";
+            this.randomRepelCheck.Size = new System.Drawing.Size(66, 17);
+            this.randomRepelCheck.TabIndex = 12;
+            this.randomRepelCheck.Text = "Random";
+            this.randomRepelCheck.UseVisualStyleBackColor = true;
+            // 
+            // randomRangeCheckt
+            // 
+            this.randomRangeCheckt.AutoSize = true;
+            this.randomRangeCheckt.Location = new System.Drawing.Point(310, 34);
+            this.randomRangeCheckt.Name = "randomRangeCheckt";
+            this.randomRangeCheckt.Size = new System.Drawing.Size(66, 17);
+            this.randomRangeCheckt.TabIndex = 13;
+            this.randomRangeCheckt.Text = "Random";
+            this.randomRangeCheckt.UseVisualStyleBackColor = true;
+            // 
             // AirFlowUserSettings
             // 
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.randomRangeCheckt);
+            this.Controls.Add(this.randomRepelCheck);
+            this.Controls.Add(this.repelText);
+            this.Controls.Add(this.rangeText);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.checkInteraction);
             this.Controls.Add(this.checkVortex);
             this.Controls.Add(this.label2);
@@ -127,6 +195,26 @@ namespace ParticleSystems.SettingsPanels
                 return false;
         }
 
+        public int getRange()
+        {
+            return int.Parse(this.rangeText.Text);
+        }
+
+        public int getRepel()
+        {
+            return int.Parse(this.repelText.Text);
+        }
+
+        public bool getRandomRepel()
+        {
+            return this.randomRepelCheck.Checked;
+        }
+
+        public bool getRandomRange()
+        {
+            return this.randomRangeCheckt.Checked;
+        }
+
         private void colorIndicator_MouseClick(object sender, MouseEventArgs e)
         {
             if (this.colorDialog.ShowDialog() == DialogResult.OK)
@@ -134,6 +222,5 @@ namespace ParticleSystems.SettingsPanels
                 this.colorIndicator.BackColor = this.colorDialog.Color;
             }
         }
-
     }
 }
