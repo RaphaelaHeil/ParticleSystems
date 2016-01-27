@@ -60,7 +60,7 @@ namespace ParticleSystems.Systems
 					for (int x = 0; x < Particles.Count - 1; x += 2) {
 						Vector2d water = Particles.ElementAt (x + 1).GetPosition ();
 						if (Math.Abs ((int)fire.X - (int)water.X) <= range && Math.Abs ((int)fire.Y - (int)water.Y) <= range) {
-
+							//remove matching particles
 							Particles.ElementAt (i).SetExpired ();
 							Particles.ElementAt (i + 1).SetExpired ();
 							break;
@@ -69,6 +69,7 @@ namespace ParticleSystems.Systems
 				}
 			}
 
+			// to set the right colors for fire and water particles
 			for (int i = 0; i < Particles.Count; i++) {
 				
 				ParticlePositions [i] = Particles.ElementAt (i).GetPosition ();
@@ -95,7 +96,7 @@ namespace ParticleSystems.Systems
 			for (int i = 0; i < Particles.Count; i++) {
 				ParticlePositions [i] = Particles.ElementAt (i).GetPosition ();
 				Vector3d vec3color = new Vector3d (color.R, color.G, color.B);
-				ParticleColours [i] = vec3color; //TODO: change accordingly
+				ParticleColours [i] = vec3color; 
 			}
 		}
 
