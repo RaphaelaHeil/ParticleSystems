@@ -14,5 +14,11 @@ namespace ParticleSystems.SettingsPanels
         private CheckBox checkVortex;
         private ContextMenuStrip contextMenuStrip2;
         private CheckBox checkInteraction;
+        private Label label3;
+        private Label label4;
+        private TextBox rangeText;
+        private TextBox repelText;
+        private CheckBox randomRepelCheck;
+        private CheckBox randomRangeCheckt;
     }
 }
