@@ -4,7 +4,6 @@ using ParticleSystems.Systems;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
 
 namespace ParticleSystems.SettingsPanels
 {
@@ -13,9 +12,9 @@ namespace ParticleSystems.SettingsPanels
         public ParticleSwarmSettingsPanel()
         {
             InitializeComponent();
-        
+
             PopulateTopologySelection();
-            
+
             Location = new System.Drawing.Point(9, 16);
         }
 
@@ -344,16 +343,10 @@ namespace ParticleSystems.SettingsPanels
 
         }
 
-        public Vector2d GetTargetPosition()
-        {
-            return new Vector2d(double.Parse(xInput.Text), double.Parse(yInput.Text));
-        }
-
         public HashSet<SwarmOptimum> GetOptima()
         {
             return Optima;
         }
-
 
         private void addOptimum_Click(object sender, EventArgs e)
         {
@@ -397,7 +390,7 @@ namespace ParticleSystems.SettingsPanels
 
         private void topologySelection_SelectedValueChanged(object sender, EventArgs e)
         {
-            if(GetSelectedTopology() == Topology.Global)
+            if (GetSelectedTopology() == Topology.Global)
             {
                 neighbourhoodInput.Enabled = false;
             }
@@ -436,6 +429,5 @@ namespace ParticleSystems.SettingsPanels
         {
             return ignoreWeights.Checked;
         }
-
     }
 }

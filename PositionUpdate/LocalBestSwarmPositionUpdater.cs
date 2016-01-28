@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ParticleSystems.Particles;
 using ParticleSystems.Strategies;
-using ParticleSystems.SettingsPanels;
 using OpenTK;
 using ParticleSystems.ParticleSwarmDataStructures;
 
 namespace ParticleSystems.PositionUpdate
 {
+    /// <summary>
+    /// Updates swarm particle positions based on local properties of the swarm.
+    /// </summary>
     class LocalBestSwarmPositionUpdater : SwarmPositionUpdater
     {
         private int NeighbourhoodSize;
@@ -88,7 +88,7 @@ namespace ParticleSystems.PositionUpdate
 
         public override void UpdateSwarmPositions(List<SwarmParticle> particles)
         {
-            throw new NotImplementedException(); //TODO
+            //not needed at the moment, don't do anything
         }
     }
 }

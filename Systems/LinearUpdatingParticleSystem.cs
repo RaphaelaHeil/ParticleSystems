@@ -93,7 +93,6 @@ namespace ParticleSystems.Systems
 
         public override ParticleSettings GetParticleSettings()
         {
-            ParticleSettings.WithAgingVelocityEnabled(false);
             return ParticleSettings;
         }
     }

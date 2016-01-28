@@ -6,6 +6,9 @@ using ParticleSystems.SettingsPanels;
 
 namespace ParticleSystems.PositionUpdate
 {
+    /// <summary>
+    /// Randomly updates a particle's position.
+    /// </summary>
     class RandomPositionUpdater : PositionUpdater
     {
         private int UpperX = 5;
@@ -34,7 +37,7 @@ namespace ParticleSystems.PositionUpdate
         /// <see cref="PositionUpdater.UpdatePositions(List{Particle})"/>
         public void UpdatePositions(List<Particle> particles)
         {
-            foreach(var particle in particles)
+            foreach (var particle in particles)
             {
                 double x = (random.NextDouble() - 0.5) * UpperX;
                 double y = (random.NextDouble() - 0.5) * UpperY;
@@ -42,13 +45,14 @@ namespace ParticleSystems.PositionUpdate
             }
         }
 
-        public void SetContext(Context context) {
-            throw new NotImplementedException();
+        public void SetContext(Context context)
+        {
+            //not needed here
         }
 
         public void SetSettingsPanel(ParticleSystemSettingsPanel settingsPanel)
         {
-            throw new NotImplementedException();
+            //not needed here
         }
     }
 }

@@ -4,7 +4,9 @@ using OpenTK;
 
 namespace ParticleSystems
 {
-
+    /// <summary>
+    /// Holds various information about the particle system context. 
+    /// </summary>
     class Context
     {
         private IdHolder IdHolder;
@@ -45,6 +47,10 @@ namespace ParticleSystems
             placeableObjects.Clear();
         }
 
+        /// <summary>
+        /// Gets the vertices for all placeables. Each placeable is represented by four vertices, starting from the bottom left, moving on counter-clowckwise.
+        /// </summary>
+        /// <returns>Placeable vertices</returns>
         public Vector2d[] GetPlaceableObjectVertices()
         {
             Vector2d[] vertices = new Vector2d[placeableObjects.Count * 4];

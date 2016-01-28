@@ -21,7 +21,7 @@ namespace ParticleSystems
         private IdHolder idHolder = new IdHolder();
         private ParticleSystem selectedParticleSystem;
         private ParticleSystemSettingsPanel panelSystemSettingsPanel;
-        private Context context = new Context();
+        private Context Context = new Context();
         private RenderHelper RenderHelper;
 
         private const double TICK_IN_MS = 15.0;
@@ -44,6 +44,7 @@ namespace ParticleSystems
             particleSystemSelection.Items.AddRange(particleSystemRegistration.GetParticleSystemNames());
             particleSystemSelection.EndUpdate();
 
+            //Add the timer listener:
             timer.Elapsed += timerListener;
         }
 
@@ -71,7 +72,7 @@ namespace ParticleSystems
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.PointSize(4f);
 
-            RenderHelper.RenderPlaceables(context.GetPlaceableObjectVertices());
+            RenderHelper.RenderPlaceables(Context.GetPlaceableObjectVertices());
 
             
             if (ready)
@@ -80,13 +81,7 @@ namespace ParticleSystems
                 {
                     if (Stopwatch.ElapsedMilliseconds >= SECOND_IN_MS)
                     {
-                        Stopwatch.Stop();
-                        int totalElapsedSeconds = (int) Stopwatch.ElapsedMilliseconds / SECOND_IN_MS;
-                        FpsMeasurement = (FpsMeasurement * SMOOTHING) + (frameCounter/totalElapsedSeconds * (1 - SMOOTHING));
-                        SetFrameCounter(((int)Math.Round(FpsMeasurement)).ToString());
-                        frameCounter = 0;
-                        droppedFrames = 0;
-                        Stopwatch.Restart();
+                        CalculateFps();
                     }
                     frameCounter++;
                 }
@@ -97,6 +92,17 @@ namespace ParticleSystems
             }
 
             glControl.SwapBuffers();
+        }
+
+        private void CalculateFps()
+        {
+            Stopwatch.Stop();
+            int totalElapsedSeconds = (int)Stopwatch.ElapsedMilliseconds / SECOND_IN_MS;
+            FpsMeasurement = (FpsMeasurement * SMOOTHING) + (frameCounter / totalElapsedSeconds * (1 - SMOOTHING));
+            SetFrameCounter(((int)Math.Round(FpsMeasurement)).ToString());
+            frameCounter = 0;
+            droppedFrames = 0;
+            Stopwatch.Restart();
         }
 
         private void InitializeProgram()
@@ -144,14 +150,6 @@ namespace ParticleSystems
             glControl.Invalidate();
         }
 
-        private void fpsTimerListener(object sender, EventArgs eventArgs)
-        {
-            FpsMeasurement = (FpsMeasurement * SMOOTHING) + (frameCounter * (1 - SMOOTHING));
-            SetFrameCounter(((int)Math.Round(FpsMeasurement)).ToString());
-            frameCounter = 0;
-            droppedFrames = 0;
-        }
-
         private void SetupViewport()
         {
             GL.Viewport(0, 0, idHolder.Width, idHolder.Height);
@@ -160,7 +158,6 @@ namespace ParticleSystems
         private void initialiseBasedOnSelection()
         {
             ParticleSettings particleSettings = selectedParticleSystem.GetParticleSettings();
-
 
             particleSettings.WithInitialNumberOfParticles(Math.Abs(int.Parse(initialAmountInput.Text)));
             particleSettings.WithAgingVelocity(Math.Abs(int.Parse(agingVelocityInput.Text)));
@@ -173,13 +170,11 @@ namespace ParticleSystems
             particleSettings.WithNumberOfNewParticlesIsRandomlyGenerated(newPerFrameRand.Checked);
             particleSettings.WithVelocityIsRandomlyGenerated(velocityRand.Checked);
 
-            //change the Backgroundcolor of the glControl
             GL.ClearColor(particleSettings.getGlControlBackgroundColor());
 
-            context.setIdHolder(idHolder);
-            //TODO: read context ... 
+            Context.setIdHolder(idHolder);
 
-            selectedParticleSystem.Init(context, RenderHelper);
+            selectedParticleSystem.Init(Context, RenderHelper);
             ready = true;
         }
 
@@ -188,7 +183,7 @@ namespace ParticleSystems
             if (particleSystemSelection.SelectedIndex >= 0)
             {
                 frameControls.Enabled = true;
-                selectedParticleSystem = particleSystemRegistration.GetParticleSystemInstance((string)particleSystemSelection.SelectedItem);
+                selectedParticleSystem = particleSystemRegistration.GetParticleSystemInstanceByName((string)particleSystemSelection.SelectedItem);
                 panelSystemSettingsPanel = selectedParticleSystem.GetParticleSystemSettingsPanel();
                 particleSystemDescription.Text = selectedParticleSystem.GetDescription();
 
@@ -198,7 +193,7 @@ namespace ParticleSystems
                 prepareGeneralSettingsPanel(true);
 
                 SetFrameCounter("0");
-                context.clearPlaceableObjects();
+                Context.clearPlaceableObjects();
                 ready = false;
             }
             Invalidate();
@@ -325,7 +320,7 @@ namespace ParticleSystems
         }
 
         private void moreOptions_Click(object sender, EventArgs e) {
-            MoreOptionsWindow moreOptions = new MoreOptionsWindow(this, context);
+            MoreOptionsWindow moreOptions = new MoreOptionsWindow(this, Context);
             moreOptions.Show();
         }
 

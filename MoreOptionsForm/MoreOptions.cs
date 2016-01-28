@@ -110,7 +110,7 @@ namespace ParticleSystems.MoreOptionsForm
             // 
             // placeButton
             // 
-            this.placeButton.Enabled = false;
+            this.placeButton.Enabled = true;
             this.placeButton.Location = new System.Drawing.Point(81, 142);
             this.placeButton.Name = "placeButton";
             this.placeButton.Size = new System.Drawing.Size(80, 23);

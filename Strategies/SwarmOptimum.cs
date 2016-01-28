@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace ParticleSystems.Strategies
 {
+    /// <summary>
+    /// Represents an optimum, a swarm can search for.
+    /// </summary>
     class SwarmOptimum
     {
         private Vector2d Position = new Vector2d(0.0);
         private int Weight = 1;
-
-
+        
         public SwarmOptimum(Vector2d position, int weight)
         {
             Position = position;

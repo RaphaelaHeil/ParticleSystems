@@ -1,24 +1,20 @@
 ﻿using OpenTK;
 using ParticleSystems.ParticleGeneration;
-using ParticleSystems.Particles;
-using ParticleSystems.PositionUpdate;
 using ParticleSystems.SettingsPanels;
 using ParticleSystems.Strategies;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System;
 
 namespace ParticleSystems.Systems
 {
+    /// <summary>
+    /// Particle system that implements the particle swarm optimisation, looking for 1-n user defined optima in the search space.
+    /// <seealso cref="http://www.swarmintelligence.org/tutorials.php"/>
+    /// </summary>
     class ParticleSwarmSystem : ParticleSystem
     {
-
-        //http://www.swarmintelligence.org/tutorials.php
-
         private ParticleSwarmSettingsPanel Panel = new ParticleSwarmSettingsPanel();
         private ParticleSwarmTopology ParticleSwarmTopology;
-
 
         protected override void Initialise()
         {
@@ -31,7 +27,6 @@ namespace ParticleSystems.Systems
             {
                 case Topology.Global:
                     ParticleSwarmTopology = new GlobalParticleSwarmTopology(fitnessStrategy, particleGenerator);
-                  
                     break;
                 case Topology.Ring:
                     ParticleSwarmTopology = new RingParticleSwarmTopology(fitnessStrategy, particleGenerator, Panel.GetNeighbourhoodSize());

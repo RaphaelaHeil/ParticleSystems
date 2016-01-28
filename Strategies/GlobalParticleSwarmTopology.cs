@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ParticleSystems.Particles;
 using ParticleSystems.PositionUpdate;
 using ParticleSystems.ParticleGeneration;
@@ -10,6 +8,9 @@ using OpenTK;
 
 namespace ParticleSystems.Strategies
 {
+    /// <summary>
+    /// Particle swarm topology that searches for optima taking the entire space into account.
+    /// </summary>
     class GlobalParticleSwarmTopology : ParticleSwarmTopology
     {
         private List<SwarmParticle> Particles = new List<SwarmParticle>();
@@ -41,16 +42,6 @@ namespace ParticleSystems.Strategies
             PositionUpdater.UpdateSwarmPositions(Particles);
         }
 
-        public override void DecrementLifetime()
-        {
-          // TODO throw new NotImplementedException();
-        }
-
-        public override void GenerateNewParticles()
-        {
-            //TODO throw new NotImplementedException();
-        }
-
         public override Tuple<Vector2d[], Vector3d[]> GetVBOs()
         {
             ParticlePositions = new Vector2d[Particles.Count];
@@ -59,19 +50,24 @@ namespace ParticleSystems.Strategies
             {
                 ParticlePositions[i] = Particles.ElementAt(i).GetPosition();
                 ParticleColours[i] = GetColour(Particles.ElementAt(i));
-                //ParticleColours[i] = new Vector3d(Particles.ElementAt(i).GetCurrentFitness() / 100.0); //TODO: change accordingly
             }
 
             return new Tuple<Vector2d[], Vector3d[]>(ParticlePositions, ParticleColours);
         }
 
-       
-
         public override void RemoveExpiredParticles()
         {
-            // TODO throw new NotImplementedException();
+            //not supported at the moment, don't do anything
         }
 
+        public override void DecrementLifetime()
+        {
+            //not supported at the moment, don't do anything
+        }
 
+        public override void GenerateNewParticles()
+        {
+            //not supported at the moment, don't do anything
+        }
     }
 }

@@ -1,16 +1,14 @@
 ﻿using OpenTK;
 using ParticleSystems.ParticleGeneration;
-using ParticleSystems.Particles;
 using ParticleSystems.ParticleSwarmDataStructures;
 using ParticleSystems.PositionUpdate;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ParticleSystems.Strategies
 {
+    /// <summary>
+    /// Particle swarm topology that searches for optima using a mesh/grid.
+    /// </summary>
     class MeshParticleSwarmTopology : ParticleSwarmTopology
     {
         private SwarmParticleMesh Particles;
@@ -46,7 +44,7 @@ namespace ParticleSystems.Strategies
 
         public override Tuple<Vector2d[], Vector3d[]> GetVBOs()
         {
-           ParticlePositions = new Vector2d[Particles.GetParticleCount()];
+            ParticlePositions = new Vector2d[Particles.GetParticleCount()];
             ParticleColours = new Vector3d[Particles.GetParticleCount()];
 
             int indexCounter = 0;
@@ -55,7 +53,7 @@ namespace ParticleSystems.Strategies
             {
                 for (int j = 0; j < Particles.GetColumnCount(); j++)
                 {
-                    foreach (var particle in Particles.GetListFromCell(i,j))
+                    foreach (var particle in Particles.GetListFromCell(i, j))
                     {
                         ParticlePositions[indexCounter] = particle.GetPosition();
                         ParticleColours[indexCounter] = GetColour(particle);
@@ -66,19 +64,19 @@ namespace ParticleSystems.Strategies
             return new Tuple<Vector2d[], Vector3d[]>(ParticlePositions, ParticleColours);
         }
 
+        public override void RemoveExpiredParticles()
+        {
+            //not supported at the moment, don't do anything
+        }
+
         public override void DecrementLifetime()
         {
-           //TODO  throw new NotImplementedException();
+            //not supported at the moment, don't do anything
         }
 
         public override void GenerateNewParticles()
         {
-           //TODO  throw new NotImplementedException();
-        }
-
-        public override void RemoveExpiredParticles()
-        {
-           //TODO throw new NotImplementedException();
+            //not supported at the moment, don't do anything
         }
     }
 }

@@ -7,7 +7,9 @@ using ParticleSystems.SettingsPanels;
 
 namespace ParticleSystems.Systems
 {
-    //TODO
+    /// <summary>
+    /// Abstract base class for all particle systems.
+    /// </summary>
     abstract class ParticleSystem
     {
         private readonly object RenderingLock = new object();
@@ -36,7 +38,7 @@ namespace ParticleSystems.Systems
         /// <summary>
         /// Renders the next iteration of the particle system.
         /// </summary>
-        /// <returns>True if a new frame has been prepared, false if another frame was still being processed.</returns>
+        /// <returns>True if a new frame has been prepared, false if another frame was still being processed and the new request timed out (after 20ms).</returns>
         public bool RenderFrame()
         {
             bool lockTaken = false;
@@ -47,7 +49,7 @@ namespace ParticleSystems.Systems
                 {
                     PrepareFrame();
                     UpdateVBOs();
-                    RenderHelper.Render(ParticlePositions, ParticleColours);
+                    RenderHelper.RenderParticles(ParticlePositions, ParticleColours);
                     return true;
                 }
                 else
@@ -63,8 +65,6 @@ namespace ParticleSystems.Systems
 
         private void PrepareFrame()
         {
-            //TODO: chpt. 7.3, p.206
-            //slighlty changed the execution order to e.g. be able to create as many new particles as were removed
             DecrementLifetime();
             RemoveExpiredParticles();
             GenerateNewParticles();

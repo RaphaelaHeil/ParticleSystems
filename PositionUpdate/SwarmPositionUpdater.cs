@@ -1,6 +1,4 @@
-﻿using OpenTK;
-using ParticleSystems.Particles;
-using System;
+﻿using ParticleSystems.Particles;
 using System.Collections.Generic;
 using ParticleSystems.SettingsPanels;
 using ParticleSystems.Strategies;
@@ -8,12 +6,15 @@ using ParticleSystems.ParticleSwarmDataStructures;
 
 namespace ParticleSystems.PositionUpdate
 {
+    /// <summary>
+    /// Abstract superclass for all swarm particle postion updaters.
+    /// </summary>
     abstract class SwarmPositionUpdater: PositionUpdater
     {
         protected double InertiaWeight = 0.7298;
         protected double AccelerationConstant = 1.4961;
         protected double Mean = 0.5;
-        protected double StandardDeviation = 0.5;
+        protected double StandardDeviation = 0.2;
 
         protected ParticleSwarmFitnessStrategy FitnessStrategy;
 
@@ -21,7 +22,6 @@ namespace ParticleSystems.PositionUpdate
         {
             FitnessStrategy = fitnessStrategy;
         }
-
 
         public abstract void UpdateSwarmPositions(List<SwarmParticle> particles);
 

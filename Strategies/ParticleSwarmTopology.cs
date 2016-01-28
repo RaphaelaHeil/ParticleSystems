@@ -1,13 +1,12 @@
 ﻿using OpenTK;
 using ParticleSystems.Particles;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ParticleSystems.Strategies
 {
+    /// <summary>
+    /// Abstract super class for swarm topologies.
+    /// </summary>
     abstract class ParticleSwarmTopology
     {
         protected Vector3d GetColour(SwarmParticle particle)

@@ -34,6 +34,10 @@ namespace ParticleSystems.ParticleGeneration
             this.MaxVelocity = maxVelocity;
         }
 
+        /// <summary>
+        /// Generates a new particle.
+        /// </summary>
+        /// <returns>Newly generated particle</returns>
         public Particle GenerateParticle()
         {
             int lifetime = Random.Next(1,MaxLifetime); 

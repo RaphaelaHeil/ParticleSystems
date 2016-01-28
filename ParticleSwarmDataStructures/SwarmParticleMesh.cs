@@ -2,12 +2,12 @@
 using ParticleSystems.Particles;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ParticleSystems.ParticleSwarmDataStructures
 {
+    /// <summary>
+    /// Mesh data structure for swarm particles.  Separates particles into a grid/cells based on their position.
+    /// </summary>
     class SwarmParticleMesh
     {
         private List<SwarmParticle>[,] Mesh;
@@ -42,7 +42,6 @@ namespace ParticleSystems.ParticleSwarmDataStructures
             InitialiseMesh();
         }
 
-
         private void InitialiseMesh()
         {
             Mesh = new List<SwarmParticle>[RowCount, ColumnCount];
@@ -70,6 +69,11 @@ namespace ParticleSystems.ParticleSwarmDataStructures
             }
         }
 
+        /// <summary>
+        /// Retrieves all particles in the same cell as the given particle. Does not include the given particle!
+        /// </summary>
+        /// <param name="particle">Particle identifying the cell to retrieve from</param>
+        /// <returns>All partciles in the same cell</returns>
         public List<SwarmParticle> GetAdjacentParticlesWithoutGivenParticle(SwarmParticle particle)
         {
             Tuple<int, int> cellIndices = ParticlePositionToCellIndices(particle.GetPosition());

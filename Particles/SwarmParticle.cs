@@ -4,6 +4,9 @@ using System;
 
 namespace ParticleSystems.Particles
 {
+    /// <summary>
+    /// Custom particle implementation for particle swarm optimisations.
+    /// </summary>
     class SwarmParticle : Particle
     {
         private Vector2d BestPosition;
@@ -57,6 +60,10 @@ namespace ParticleSystems.Particles
             Translation = translation;
         }
 
+        /// <summary>
+        /// Updates the particle's fitness value and sets the overall best location to be the current location.
+        /// </summary>
+        /// <param name="highestFitness">New fitness value</param>
         public void UpdateFittestValues(double highestFitness)
         {
             OverallBestFitness = highestFitness;

@@ -1,6 +1,5 @@
 ﻿using OpenTK;
 using ParticleSystems.Particles;
-using ParticleSystems.SettingsPanels;
 using ParticleSystems.Strategies;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,9 @@ using ParticleSystems.ParticleSwarmDataStructures;
 
 namespace ParticleSystems.PositionUpdate
 {
+    /// <summary>
+    /// Updates swarm particle positions based on global properties of the swarm.
+    /// </summary>
     class GlobalBestSwarmPositionUpdater: SwarmPositionUpdater
     {
         private Vector2d GlobalBestLocation = new Vector2d(0.0);
@@ -72,12 +74,13 @@ namespace ParticleSystems.PositionUpdate
 
         public override void UpdateSwarmPositions(ParticleRing<SwarmParticle> particles)
         {
-            throw new NotImplementedException(); //TODO
+            //not needed at the moment, don't do anything
         }
 
         public override SwarmParticleMesh UpdateSwarmPositions(SwarmParticleMesh particles)
         {
-            throw new NotImplementedException(); //TODO
+            //not needed at the moment, don't do anything
+            return particles;
         }
     }
 }

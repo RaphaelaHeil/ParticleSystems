@@ -1,14 +1,14 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
-using System.Collections.Generic;
 
 namespace ParticleSystems
 {
+    /// <summary>
+    /// Helper class that handles rendering of various elements. 
+    /// </summary>
     class RenderHelper
     {
-        //TODO: update docs !!!!!!!!!!!!!!!!!
-
         private IdHolder IdHolder;
         protected Matrix4 Projection = Matrix4.Identity;
 
@@ -20,7 +20,12 @@ namespace ParticleSystems
             PrepareUniforms();
         }
 
-        public void Render(Vector2d[] positions, Vector3d[] colours)
+        /// <summary>
+        /// Renders particles based on the given positions and colours, assuming a 1:1 relationship between entries in both arrays (i.e. colour 1 belongs to position 1, 2 to 2, etc.).
+        /// </summary>
+        /// <param name="positions">Positions of the particles</param>
+        /// <param name="colours">Colours of the particles</param>
+        public void RenderParticles(Vector2d[] positions, Vector3d[] colours)
         {
             FillParticleBuffers(positions, colours);
             FillUniforms();
@@ -31,21 +36,24 @@ namespace ParticleSystems
             GL.Flush();
         }
 
-        public void RenderPlaceables(Vector2d[] list)
+        /// <summary>
+        /// Renders placeables, i.e. e.g. obstacles or optimum indicators. Currently no colouring is supported.
+        /// </summary>
+        /// <param name="placeables">Objects to render</param>
+        public void RenderPlaceables(Vector2d[] placeables)
         {
-            FillPlaceableBuffers(list);
+            FillPlaceableBuffers(placeables);
             FillUniforms();
             EnablePlaceableArrays();
-            GL.DrawArrays(PrimitiveType.Quads, 0, list.Length);
+            GL.DrawArrays(PrimitiveType.Quads, 0, placeables.Length);
 
             DisablePlaceableArrays();
             GL.Flush();
-
         }
 
 
         /// <summary>
-        /// Fill the Buffer Objects with the previously generated values.
+        /// Fill the Buffer Objects with the previously generated values for particle positions and colours.
         /// </summary>
         private void FillParticleBuffers(Vector2d[] positions, Vector3d[] colours)
         {
@@ -62,6 +70,10 @@ namespace ParticleSystems
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0); //bind empty id to make sure no following calls modify any of the above buffers accidentally 
         }
 
+        /// <summary>
+        /// Fill the Buffer Object for the placeables.
+        /// </summary>
+        /// <param name="vertices"></param>
         private void FillPlaceableBuffers(Vector2d[] vertices)
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, IdHolder.ObstacleBufferId); //bind buffer that will be modified
@@ -94,6 +106,9 @@ namespace ParticleSystems
             GL.EnableVertexAttribArray(IdHolder.VertexColourID);
         }
 
+        /// <summary>
+        /// Enable the VertexArray before rendering the placeables.
+        /// </summary>
         private void EnablePlaceableArrays()
         {
             GL.EnableVertexAttribArray(IdHolder.ObstaclePositionID);
@@ -108,6 +123,9 @@ namespace ParticleSystems
             GL.DisableVertexAttribArray(IdHolder.VertexColourID);
         }
 
+        /// <summary>
+        /// Disable the VertexArray after rendering the placeables.
+        /// </summary>
         private void DisablePlaceableArrays()
         {
             GL.DisableVertexAttribArray(IdHolder.ObstaclePositionID);

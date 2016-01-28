@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace ParticleSystems
 {
-    //TODO
+    /// <summary>
+    /// Handles the particle expiration, i.e. removing expired particles from the system.
+    /// </summary>
     class ExpirationHandler
     {
         /// <summary>

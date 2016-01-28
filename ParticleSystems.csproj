@@ -118,9 +118,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ParticleGeneration\RandomParticleGenerator.cs" />
     <Compile Include="PositionUpdate\RandomPositionUpdater.cs" />
-    <Compile Include="SettingsPanels\Test.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Strategies\ParticleSwarmFitnessStrategy.cs" />
     <Compile Include="Strategies\ParticleSwarmPNormFitnessStrategy.cs" />
     <EmbeddedResource Include="MainFrame.resx">
@@ -151,9 +148,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SettingsPanels\Test.resx">
-      <DependentUpon>Test.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="fragment.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

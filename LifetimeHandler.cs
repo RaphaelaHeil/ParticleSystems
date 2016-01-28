@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace ParticleSystems
 {
+    /// <summary>
+    /// Handles particle aging.
+    /// </summary>
     class LifetimeHandler
     {
         /// <summary>

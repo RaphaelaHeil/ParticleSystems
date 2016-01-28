@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using OpenTK;
 using ParticleSystems.Particles;
 using ParticleSystems.SettingsPanels;
@@ -8,11 +7,10 @@ namespace ParticleSystems.PositionUpdate
 {
 
     /// <summary>
-    /// Linearily translates particle positions.
+    /// Linearily updates particle positions.
     /// </summary>
     class LinearPositionUpdater : PositionUpdater
     {
-
         private const int DEFAULT_DELTA = 1;
         private Vector2d Translation;
 
@@ -34,15 +32,6 @@ namespace ParticleSystems.PositionUpdate
             Translation = new Vector2d(deltaX, deltaY);
         }
 
-        public void SetContext(Context context) {
-            throw new NotImplementedException();
-        }
-
-        public void SetSettingsPanel(ParticleSystemSettingsPanel settingsPanel)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <see cref="PositionUpdater.UpdatePositions(List{Particle})"/>
         public void UpdatePositions(List<Particle> particles)
         {
@@ -50,6 +39,16 @@ namespace ParticleSystems.PositionUpdate
             {
                 particle.updatePosition(Translation);
             }
+        }
+
+        public void SetContext(Context context)
+        {
+            //not needed, don't do anything
+        }
+
+        public void SetSettingsPanel(ParticleSystemSettingsPanel settingsPanel)
+        {
+            //not needed, don't do anything
         }
     }
 }

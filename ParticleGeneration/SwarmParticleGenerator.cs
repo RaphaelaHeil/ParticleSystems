@@ -6,6 +6,10 @@ using System;
 
 namespace ParticleSystems.ParticleGeneration
 {
+
+    /// <summary>
+    /// Generates swarm particles.
+    /// </summary>
     class SwarmParticleGenerator
     {
         private int XMin;
@@ -30,7 +34,10 @@ namespace ParticleSystems.ParticleGeneration
             MaxVelocity = particleSettings.GetVelocity();
         }
 
-
+        /// <summary>
+        /// Generates a new swarm particle.
+        /// </summary>
+        /// <returns>Newly generated swarm particle</returns>
         public SwarmParticle GenerateParticle()
         {
             return new SwarmParticle(CreateRandomPosition(), MaxLifetime, MaxAgingVelocity, MaxVelocity);

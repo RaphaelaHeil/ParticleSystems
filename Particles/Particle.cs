@@ -1,4 +1,5 @@
 ﻿using OpenTK;
+using System;
 
 namespace ParticleSystems.Particles
 {
@@ -59,7 +60,9 @@ namespace ParticleSystems.Particles
         /// <param name="translation">Translation to be applied to the current position (possibly taking the velocity into consideration)</param>
         public virtual void updatePosition(Vector2d translation)
         {
-            Position = Vector2d.Add(Position, translation * Velocity);
+            Vector2d update = translation * Velocity;
+
+            Position = Position + update;
         }
 
         /// <summary>
@@ -128,6 +131,9 @@ namespace ParticleSystems.Particles
             return Expired;
         }
 
+        /// <summary>
+        /// Sets this particle's status to be expired.
+        /// </summary>
 		public virtual void SetExpired(){
 			Expired = true;
 		}

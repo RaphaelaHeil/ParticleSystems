@@ -6,6 +6,9 @@ using System.Linq.Expressions;
 
 namespace ParticleSystems
 {
+    /// <summary>
+    /// Registration point for all particle systems that should be available in the GUI. 
+    /// </summary>
     class ParticleSystemRegistration
     {
 
@@ -37,12 +40,21 @@ namespace ParticleSystems
 			).Compile());
         }
 
+        /// <summary>
+        /// Gets the names of all available particle systems.
+        /// </summary>
+        /// <returns></returns>
         public String[] GetParticleSystemNames()
         {
             return systems.Keys.ToArray<string>();
         }
 
-        public ParticleSystem GetParticleSystemInstance(string particleSystemName)
+        /// <summary>
+        /// Gets an instance of a particle system based on the given name.
+        /// </summary>
+        /// <param name="particleSystemName">Name of the requested particle system</param>
+        /// <returns>Particle system instance matching the name</returns>
+        public ParticleSystem GetParticleSystemInstanceByName(string particleSystemName)
         {
             return systems[particleSystemName]();
         }

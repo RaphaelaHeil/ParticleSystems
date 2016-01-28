@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
 using ParticleSystems.Particles;
 using ParticleSystems.PositionUpdate;
@@ -11,6 +7,9 @@ using ParticleSystems.ParticleSwarmDataStructures;
 
 namespace ParticleSystems.Strategies
 {
+    /// <summary>
+    /// Particle swarm topology that searches for optima using a ring data structure.
+    /// </summary>
     class RingParticleSwarmTopology : ParticleSwarmTopology
     {
         private ParticleRing<SwarmParticle> Particles = new ParticleRing<SwarmParticle>();
@@ -57,19 +56,19 @@ namespace ParticleSystems.Strategies
             return new Tuple<Vector2d[], Vector3d[]>(ParticlePositions, ParticleColours);
         }
 
+        public override void RemoveExpiredParticles()
+        {
+            //not supported at the moment, don't do anything
+        }
+
         public override void DecrementLifetime()
         {
-            //throw new NotImplementedException();
+            //not supported at the moment, don't do anything
         }
 
         public override void GenerateNewParticles()
         {
-           // throw new NotImplementedException();
+            //not supported at the moment, don't do anything
         }
-        
-        public override void RemoveExpiredParticles()
-        {
-          //  throw new NotImplementedException();
-        }      
     }
 }

@@ -4,12 +4,13 @@ using System.Collections.Generic;
 
 namespace ParticleSystems.Strategies
 {
+    /// <summary>
+    /// Particle swarm fitness function basing the fitness calculation on the p-norm.
+    /// </summary>
     class ParticleSwarmPNormFitnessStrategy : ParticleSwarmFitnessStrategy
     {
-
         private int P = 1;
-      
-   
+
         public ParticleSwarmPNormFitnessStrategy(int p, HashSet<SwarmOptimum> optima, bool ignoreWeights)
         {
             IgnoreWeights = ignoreWeights;
@@ -22,7 +23,7 @@ namespace ParticleSystems.Strategies
 
         public override double GetFitness(Vector2d position)
         {
-            if(Optima.Count == 0)
+            if (Optima.Count == 0)
             {
                 return double.MaxValue;
             }
@@ -43,14 +44,14 @@ namespace ParticleSystems.Strategies
         private double calculateFitness(Vector2d particlePosition, SwarmOptimum optimum)
         {
             Vector2d diff = particlePosition - optimum.GetPosition();
-            double baseFitness =  Math.Pow((Math.Pow(Math.Abs(diff.X), P) + Math.Pow(Math.Abs(diff.Y), P)), ((double)1.0 / P));
+            double baseFitness = Math.Pow((Math.Pow(Math.Abs(diff.X), P) + Math.Pow(Math.Abs(diff.Y), P)), ((double)1.0 / P));
 
             if (IgnoreWeights)
             {
                 return baseFitness;
             }
 
-            return baseFitness / (double)optimum.GetWeight();//TODO: find a different way? substract weight? 
+            return baseFitness / (double)optimum.GetWeight();
         }
     }
 }
