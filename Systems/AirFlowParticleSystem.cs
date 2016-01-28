@@ -36,7 +36,6 @@ namespace ParticleSystems.Systems {
             );
             CreateInitialParticles();
             ParticleGrid = new ParticleGrid<AirParticle>(Context);
-            ParticleGrid.putParticlesToParticleGridArrayList(Particles);
             //TODO: create stuff from settings
             //TODO: generate initial particles
         }
@@ -104,10 +103,11 @@ namespace ParticleSystems.Systems {
 
         public override ParticleSettings GetParticleSettings() {
             Panel = (AirFlowUserSettings)GetParticleSystemSettingsPanel();
-            ParticleSettings.WithInitialNumberOfParticles(10);
-            ParticleSettings.WithNewParticlesPerFrame(1);
-            ParticleSettings.WithLifetime(200); //the particle dies outside the right side of the draw-area
-            ParticleSettings.WithVelocity(3);
+            ParticleSettings.WithInitialNumberOfParticles(5000);
+            ParticleSettings.WithNewParticlesPerFrame(0);
+            ParticleSettings.WithLifetime(1000); //the particle dies outside the right side of the draw-area
+            ParticleSettings.WithVelocity(4);
+            ParticleSettings.WithVelocityIsRandomlyGenerated(true);
             Color color = Panel.getColor();
             Color complementaryColor = Color.FromArgb((255 - color.R), (255 - color.G), (255 - color.B));
             ParticleSettings.WithGlBackgroundColor(complementaryColor);

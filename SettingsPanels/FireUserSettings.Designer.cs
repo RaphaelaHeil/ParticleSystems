@@ -11,7 +11,6 @@ namespace ParticleSystems.SettingsPanels
         private Label label1;
         private TextBox xMin;
         private TextBox xMax;
-        private Label label2;
         private Label label3;
         private Label label4;
         private TextBox einflussbereich;
