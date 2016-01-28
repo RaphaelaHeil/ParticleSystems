@@ -4,6 +4,9 @@ using ParticleSystems.Particles;
 
 namespace ParticleSystems.ParticleGeneration
 {
+	/// <summary>
+	/// Class to generate fire particles.
+	/// </summary>
 	class FireParticleGenerator : ParticleGenerator 
 	{
 		private int Width;
@@ -30,26 +33,31 @@ namespace ParticleSystems.ParticleGeneration
 			this.MaxVelocity = maxVelocity;
 		}
 
+		/// <summary>
+		/// Generates fire particles and returns the fire particle list.
+		/// </summary>
+		/// <returns></returns>
 		public Particle GenerateParticle() {
-			Random rand = new Random();
-			int lifetime = (int)(rand.NextDouble() * 1000);
 			int agingVelocity = MaxAgingVelocity;
 			double velocity = Random.NextDouble() * MaxVelocity;
 			return new Particle(CreateStartingPosition(), MaxLifetime, agingVelocity, velocity);
 		}
 
-		/**public Particle GenerateParticle() {
-			return null;
-		}**/
-
+	
+		/// <summary>
+		/// Generates water particles and returns the water particle list.
+		/// </summary>
+		/// <returns></returns>
 		public Particle GenerateParticle2(int minX, int maxX) {
-			Random rand = new Random();
-			int lifetime = (int)(rand.NextDouble() * 1000);
 			int agingVelocity = MaxAgingVelocity;
 			double velocity = Random.NextDouble() * MaxVelocity;
 			return new Particle(CreateStartingPosition2(minX, maxX), MaxLifetime, agingVelocity, velocity);
 		}
 
+		/// <summary>
+		/// Sets the starting position for the fire particles.
+		/// </summary>
+		/// <returns></returns>
 		private Vector2d CreateStartingPosition() {
 			double y = 0;
 			double x = Random.NextDouble() * Width;
@@ -57,8 +65,12 @@ namespace ParticleSystems.ParticleGeneration
 			return new Vector2d(x, y);
 		}
 
+		/// <summary>
+		/// Sets the starting position for the water particles. Can be manipulated by user settings panel
+		/// </summary>
+		/// <returns></returns>
 		private Vector2d CreateStartingPosition2(int minX, int maxX) {
-			double y = 580;
+			double y = 595;
 			//double x = Random.NextDouble() * Width;
 			double x = 300 ;
 			x = (double)Random.Next (minX, maxX);

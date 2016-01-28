@@ -4,14 +4,25 @@ using System.Collections.Generic;
 
 namespace ParticleSystems.SettingsPanels
 {
+
+	/// <summary>
+	/// Settings-Panel for the Fire Particle System.
+	/// Some unique setting for the Fire Particle system can be made here.
+	/// </summary>
 	public partial class FireUserSettings : ParticleSystemSettingsPanel {
 		
-
+		/// <summary>
+		/// Contructor for the Fire Particle settings.
+		/// Call the initalize method.
+		/// </summary>
 		public FireUserSettings()
 		{
 			InitializeComponent(); 
 		}
 
+		/// <summary>
+		/// Initializes the components on the settings panel.
+		/// </summary>
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
@@ -102,16 +113,26 @@ namespace ParticleSystems.SettingsPanels
 
 		}
 
+		/// <summary>
+		/// Returns value for the starting position of the waterfall
+		/// </summary>
+		/// <returns></returns>
 		public int GetXMin()
         {
             return int.Parse(xMin.Text);
         }
-
+		/// <summary>
+		/// Returns value for the ending position of the waterfall
+		/// </summary>
+		/// <returns></returns>
         public int GetXMax()
         {
             return int.Parse(xMax.Text);
         }
-
+		/// <summary>
+		/// Returns value for the range of the waterfall
+		/// </summary>
+		/// <returns></returns>
         public int GetRange()
         {
             return int.Parse(einflussbereich.Text);

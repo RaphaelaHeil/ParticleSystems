@@ -15,27 +15,22 @@ namespace ParticleSystems.PositionUpdate
 	{
 		private Context context;
 		private const int DEFAULT_DELTA = 1;
-		private Vector2d TranslationX;
-		private Vector2d TranslationYup;
-		private Vector2d TranslationYdown;
-		LifetimeHandler LifetimeHandler = new LifetimeHandler ();
-		ExpirationHandler ExpirationHandler = new ExpirationHandler ();
 
-
+		/// <summary>
+		/// unused constructor
+		/// </summary>
 		public FirePositionUpdater ()
 		{
-			TranslationX = new Vector2d (DEFAULT_DELTA, 0);
-			TranslationYup = new Vector2d (0, DEFAULT_DELTA);
-			TranslationYdown = new Vector2d (0, -DEFAULT_DELTA);
 		}
 
 		/// <see cref="PositionUpdater.UpdatePositions(List{Particle})"/>
+		/// <summary>
+		/// Initiates the particle moving behaviour and directions
+		/// </summary>
 		public void UpdatePositions (List<Particle> particles)
 		{
 			bool isFire = true;
 			foreach (var particle in particles) {
-				int particlePosX = (int)particle.GetPosition ().X;
-				int particlePosY = (int)particle.GetPosition ().Y;
 				if (isFire) {
 					Random rand = new Random ();
 					double x = rand.NextDouble ();
@@ -63,12 +58,19 @@ namespace ParticleSystems.PositionUpdate
 			}
 		}
 
-
+		/// <summary>
+		/// Sets the context object
+		/// </summary>
+		/// <param name="context"></param>
 		public void SetContext (Context context)
 		{
 			this.context = context;
 		}
 
+		/// <summary>
+		/// Unused method
+		/// </summary>
+		/// <param name="context"></param>
 		public void SetSettingsPanel (ParticleSystemSettingsPanel settingsPanel)
 		{
 			//TODO
