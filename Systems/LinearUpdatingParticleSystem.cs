@@ -7,6 +7,9 @@ using ParticleSystems.ParticleGeneration;
 
 namespace ParticleSystems.Systems
 {
+    /// <summary>
+    /// A simple particle system for demonstration purposes that updates the particle's positions linearly.
+    /// </summary>
     class LinearilyUpdatingParticleSystem : ParticleSystem
     {
         private PositionUpdater PositionUpdater = new LinearPositionUpdater();
@@ -20,22 +23,18 @@ namespace ParticleSystems.Systems
         protected override void Initialise()
         {
             ParticleGenerator = new RandomParticleGenerator(Context.GetIdHolder().Width, Context.GetIdHolder().Height, ParticleSettings.GetLifetime(), ParticleSettings.GetAgingVelocity(), ParticleSettings.GetVelocity());
-            CreateInitialParticles();
-
             PositionUpdater = new LinearPositionUpdater(Panel.GetXDirectionChange(), Panel.GetYDirectionChange());
-
-            //TODO: create stuff from settings
-            //TODO: generate initial particles
+            CreateInitialParticles();
         }
 
         protected override void UpdateVBOs()
-        {           
-            ParticlePositions = new Vector2d[Particles.Count]; //TODO: find a safer solution :( 
+        {
+            ParticlePositions = new Vector2d[Particles.Count];
             ParticleColours = new Vector3d[Particles.Count];
-            for(int i=0; i < Particles.Count; i++)
+            for (int i = 0; i < Particles.Count; i++)
             {
                 ParticlePositions[i] = Particles.ElementAt(i).GetPosition();
-                ParticleColours[i] = new Vector3d(0.0); //TODO: change accordingly
+                ParticleColours[i] = new Vector3d(0.0);
             }
         }
 

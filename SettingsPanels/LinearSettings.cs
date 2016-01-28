@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ParticleSystems.SettingsPanels
+﻿namespace ParticleSystems.SettingsPanels
 {
     class LinearSettings : ParticleSystemSettingsPanel
     {
@@ -16,6 +10,7 @@ namespace ParticleSystems.SettingsPanels
         public LinearSettings()
         {
             InitializeComponent();
+            this.Location = new System.Drawing.Point(9, 16);
         }
 
         private void InitializeComponent()
@@ -67,7 +62,7 @@ namespace ParticleSystems.SettingsPanels
             this.Controls.Add(this.label1);
             this.Controls.Add(this.xDirectionInput);
             this.Controls.Add(this.yDirectionInput);
-            this.Location = new System.Drawing.Point(0, 0);
+           
             this.Name = "LinearSettings";
             this.Size = this.Size;
             this.ResumeLayout(false);

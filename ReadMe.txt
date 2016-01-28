@@ -27,3 +27,5 @@ Anlegen eines neuen ParticleSystemSettingsPanel (Beispiel: s. TestPanel)
 HINWEIS: Die Größe des Panels sollte beibehalten werden, damit es ohne Probleme automatisch in die restliche Anwendung eingefügt werden kann. 
 Um sicherzustellen, dass tatsächlich die gleiche Größe verwendet wird kann als vorletzter Aufruf in InitializeComponents (vor PerformLayout) "this.Size = base.Size;" verwendet werden. 
 Die Größenänderung wird dann auch direkt auf den Designer übertragen/dort angezeigt.
+Um Überlappungen beim Anzeigen vorzubeugen kann dem Konstruktor nach dem Aufruf von InitializeComponents folgende Anweisung hinzugefügt werden: 
+this.Location = new System.Drawing.Point(9, 16);

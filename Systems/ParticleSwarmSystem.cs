@@ -8,7 +8,7 @@ using System;
 namespace ParticleSystems.Systems
 {
     /// <summary>
-    /// Particle system that implements the particle swarm optimisation, looking for 1-n user defined optima in the search space.
+    /// Particle system that implements the particle swarm optimisation, looking for 1 to n user defined optima in the search space.
     /// <seealso cref="http://www.swarmintelligence.org/tutorials.php"/>
     /// </summary>
     class ParticleSwarmSystem : ParticleSystem
@@ -62,10 +62,9 @@ namespace ParticleSystems.Systems
             ParticleColours = vbos.Item2;
         }
 
-
         public override string GetDescription()
         {
-            return "XXX"; //TODO :D  
+            return "Particle system that implements the particle swarm optimisation, looking for 1 to n user defined optima in the search space.";
         }
 
         public override ParticleSettings GetParticleSettings()
@@ -76,7 +75,6 @@ namespace ParticleSystems.Systems
                 WithVelocity(0.02).WithVelocityEnabled(true).
                 WithInitialNumberOfParticles(50).
                 WithGlBackgroundColor(System.Drawing.Color.DarkGray);
-
             return ParticleSettings;
         }
 
@@ -99,9 +97,7 @@ namespace ParticleSystems.Systems
         {
             return Panel;
         }
-
     }
-
 
     public enum Topology
     {
