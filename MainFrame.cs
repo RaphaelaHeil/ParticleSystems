@@ -160,7 +160,7 @@ namespace ParticleSystems
             particleSettings.WithAgingVelocity(Math.Abs(int.Parse(agingVelocityInput.Text)));
             particleSettings.WithLifetime(Math.Abs(int.Parse(lifetimeInput.Text)));
             particleSettings.WithNewParticlesPerFrame(Math.Abs(int.Parse(newParticlesInput.Text)));
-            particleSettings.WithVelocity(Math.Abs(int.Parse(velocityInput.Text)));
+            particleSettings.WithVelocity(Math.Abs(double.Parse(velocityInput.Text)));
 
             particleSettings.WithAgingVelocityIsRandomlyGenerated(agingRand.Checked);
             particleSettings.WithLifetimeIsRandomlyGenerated(lifetimeRand.Checked);

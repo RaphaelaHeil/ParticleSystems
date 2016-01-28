@@ -6,46 +6,20 @@ namespace ParticleSystems.Particles
 {
     class SwarmParticle : Particle
     {
-      //  private static Random Rand = new Random();
-        private ParticleSwarmFitnessStrategy FitnessStrategy;
-
         private Vector2d BestPosition;
         private Vector2d Translation = new Vector2d(0.0);
         private double OverallBestFitness = double.MaxValue;
         private double CurrentFitness = double.MaxValue;
+       
 
-        private double InertiaWeight = 0.7298;
-        private double AccelerationConstant = 0.8; //1.4961;
-        private double Scaling = 0.08;
-
-        //Vector2d initialPosition, int maxLifetime, int; agingVelocity, double velocity) : this(initialPosition, maxLifetime, agingVelocity)
-
-        public SwarmParticle(Vector2d initialPosition, int maxLifetime, int agingVelocity, double velocity, ParticleSwarmFitnessStrategy fitnessStrategy) : base(initialPosition, maxLifetime, agingVelocity, velocity)
+        public SwarmParticle(Vector2d initialPosition, int maxLifetime, int agingVelocity, double velocity) : base(initialPosition, maxLifetime, agingVelocity, velocity)
         {
-            FitnessStrategy = fitnessStrategy;
             BestPosition = initialPosition;
         }
 
-        public SwarmParticle(Vector2d initialPosition, ParticleSwarmFitnessStrategy fitnessStrategy) : base(initialPosition, 1, 1, 0.2)
+        public SwarmParticle(Vector2d initialPosition) : base(initialPosition, 1, 0, 0.02)
         {
-            FitnessStrategy = fitnessStrategy;
             BestPosition = initialPosition;
-        }
-
-        public override void updatePosition(Vector2d globalBest)
-        {
-
-            Translation.X = (Translation.X * InertiaWeight + AccelerationConstant* GaussianRandomHelper.GetRandomValue(0.0, 1.0) * (BestPosition.X - Position.X) + AccelerationConstant * GaussianRandomHelper.GetRandomValue(0.0, 1.0) * (globalBest.X - Position.X)) * Scaling;
-            Translation.Y = (Translation.Y * InertiaWeight + AccelerationConstant * GaussianRandomHelper.GetRandomValue(0.0, 1.0) * (BestPosition.Y - Position.Y) + AccelerationConstant * GaussianRandomHelper.GetRandomValue(0.0, 1.0) * (globalBest.Y - Position.Y)) * Scaling;
-
-            Position = Position + Translation ;
-
-            CurrentFitness = FitnessStrategy.GetFitness(Position);
-            if (CurrentFitness < OverallBestFitness)
-            {
-                OverallBestFitness = CurrentFitness;
-                BestPosition = Position;
-            }
         }
 
         public Vector2d GetBestLocation()
@@ -58,9 +32,40 @@ namespace ParticleSystems.Particles
             return CurrentFitness;
         }
 
+        public void SetCurrentFitness(double currentFitness)
+        {
+            CurrentFitness = currentFitness;
+        }
+
         public double GetOverallBestFitness()
         {
             return OverallBestFitness;
+        }
+
+        public void SetOverallBestFitness(double newFitness)
+        {
+            OverallBestFitness = newFitness;
+        }
+
+        public Vector2d GetTranslation()
+        {
+            return Translation;
+        }
+
+        public void SetTranslation(Vector2d translation)
+        {
+            Translation = translation;
+        }
+
+        public void UpdateFittestValues(double highestFitness)
+        {
+            OverallBestFitness = highestFitness;
+            SetCurrentLocationAsBest();
+        }
+
+        public void SetCurrentLocationAsBest()
+        {
+            BestPosition = Position;
         }
     }
 }

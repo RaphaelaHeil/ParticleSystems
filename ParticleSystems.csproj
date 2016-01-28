@@ -62,13 +62,21 @@
     <Compile Include="ParticleGeneration\AirFlowParticleGenerator.cs" />
     <Compile Include="ParticleGeneration\SwarmParticleGenerator.cs" />
     <Compile Include="ParticleGrid.cs" />
+    <Compile Include="ParticleSwarmDataStructures\ParticleRing.cs" />
+    <Compile Include="ParticleSwarmDataStructures\SwarmParticleMesh.cs" />
     <Compile Include="Particles\AirParticle.cs" />
     <Compile Include="PositionUpdate\GlobalBestSwarmPositionUpdater.cs" />
+    <Compile Include="PositionUpdate\LocalBestSwarmPositionUpdater.cs" />
     <Compile Include="SettingsPanels\ParticleSwarmSettingsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Strategies\GlobalParticleSwarmTopology.cs" />
+    <Compile Include="Strategies\MeshParticleSwarmTopology.cs" />
+    <Compile Include="Strategies\ParticleSwarmTopology.cs" />
     <Compile Include="Strategies\PlaceableObject.cs" />
     <Compile Include="Strategies\GaussianRandomHelper.cs" />
+    <Compile Include="Strategies\RingParticleSwarmTopology.cs" />
+    <Compile Include="Strategies\SwarmOptimum.cs" />
     <Compile Include="Systems\AirFlowParticleSystem.cs" />
     <Compile Include="Systems\ParticleSwarmSystem.cs" />
     <Compile Include="Particles\SwarmParticle.cs" />

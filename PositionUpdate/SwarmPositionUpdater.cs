@@ -3,51 +3,46 @@ using ParticleSystems.Particles;
 using System;
 using System.Collections.Generic;
 using ParticleSystems.SettingsPanels;
+using ParticleSystems.Strategies;
+using ParticleSystems.ParticleSwarmDataStructures;
 
 namespace ParticleSystems.PositionUpdate
 {
-    class SwarmPositionUpdater : PositionUpdater
+    abstract class SwarmPositionUpdater: PositionUpdater
     {
-        private Vector2d GlobalBestLocation = new Vector2d(0.0);
-        private double GlobalBestFitness =double.MaxValue;
-        private bool changed = false;
+        protected double InertiaWeight = 0.7298;
+        protected double AccelerationConstant = 1.4961;
+        protected double Mean = 0.5;
+        protected double StandardDeviation = 0.5;
 
-        public void UpdateSwarmPositions(List<SwarmParticle> particles)
+        protected ParticleSwarmFitnessStrategy FitnessStrategy;
+
+        public SwarmPositionUpdater(ParticleSwarmFitnessStrategy fitnessStrategy)
         {
-            Vector2d globalBestCache = new Vector2d();
-            double fitnessCache = GlobalBestFitness;
-            foreach (var particle in particles)
-            {
-                particle.updatePosition(GlobalBestLocation);
-
-                if (particle.GetOverallBestFitness() < fitnessCache)
-                {
-                    globalBestCache = particle.GetBestLocation();
-                    fitnessCache = particle.GetOverallBestFitness();
-                    changed = true;
-                }
-            }
-            if (changed)
-            {
-                GlobalBestLocation = globalBestCache;
-                GlobalBestFitness = fitnessCache;
-            }
-            changed = false;
+            FitnessStrategy = fitnessStrategy;
         }
+
+
+        public abstract void UpdateSwarmPositions(List<SwarmParticle> particles);
+
+        public abstract void UpdateSwarmPositions(ParticleRing<SwarmParticle> particles);
+
+        public abstract SwarmParticleMesh UpdateSwarmPositions(SwarmParticleMesh particles);
 
         public void UpdatePositions(List<Particle> particles)
         {
             // substituted by custom method signature to avoid casting :) 
-            throw new NotImplementedException("Not implemented. Use custom implementation with explicit List of SwarmParticles!");
+            // not needed here, therefore don't do anything
         }
 
-        public void SetContext(Context context) {
-            throw new NotImplementedException();
+        public void SetContext(Context context)
+        {
+           // not needed here, therefore don't do anything
         }
 
         public void SetSettingsPanel(ParticleSystemSettingsPanel settingsPanel)
         {
-            throw new NotImplementedException();
+            // not needed here, therefore don't do anything
         }
     }
 }

@@ -1,49 +1,45 @@
 ﻿using OpenTK;
 using ParticleSystems.Particles;
 using ParticleSystems.Strategies;
+using ParticleSystems.Systems;
 using System;
 
 namespace ParticleSystems.ParticleGeneration
 {
     class SwarmParticleGenerator
     {
-        private ParticleSwarmFitnessStrategy FitnessStrategy;
-        private int Width;
-        private int Height;
+        private int XMin;
+        private int XMax;
+        private int YMin;
+        private int YMax;
         private int MaxLifetime = 1;
         private int MaxAgingVelocity = 0;
-        private double MaxVelocity = 1.0;
-
+        private double MaxVelocity = 0.02;
+      
         private static Random Random = new Random();
 
-        public SwarmParticleGenerator(ParticleSwarmFitnessStrategy fitnessStrategy, int width, int height)
+        public SwarmParticleGenerator(ParticleSettings particleSettings, int xMin = 0, int xMax = 600, int yMin = 0, int yMax = 0)
         {
-            FitnessStrategy = fitnessStrategy;
-            Width = width;
-            Height = height;
-        }
-
-
-        public SwarmParticleGenerator(ParticleSwarmFitnessStrategy fitnessStrategy, int width, int height, int maxLifetime, int maxAgingVelocity, double maxVelocity)
-        {
-            FitnessStrategy = fitnessStrategy;
-            Width = width;
-            Height = height;
-            MaxLifetime = maxLifetime;
-            MaxAgingVelocity = maxAgingVelocity;
-            MaxVelocity = maxVelocity;
+            XMin = xMin;
+            XMax = xMax;
+            YMin = yMin;
+            YMax = yMax;
+          
+            MaxLifetime = particleSettings.GetLifetime();
+            MaxAgingVelocity = particleSettings.GetAgingVelocity();
+            MaxVelocity = particleSettings.GetVelocity();
         }
 
 
         public SwarmParticle GenerateParticle()
         {
-            return new SwarmParticle(CreateRandomPosition(), FitnessStrategy);
+            return new SwarmParticle(CreateRandomPosition(), MaxLifetime, MaxAgingVelocity, MaxVelocity);
         }
 
         private Vector2d CreateRandomPosition()
         {
-            double x = Random.NextDouble() * Width;
-            double y = Random.NextDouble() * Height;
+            int x = Random.Next(XMin, XMax);
+            int y = Random.Next(YMin, YMax);
             return new Vector2d(x, y);
         }
     }

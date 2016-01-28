@@ -8,15 +8,16 @@ namespace ParticleSystems.Strategies
     {
 
         private int P = 1;
-        private List<Vector2d> Optima;
-
-        public ParticleSwarmPNormFitnessStrategy(int p, HashSet<Vector2d> optima)
+      
+   
+        public ParticleSwarmPNormFitnessStrategy(int p, HashSet<SwarmOptimum> optima, bool ignoreWeights)
         {
+            IgnoreWeights = ignoreWeights;
             if (p >= 1)
             {
                 P = p;
             }
-            Optima = new List<Vector2d>(optima);
+            Optima = new List<SwarmOptimum>(optima);
         }
 
         public override double GetFitness(Vector2d position)
@@ -39,10 +40,17 @@ namespace ParticleSystems.Strategies
             return bestFitness;
         }
 
-        private double calculateFitness(Vector2d particlePosition, Vector2d optimum)
+        private double calculateFitness(Vector2d particlePosition, SwarmOptimum optimum)
         {
-            Vector2d diff = particlePosition - optimum;
-            return Math.Pow((Math.Pow(Math.Abs(diff.X), P) + Math.Pow(Math.Abs(diff.Y), P)), ((double)1.0 / P));
+            Vector2d diff = particlePosition - optimum.GetPosition();
+            double baseFitness =  Math.Pow((Math.Pow(Math.Abs(diff.X), P) + Math.Pow(Math.Abs(diff.Y), P)), ((double)1.0 / P));
+
+            if (IgnoreWeights)
+            {
+                return baseFitness;
+            }
+
+            return baseFitness / (double)optimum.GetWeight();//TODO: find a different way? substract weight? 
         }
     }
 }
