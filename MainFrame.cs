@@ -6,6 +6,7 @@ using System.IO;
 using ParticleSystems.Systems;
 using ParticleSystems.SettingsPanels;
 using ParticleSystems.MoreOptionsForm;
+using System.Diagnostics;
 
 namespace ParticleSystems
 {
@@ -16,7 +17,7 @@ namespace ParticleSystems
     {
         private ParticleSystemRegistration particleSystemRegistration = new ParticleSystemRegistration();
         private System.Timers.Timer timer = new System.Timers.Timer(TICK_IN_MS);
-        private Timer fpsTimer = new Timer();
+        private Stopwatch Stopwatch = new Stopwatch();
         private IdHolder idHolder = new IdHolder();
         private ParticleSystem selectedParticleSystem;
         private ParticleSystemSettingsPanel panelSystemSettingsPanel;
@@ -25,6 +26,7 @@ namespace ParticleSystems
 
         private const double TICK_IN_MS = 15.0;
         private const double SMOOTHING = 0.8;
+        private const int SECOND_IN_MS = 1000;
 
         private bool glControlLoaded = false;
         private bool ready = false;
@@ -42,12 +44,7 @@ namespace ParticleSystems
             particleSystemSelection.Items.AddRange(particleSystemRegistration.GetParticleSystemNames());
             particleSystemSelection.EndUpdate();
 
-           
-
             timer.Elapsed += timerListener;
-
-            fpsTimer.Tick += fpsTimerListener;
-            fpsTimer.Interval = 1000;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -81,6 +78,16 @@ namespace ParticleSystems
             {
                 if (selectedParticleSystem.RenderFrame())
                 {
+                    if (Stopwatch.ElapsedMilliseconds >= SECOND_IN_MS)
+                    {
+                        Stopwatch.Stop();
+                        int totalElapsedSeconds = (int) Stopwatch.ElapsedMilliseconds / SECOND_IN_MS;
+                        FpsMeasurement = (FpsMeasurement * SMOOTHING) + (frameCounter/totalElapsedSeconds * (1 - SMOOTHING));
+                        SetFrameCounter(((int)Math.Round(FpsMeasurement)).ToString());
+                        frameCounter = 0;
+                        droppedFrames = 0;
+                        Stopwatch.Restart();
+                    }
                     frameCounter++;
                 }
                 else
@@ -140,9 +147,8 @@ namespace ParticleSystems
         private void fpsTimerListener(object sender, EventArgs eventArgs)
         {
             FpsMeasurement = (FpsMeasurement * SMOOTHING) + (frameCounter * (1 - SMOOTHING));
-            framesPerSecondOutput.Text = ((int)Math.Round(FpsMeasurement)).ToString();
+            SetFrameCounter(((int)Math.Round(FpsMeasurement)).ToString());
             frameCounter = 0;
-          //  Console.WriteLine("Dropped Frames: " + droppedFrames);
             droppedFrames = 0;
         }
 
@@ -190,6 +196,10 @@ namespace ParticleSystems
                 particleSystemSettingsPanel = selectedParticleSystem.GetParticleSystemSettingsPanel();
                 psSettings.Controls.Add(particleSystemSettingsPanel);
                 prepareGeneralSettingsPanel(true);
+
+                SetFrameCounter("0");
+                context.clearPlaceableObjects();
+                ready = false;
             }
             Invalidate();
         }
@@ -204,16 +214,22 @@ namespace ParticleSystems
                 generalSettings.Enabled = false;
                 stopped = false;
                 timer.Start();
-                fpsTimer.Start();
+                Stopwatch.Restart();
                 frameButton.Enabled = false;
                 pauseButton.Enabled = true;
+                Stopwatch.Start();
+                FpsMeasurement = 30;
+                frameCounter = 0;
+                droppedFrames = 0;
             }
             else
             {
                 stopped = true;
                 paused = true;
                 timer.Stop();
-                fpsTimer.Stop();
+                Stopwatch.Stop();
+                frameCounter = 0;
+                droppedFrames = 0;
                 startButton.Text = "Start";
                 pauseButton.Text = "Pause";
                 pauseButton.Enabled = false;
@@ -230,15 +246,17 @@ namespace ParticleSystems
             {
                 startButton.Text = "Stop";
                 timer.Stop();
-                fpsTimer.Stop();
+                Stopwatch.Stop();
                 pauseButton.Text = "Continue";
                 frameButton.Enabled = true;
                 paused = false;
+                frameCounter = 0;
+                droppedFrames = 0;
             }
             else
             {
                 timer.Start();
-                fpsTimer.Start();
+                Stopwatch.Restart();
                 pauseButton.Text = "Pause";
                 frameButton.Enabled = false;
                 paused = true;
@@ -314,6 +332,11 @@ namespace ParticleSystems
         public void MoreOptionsFormClosed()
         {
             glControl.Invalidate();
+        }
+
+        private void SetFrameCounter(string fps)
+        {
+            framesPerSecondOutput.Text = fps;
         }
     }
 }

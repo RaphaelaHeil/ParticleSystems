@@ -359,7 +359,7 @@ namespace ParticleSystems.SettingsPanels
         {
             Vector2d position = new Vector2d(int.Parse(xInput.Text), int.Parse(yInput.Text));
             int weight = int.Parse(weightInput.Text);
-            if (weight >= 0)
+            if (weight <= 0)
             {
                 weight = 1;
             }

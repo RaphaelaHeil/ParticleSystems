@@ -118,12 +118,5 @@ namespace ParticleSystems.Systems
         /// Retrieve the particle positions and intended colours for rendering and prepare the two arrays ParticlePositions and ParticleColours.
         /// </summary>
         protected abstract void UpdateVBOs();
-
-        protected virtual void GetDefaultGUIValues()
-        {
-            // max Lifetime default = 100;
-            // Input xyz deaktiviert
-            // 
-        }
     }
 }

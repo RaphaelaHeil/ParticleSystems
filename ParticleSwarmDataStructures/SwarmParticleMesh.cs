@@ -83,13 +83,23 @@ namespace ParticleSystems.ParticleSwarmDataStructures
             int column = (int)position.X / CellSize;
             int row = (int)position.Y / CellSize;
 
+            if (column < 0)
+            {
+                column = ColumnCount + column % ColumnCount - 1;
+            }
+
+            if (row < 0)
+            {
+                row = RowCount + row % RowCount - 1;
+            }
+
             if (column >= ColumnCount)
             {
-                column -= ColumnCount;
+                column = column % ColumnCount;
             }
             if (row >= RowCount)
             {
-                row -= RowCount;
+                row = row % RowCount;
             }
             return new Tuple<int, int>(row, column);
         }

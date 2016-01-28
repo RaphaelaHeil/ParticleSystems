@@ -32,6 +32,7 @@ namespace ParticleSystems.SettingsPanels
             this.yDirectionInput.Name = "yDirectionInput";
             this.yDirectionInput.Size = new System.Drawing.Size(100, 20);
             this.yDirectionInput.TabIndex = 0;
+            this.yDirectionInput.Text = "5";
             // 
             // xDirectionInput
             // 
@@ -39,6 +40,7 @@ namespace ParticleSystems.SettingsPanels
             this.xDirectionInput.Name = "xDirectionInput";
             this.xDirectionInput.Size = new System.Drawing.Size(100, 20);
             this.xDirectionInput.TabIndex = 1;
+            this.xDirectionInput.Text = "5";
             // 
             // label1
             // 
@@ -65,10 +67,12 @@ namespace ParticleSystems.SettingsPanels
             this.Controls.Add(this.label1);
             this.Controls.Add(this.xDirectionInput);
             this.Controls.Add(this.yDirectionInput);
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "LinearSettings";
             this.Size = this.Size;
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         public double GetXDirectionChange()
