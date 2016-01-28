@@ -2,14 +2,27 @@
 
 namespace ParticleSystems
 {
+    /// <summary>
+    /// Placable Object class.
+    /// Contains the necessary values for an object to be placed on the graphic plane. 
+    /// </summary>
     class PlaceableObject
     {
-        public enum Shape { Square, Rectangle};
+        public enum Shape { Square, Rectangle };
 
         private Shape objectShape;
         private Vector2d position;
         private Vector2d size;
 
+        /// <summary>
+        /// Constructor for the placable Object. 
+        /// Shape, position and size has to be given to create an object.
+        /// </summary>
+        /// <param name="objectShape"></param>
+        /// <param name="positionX"></param>
+        /// <param name="positionY"></param>
+        /// <param name="sizeWidth"></param>
+        /// <param name="sizeHeight"></param>
         public PlaceableObject(Shape objectShape, int positionX, int positionY, int sizeWidth, int sizeHeight)
         {
             this.objectShape = objectShape;

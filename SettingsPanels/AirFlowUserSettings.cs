@@ -4,13 +4,25 @@ using System.Collections.Generic;
 
 namespace ParticleSystems.SettingsPanels
 {
-    public partial class AirFlowUserSettings : ParticleSystemSettingsPanel {
+    /// <summary>
+    /// Settings-Pnael for the Airflow Particle System.
+    /// Some unique setting for the Airflow system can be made here.
+    /// </summary>
+    public partial class AirFlowUserSettings : ParticleSystemSettingsPanel
+    {
 
+        /// <summary>
+        /// Contructor for the Airflow settings.
+        /// Call the initalize method.
+        /// </summary>
         public AirFlowUserSettings()
         {
-            InitializeComponent(); 
+            InitializeComponent();
         }
 
+        /// <summary>
+        /// Initializes the components on the settings panel.
+        /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -174,11 +186,19 @@ namespace ParticleSystems.SettingsPanels
 
         }
 
+        /// <summary>
+        /// Returns the colour, which is picked in the color picker
+        /// </summary>
+        /// <returns></returns>
         public Color getColor()
         {
             return this.colorIndicator.BackColor;
         }
 
+        /// <summary>
+        /// Returns true if the Vortex-Check-Box is checked. False if not.
+        /// </summary>
+        /// <returns></returns>
         public bool GetVortex()
         {
             if (this.checkVortex.Checked)
@@ -187,6 +207,10 @@ namespace ParticleSystems.SettingsPanels
                 return false;
         }
 
+        /// <summary>
+        /// Returns true if the Interaction-Check-Box is checked. False if not.
+        /// </summary>
+        /// <returns></returns>
         public bool GetInteraction()
         {
             if (this.checkInteraction.Checked)
@@ -195,26 +219,50 @@ namespace ParticleSystems.SettingsPanels
                 return false;
         }
 
+        /// <summary>
+        /// Returns the range in witch the particles will be interact.
+        /// </summary>
+        /// <returns></returns>
         public int getRange()
         {
             return int.Parse(this.rangeText.Text);
         }
 
+        /// <summary>
+        /// Returns the distance the particle will be moved if the interaction takes place.
+        /// </summary>
+        /// <returns></returns>
         public int getRepel()
         {
             return int.Parse(this.repelText.Text);
         }
 
+        /// <summary>
+        /// Returns true if the Random-Repel-Check-Box is checked. False if not.
+        /// The repel distance will be random generated.
+        /// </summary>
+        /// <returns></returns>
         public bool getRandomRepel()
         {
             return this.randomRepelCheck.Checked;
         }
 
+        /// <summary>
+        /// Returns true if the Random-Range-Check-Box is checked. False if not.
+        /// The interaction range will be random generated.
+        /// </summary>
+        /// <returns></returns>
         public bool getRandomRange()
         {
             return this.randomRangeCheckt.Checked;
         }
 
+        /// <summary>
+        /// Handle colur picker mouse click and opens the colour picker-dialoge,
+        /// to choose a colour for the particles.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void colorIndicator_MouseClick(object sender, MouseEventArgs e)
         {
             if (this.colorDialog.ShowDialog() == DialogResult.OK)

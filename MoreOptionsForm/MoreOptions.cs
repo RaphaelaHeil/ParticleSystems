@@ -3,6 +3,10 @@ using System.Windows.Forms;
 
 namespace ParticleSystems.MoreOptionsForm
 {
+    /// <summary>
+    /// More-Options-Window class.
+    /// Provide options to place an object in the graphic plane.
+    /// </summary>
     class MoreOptionsWindow : Form
     {
         GroupBox placeObjectListBox;
@@ -22,10 +26,20 @@ namespace ParticleSystems.MoreOptionsForm
         Label objectLabel;
 
         private CheckedListBox checkedListBox1;
-        private Button button1;
+        private Button removeButton;
         Context context;
         MainFrame MainFrame;
 
+        /// <summary>
+        /// Contructor for the More-Options-Window class.
+        /// Initalizes context and the main frame object.
+        /// Calls the InitializeComponent method.
+        /// Calls the fillPlacedObjectListFromContext method, 
+        /// to list the values of the plcable object, 
+        /// wich are allready placed.
+        /// </summary>
+        /// <param name="mainFrame"></param>
+        /// <param name="context"></param>
         public MoreOptionsWindow(MainFrame mainFrame, Context context)
         {
             this.context = context;
@@ -34,10 +48,13 @@ namespace ParticleSystems.MoreOptionsForm
             fillPlacedObjectListFromContext();
         }
 
+        /// <summary>
+        /// Initializes the components on the More-Options-Window.
+        /// </summary>
         private void InitializeComponent()
         {
             this.placeObjectListBox = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.removeButton = new System.Windows.Forms.Button();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.placeObjectBox = new System.Windows.Forms.GroupBox();
             this.placeButton = new System.Windows.Forms.Button();
@@ -59,7 +76,7 @@ namespace ParticleSystems.MoreOptionsForm
             // 
             // placeObjectListBox
             // 
-            this.placeObjectListBox.Controls.Add(this.button1);
+            this.placeObjectListBox.Controls.Add(this.removeButton);
             this.placeObjectListBox.Controls.Add(this.checkedListBox1);
             this.placeObjectListBox.Location = new System.Drawing.Point(185, 6);
             this.placeObjectListBox.Name = "placeObjectListBox";
@@ -70,13 +87,13 @@ namespace ParticleSystems.MoreOptionsForm
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(171, 146);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(113, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Remove selected";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.removeButton.Location = new System.Drawing.Point(171, 146);
+            this.removeButton.Name = "removeButton";
+            this.removeButton.Size = new System.Drawing.Size(113, 23);
+            this.removeButton.TabIndex = 10;
+            this.removeButton.Text = "Remove selected";
+            this.removeButton.UseVisualStyleBackColor = true;
+            this.removeButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // checkedListBox1
             // 
@@ -251,6 +268,13 @@ namespace ParticleSystems.MoreOptionsForm
 
         }
 
+        /// <summary>
+        /// Handles the place object button click.
+        /// Put the values of the placable object into the text list,
+        /// and added a new placable object to the context.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void placeButton_Click(object sender, System.EventArgs e)
         {
             PlaceableObject.Shape objectShape = (PlaceableObject.Shape)objectSelect.SelectedItem;
@@ -269,6 +293,11 @@ namespace ParticleSystems.MoreOptionsForm
             putVisibleObjectToGlControl(placeableObject);
         }
 
+        /// <summary>
+        /// Handles the object shape select.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void objectSelect_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             placeButton.Enabled = true;
@@ -282,17 +311,30 @@ namespace ParticleSystems.MoreOptionsForm
             }
         }
 
+        /// <summary>
+        /// Put the values of the allready exiting placable objects into the text list.
+        /// </summary>
         private void fillPlacedObjectListFromContext()
         {
                 checkedListBox1.Items.Clear();
                 checkedListBox1.Items.AddRange(context.getPlacableObjects().ToArray());
         }
 
+        /// <summary>
+        /// Put the values of the placable object into the text list.
+        /// </summary>
+        /// <param name="placeableObject"></param>
         private void putVisibleObjectToGlControl(PlaceableObject placeableObject)
         {
             checkedListBox1.Items.Add(placeableObject);
         }
 
+        /// <summary>
+        /// Removes the values of the placable object from the text list,
+        /// and deletes a placable object from the context.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             while (checkedListBox1.CheckedItems.Count > 0)
@@ -302,6 +344,11 @@ namespace ParticleSystems.MoreOptionsForm
             }
         }
 
+        /// <summary>
+        /// Handles the close event of the More-Options-Window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MoreOptionsWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
             MainFrame.MoreOptionsFormClosed();
