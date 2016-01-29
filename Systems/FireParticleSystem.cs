@@ -46,6 +46,10 @@ namespace ParticleSystems.Systems
 
 			minX = Panel.GetXMin ();
 			maxX = Panel.GetXMax ();
+			if (minX > maxX) {
+				maxX = Panel.GetXMin ();
+				minX = Panel.GetXMax ();
+			}
 			range = Panel.GetRange ();
 
 			CreateInitialParticles ();
