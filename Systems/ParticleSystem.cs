@@ -31,7 +31,7 @@ namespace ParticleSystems.Systems
         {
             Particles = new List<Particle>();
             Context = context;
-            RenderHelper = renderHelper; //  new RenderHelper(Context.GetIdHolder());
+            RenderHelper = renderHelper;
             Initialise();
         }
 
